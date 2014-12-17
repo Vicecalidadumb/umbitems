@@ -1,0 +1,36 @@
+CREATE TABLE IF NOT EXISTS  `umbitems_session` (
+	session_id varchar(40) DEFAULT '0' NOT NULL,
+	ip_address varchar(45) DEFAULT '0' NOT NULL,
+	user_agent varchar(120) NOT NULL,
+	last_activity int(10) unsigned DEFAULT 0 NOT NULL,
+	user_data text NOT NULL,
+	PRIMARY KEY (session_id),
+	KEY `last_activity_idx` (`last_activity`)
+);
+
+CREATE TABLE `umbitems_modulos` (
+  `ID_MODULO` int(11) NOT NULL auto_increment COMMENT 'ID DEL MODULO',
+  `NOM_MODULO` varchar(300) default NULL COMMENT 'NOMBRE DEL MODULO',
+  `ACT_MODULO` tinyint(1) default NULL COMMENT 'ESTADO DEL MODULO(1=ACTIVO,0=INACTIVO)',
+  PRIMARY KEY  (`ID_MODULO`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='MODULOS DE SISTEMA' AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE `umbitems_modulos_tipos` (
+  `ID_MODULO` int(11) NOT NULL COMMENT 'ID DEL MODULO',
+  `ID_TIPO_USU` int(11) NOT NULL COMMENT 'ID DEL TIPO DE USUARIO',
+  `GUARDAR` tinyint(1) default NULL COMMENT 'GUARDAR EN MODULO',
+  `ACTUALIZAR` tinyint(1) default NULL COMMENT 'ACTUALIZAR EN MODULO',
+  `ELIMINAR` tinyint(1) default NULL COMMENT 'ELIMINAR EN MODULO',
+  `CONSULTAR` tinyint(1) default NULL COMMENT 'CONSULTAR MODULO',
+  PRIMARY KEY  (`ID_MODULO`,`ID_TIPO_USU`),
+  KEY `ID_TIPO_USU` (`ID_TIPO_USU`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Modulos por Tipos de Usuario';
+
+
+CREATE TABLE `umbitems_tipos_usuario` (
+  `ID_TIPO_USU` int(11) NOT NULL auto_increment COMMENT 'ID DEL TIPO DE USUARIO',
+  `NOM_TIPO_USU` varchar(250) default NULL COMMENT 'NOMBRE DEL TIPO DE USUARIO',
+  `ACT_TIPO_USU` tinyint(1) default NULL COMMENT 'ESTADO DEL TIPO DE USUARIO(1=ACTIVO,0=INACTIVO)',
+  PRIMARY KEY  (`ID_TIPO_USU`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='TIPOS DE USUARIOS' AUTO_INCREMENT=1 ;

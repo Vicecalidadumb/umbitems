@@ -1,0 +1,8 @@
+apache 	2.4.4
+php 	5.4.16
+mysql 	5.6.12
+
+
+apache 	2.4.4
+php	5.2.9
+mysql	5.1.41
