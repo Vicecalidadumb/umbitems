@@ -19,12 +19,9 @@ class Desk extends CI_Controller {
         $data['content'] = 'index';
 
         $data['components_array'] = $this->component_model->get_components_id_user_2($this->session->userdata('USUARIO_ID'));
-
         $data['components_array_2'] = $this->component_model->get_components_id_user_3($this->session->userdata('USUARIO_ID'));
-
         $data['components_array_3'] = $this->component_model->get_components_id_user_4($this->session->userdata('USUARIO_ID'));
 
-        //echo '<pre>'.print_r($components_array,true).'</pre>';
         $this->load->view('template/template', $data);
     }
 

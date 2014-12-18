@@ -12,6 +12,7 @@
     <?php echo $this->session->userdata('HEADER_2'); ?>
 </div>
 
+
 <div class="page-header">
     <h1 style="color:#2aabd2">Agregar Item</h1>
     <h4 style="color:#2aabd2">

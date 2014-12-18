@@ -304,7 +304,7 @@ function configuracion($url) {
     
             $config['c_nombre'] = 'CONVOCATORIA No. 320 de 2014 - DPS';
             $config['c_descripcion'] = 'CONVOCATORIA No. 320 de 2014 - DPS';
-            $config['c_imagen1'] = 'ima1_parques.png';
+            $config['c_imagen1'] = 'ima1.png';
             $config['c_id'] = '1';    
     return $config;
 }

@@ -1,3 +1,5 @@
+<?php //echo '<pre>'.print_r($users,true).'<pre>'; ?>
+
 <?php if ($this->session->flashdata('message')) { ?>
     <div class="alert alert-<?php echo $this->session->flashdata('message_type'); ?>">
         <?php echo $this->session->flashdata('message'); ?>
@@ -25,6 +27,9 @@
 <table class="table table-striped">
     <tr>
         <th>
+            Rol
+        </th>        
+        <th>
             Nombres
         </th>
         <th>
@@ -46,6 +51,9 @@
 
     <?php foreach ($users as $user) { ?>
         <tr>
+            <td>
+                <?php echo $user->NOM_TIPO_USU ?>
+            </td>            
             <td>
                 <?php echo $user->USUARIO_NOMBRES ?>
             </td>
