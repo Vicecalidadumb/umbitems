@@ -35,8 +35,8 @@
             
 <!--            <img src="<?php echo base_url('images/banner1.png'); ?>" style="width: 180px;">
             <img src="<?php echo base_url('images/marca-umb.png'); ?>" style="width: 280px;">-->
-            <img src="<?php echo base_url('images/vice/'.$c_imagen1); ?>" style="width: 100%;">
-            <h4><?php echo $c_nombre; ?></h4>
+            <img src="<?php echo base_url('images/vice/ima1.png'); ?>" style="width: 100%;">
+            <h4>CONVOCATORIA No. 320 de 2014 - DPS</h4>
             <h2 class="form-signin-heading">Sistema de Administraci&oacute;n de &Iacute;tems</h2>
             
             <!--<h4>Sistema Integrado de Evaluación Institucional - UMB</h4>-->

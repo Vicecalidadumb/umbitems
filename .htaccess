@@ -16,6 +16,6 @@
     # request to index.php
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ umb_items/index.php?/$1 [L]
+    RewriteRule ^(.*)$ umbitems/index.php?/$1 [L]
  
 </IfModule>

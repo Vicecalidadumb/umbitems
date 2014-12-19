@@ -53,7 +53,6 @@ class User_model extends CI_Model {
     }
 
     public function get_user_id_user($id_user) {
-        $CI = & get_instance();
         $SQL_string = "SELECT *
                       FROM {$this->db->dbprefix('usuarios')}
                       WHERE USUARIO_ID = $id_user AND USUARIO_ESTADO = '1'";
@@ -131,5 +130,26 @@ class User_model extends CI_Model {
                        ";
         $SQL_string_query = $this->db->query($SQL_string);
     }
+    
+    public function insert_event($array) {
+        $SQL_string = "INSERT INTO {$this->db->dbprefix('log')}
+                      (
+                       USUARIO_ID,
+                       PREGUNTA_ID,
+                       LOG_TIPO,
+                       LOG_DESCRIPCION,
+                       LOG_IDREFERENCIA
+                       )
+                      VALUES 
+                       (
+                       '{$array['USUARIO_ID']}',
+                       '{$array['PREGUNTA_ID']}',
+                       '{$array['LOG_TIPO']}',
+                       '{$array['LOG_DESCRIPCION']}',
+                       '{$array['LOG_IDREFERENCIA']}'
+                       )
+                       ";
+        return $this->db->query($SQL_string);
+    }    
     
 }

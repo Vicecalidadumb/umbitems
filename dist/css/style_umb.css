@@ -1,0 +1,74 @@
+/* =======================================
+
+                Estilos propios
+                
+========================================== */
+.enconstruccion{
+    background-color: #fff !important;
+}
+.enconstruccion > td{
+    background-color: transparent !important;
+    font-size: 11px !important;
+}
+
+.enseleccion{
+    background-color: #eec798 !important;
+}
+.enseleccion > td{
+    background-color: transparent !important;
+    font-size: 11px !important;
+}
+
+.enestilo{
+    background-color: #fd95bc !important;
+}
+.enestilo > td{
+    background-color: transparent !important;
+    font-size: 11px !important;
+}
+
+.warning{
+    background-color: #fcf8e3 !important;
+}
+.warning > td{
+    background-color: transparent !important;
+    font-size: 11px !important;
+}
+
+.danger{
+    background-color: #f2dede !important;
+}
+.danger > td{
+    background-color: transparent !important;
+    font-size: 11px !important;
+}
+
+.info{
+    background-color: #d9edf7 !important;
+}
+.info > td{
+    background-color: transparent !important;
+    font-size: 11px !important;
+}
+
+.susses{
+    background-color: #dff0d8 !important;
+}
+.susses > td{
+    background-color: transparent !important;
+    font-size: 11px !important;
+}
+
+
+.jumbotron {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.page-header {
+    margin: 30px 0 20px !important;
+}
+
+.modal-lg {
+    width: 70% !important;
+}

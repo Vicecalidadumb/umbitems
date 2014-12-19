@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        
         <?php
         header("Cache-Control: no-store, no-cache, must-revalidate");
         header("Pragma: no-cache");
         ?>
-        
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,8 +41,9 @@
 
         <script src="<?php echo base_url('dist/js/jquery.validate.min.js'); ?>"></script> 
         <script src="<?php echo base_url('dist/js/messages_es.js'); ?>"></script> 
-        
+
         <link href="<?php echo base_url('dist/css/style.css'); ?>" rel="stylesheet">
+        <link href="<?php echo base_url('dist/css/style_umb.css'); ?>" rel="stylesheet">
 
         <script src="<?php echo base_url('dist/js/bootstrap.min.js'); ?>"></script>
         <script src="<?php echo base_url('docs-assets/js/holder.js'); ?>"></script>        

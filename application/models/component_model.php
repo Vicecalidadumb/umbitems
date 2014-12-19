@@ -42,13 +42,12 @@ class Component_model extends CI_Model {
                       FROM 
                         {$this->db->dbprefix('componentes')} c
                       WHERE 
-                        COMPONENTE_ESTADO = '1'"
-                        . " AND  c.CONFIGURACION_ID=".$CI->session->userdata('c_id')." ";
+                        COMPONENTE_ESTADO = '1'";
         //echo $SQL_string;  
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
     }
-    
+
     public function get_components_report2() {
         $CI = & get_instance();
         $SQL_string = "SELECT c.*,
@@ -151,13 +150,12 @@ class Component_model extends CI_Model {
                       FROM 
                         {$this->db->dbprefix('componentes')} c
                       WHERE 
-                        COMPONENTE_ESTADO = '1'"
-                        . " AND c.CONFIGURACION_ID=".$CI->session->userdata('c_id')." ";
+                        COMPONENTE_ESTADO = '1' ";
         //echo $SQL_string;  
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
-    }    
-    
+    }
+
     public function get_components_id_est($COMPONENTE_ID) {
         $CI = & get_instance();
         $SQL_string = "SELECT c.*,
@@ -196,8 +194,7 @@ class Component_model extends CI_Model {
                         {$this->db->dbprefix('componentes')} c
                       WHERE 
                         COMPONENTE_ESTADO = '1' 
-                        AND COMPONENTE_ID = '$COMPONENTE_ID'"
-                                . " AND c.CONFIGURACION_ID=".$CI->session->userdata('c_id')." ";
+                        AND COMPONENTE_ID = '$COMPONENTE_ID' ";
         //echo $SQL_string;  
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
@@ -218,8 +215,7 @@ class Component_model extends CI_Model {
                         {$this->db->dbprefix('componentes')} c
                       WHERE 
                         c.COMPONENTE_ESTADO = '1' 
-                        AND c.COMPONENTE_ID = $COMPONENTE_ID"
-                                . " AND c.CONFIGURACION_ID=".$CI->session->userdata('c_id')." ";
+                        AND c.COMPONENTE_ID = $COMPONENTE_ID ";
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
     }
@@ -231,8 +227,7 @@ class Component_model extends CI_Model {
                         {$this->db->dbprefix('componentes')} c  
                       WHERE 
                         COMPONENTE_ESTADO = '1' 
-                        AND COMPONENTE_SIGLA='$sigla'"
-                                . " AND c.CONFIGURACION_ID=".$CI->session->userdata('c_id')." ";
+                        AND COMPONENTE_SIGLA='$sigla' ";
         //echo $SQL_string;
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
@@ -264,8 +259,7 @@ class Component_model extends CI_Model {
                         AND
                         u.USUARIO_ID = $id_user
                         AND
-                        c.COMPONENTE_ESTADO = '1'"
-                                . " AND c.CONFIGURACION_ID = ".$CI->session->userdata('c_id')." ";
+                        c.COMPONENTE_ESTADO = '1'";
         //echo $SQL_string;
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
@@ -349,13 +343,12 @@ class Component_model extends CI_Model {
                         AND
                         u.USUARIO_ID = $id_user
                         AND
-                        c.COMPONENTE_ESTADO = '1'"
-                                . " AND c.CONFIGURACION_ID=".$CI->session->userdata('c_id')." ";
+                        c.COMPONENTE_ESTADO = '1' ";
         //echo $SQL_string;
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
     }
-    
+
     public function get_components_id_user_3($id_user) {
         $CI = & get_instance();
         $SQL_string = "SELECT c.*,uc.*,u.*,
@@ -435,16 +428,16 @@ class Component_model extends CI_Model {
                         u.USUARIO_ID = $id_user
                         AND
                         c.COMPONENTE_ESTADO = '1' 
-                        AND c.CONFIGURACION_ID = ".$CI->session->userdata('c_id')."
+                        
                         ORDER BY c.COMPONENTE_SIGLA";
         //echo $SQL_string;
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
-    }   
-    
+    }
+
     public function get_components_id_user_4($id_user) {
         $CI = & get_instance();
-        
+
         $SQL_string = "SELECT c.*,uc.*,u.*,
                             (
                             SELECT COUNT(PREGUNTA_ID)
@@ -522,12 +515,12 @@ class Component_model extends CI_Model {
                         u.USUARIO_ID = $id_user
                         AND
                         c.COMPONENTE_ESTADO = '1' 
-                        AND c.CONFIGURACION_ID = ".$CI->session->userdata('c_id')."
+                        
                         ORDER BY c.COMPONENTE_SIGLA";
         //echo $SQL_string;
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
-    }     
+    }
 
     public function get_components_id($id_component) {
         $CI = & get_instance();
@@ -545,14 +538,12 @@ class Component_model extends CI_Model {
                       WHERE 
                         c.COMPONENTE_ID = $id_component
                         AND
-                        c.COMPONENTE_ESTADO = '1'"
-                                . " AND c.CONFIGURACION_ID=".$CI->session->userdata('c_id')." ";
+                        c.COMPONENTE_ESTADO = '1' ";
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
     }
 
     public function get_components_id_user_id_component($id_user, $id_component) {
-        $CI = & get_instance();
         $where = '';
         if ($id_component == 'ALL') {
             $where = '';
@@ -570,6 +561,16 @@ class Component_model extends CI_Model {
         return $SQL_string_query->result();
     }
 
+    public function get_componentslevels_id_user_id_component($id_user, $id_component) {
+        $SQL_string = "SELECT `PREGUNTA_NIVELPREGUNTA`,
+                        CONCAT(PREGUNTA_NIVELPREGUNTA,' ',COUNT(`PREGUNTA_ID`)) TOTAL
+                        FROM `umbitems_preguntas` 
+                        WHERE `COMPONENTE_ID` = $id_component AND `USUARIO_ID` = $id_user AND `PREGUNTA_ESTADO`=1
+                        GROUP BY `PREGUNTA_NIVELPREGUNTA`";
+        $SQL_string_query = $this->db->query($SQL_string);
+        return $SQL_string_query->result();
+    }
+
     public function insert_component($data) {
         $CI = & get_instance();
         $SQL_string = "INSERT IGNORE  INTO {$this->db->dbprefix('componentes')}
@@ -577,16 +578,14 @@ class Component_model extends CI_Model {
                        COMPONENTE_NOMBRE,  
                        COMPONENTE_SIGLA,     
                        COMPONENTE_ESTADO,
-                       COMPONENTE_PREGUNTAS,
-                       CONFIGURACION_ID
+                       COMPONENTE_PREGUNTAS
                        )
                       VALUES 
                        (
                        '{$data['COMPONENTE_NOMBRE']}',"
-                        . "'{$data['COMPONENTE_SIGLA']}',"
-                        . "'{$data['COMPONENTE_ESTADO']}',"
-                        . "'{$data['COMPONENTE_PREGUNTAS']}',
-                            '{$CI->session->userdata('c_id')}'
+                    . "'{$data['COMPONENTE_SIGLA']}',"
+                    . "'{$data['COMPONENTE_ESTADO']}',"
+                    . "'{$data['COMPONENTE_PREGUNTAS']}'
                        )
                        ";
         if ($this->db->query($SQL_string)) {
@@ -597,7 +596,7 @@ class Component_model extends CI_Model {
     }
 
     public function insert_component_users($data, $COMPONENTE_ID) {
-        
+
         //echo print_r($data['USUARIO_IDs'],true);
         if (count($data['USUARIO_IDs']) > 0) {
             $this->db->query("DELETE FROM {$this->db->dbprefix('usuarios_componentes')} WHERE COMPONENTE_ID = '{$COMPONENTE_ID}' ");
@@ -630,7 +629,7 @@ class Component_model extends CI_Model {
                        ";
         return $SQL_string_query = $this->db->query($SQL_string);
     }
-    
+
     public function update_component_vobo($data) {
         //echo '<pre>' . print_r($data['question'], true) . '</pre>';
         $SQL_string = "UPDATE {$this->db->dbprefix('componentes')} SET
@@ -643,6 +642,6 @@ class Component_model extends CI_Model {
         $return = $SQL_string_query = $this->db->query($SQL_string);
 
         return $return;
-    }    
+    }
 
 }

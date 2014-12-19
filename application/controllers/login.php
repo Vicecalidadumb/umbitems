@@ -21,8 +21,8 @@ class Login extends CI_Controller {
                 //SI EL USUARIO TIENE SESION ABIERTA, SE REDIRIGE A ESCRITORIO
                 redirect('desk', 'refresh');
             } else {
-                //SI EL USUARIO NO TIENE SESION ABIERTA, SE REDIRIGE A PAG. DE LOGIN
-                $this->load->view('login/index', $config);
+                //SI EL USUARIO NO TIENE SESION ABIERTA, CARGAR VISTA DE LOGIN
+                $this->load->view('login/index');
             }
         } else {
             $this->session->set_flashdata(array('message' => 'Se recomienda utilizar el navegador <strong>GOOGLE CHROME</strong> para este aplicativo, lo puede descargar <a href="http://www.google.com/intl/es-419/chrome/" target="_blank">AQUI</a>', 'message_type' => 'danger'));

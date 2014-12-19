@@ -1,3 +1,21 @@
+
+<style>
+    /*ESTILO DINAMICO PARA TIPOS DE USUARIOS*/
+    <?php
+    switch ($this->session->userdata('ID_TIPO_USU')) {
+        case 2:$color = '#fff600';break;
+        case 3:$color = '#f000ff';break;
+        case 4:$color = '#ff0000';break;
+        case 5:$color = '#000000';break;
+        case 6:$color = '#ff9c00';break;
+        case 7:$color = '#18ff00';break;
+        default:$color = '#ccc';break;break;
+    }
+    ?>
+    .navbar{
+        border-bottom: 2px solid <?php echo $color; ?> !important;
+    }
+</style>
 <!-- Fixed navbar -->
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
@@ -26,8 +44,8 @@
                     </li>
                 </ul>
             <?php endif; ?>
-                
-                
+
+
             <?php if ($this->session->userdata('ID_TIPO_USU') == 1 OR $this->session->userdata('ID_TIPO_USU') == 3 OR $this->session->userdata('ID_TIPO_USU') == 4): ?>
                 <!--MENU CONSTRUCTOR DE ITEMS-->
                 <ul class="nav navbar-nav">
@@ -39,7 +57,7 @@
                     </li>
                 </ul>
             <?php endif; ?>
-                
+
             <?php if ($this->session->userdata('ID_TIPO_USU') == 1 OR $this->session->userdata('ID_TIPO_USU') == 5): ?>
                 <!--MENU CONSTRUCTOR DE ITEMS-->
                 <ul class="nav navbar-nav">
@@ -52,8 +70,8 @@
                     </li>
                 </ul>
             <?php endif; ?>
-                
-                
+
+
             <?php if ($this->session->userdata('ID_TIPO_USU') == 1 OR $this->session->userdata('ID_TIPO_USU') == 5): ?>
                 <!--MENU CONSTRUCTOR DE ITEMS-->
                 <ul class="nav navbar-nav">
@@ -66,7 +84,7 @@
                     </li>
                 </ul>
             <?php endif; ?>
-                
+
             <?php if ($this->session->userdata('ID_TIPO_USU') == 1): ?>
                 <!--MENU CONSTRUCTOR DE ITEMS-->
                 <ul class="nav navbar-nav">
@@ -78,8 +96,8 @@
                     </li>
                 </ul>
             <?php endif; ?>                
-                
-               
+
+
 
 
 
