@@ -42,18 +42,26 @@ $components[''] = "---SELECCIONE UN COMPONENTE---";
 
 <script>
     function get_level(select) {
-        $.ajax({
-            data: "select=" + select,
-            type: "POST",
-            dataType: "html",
-            url: base_url_js + "question/get_levelsquestions",
-            success: function(data) {
-                $("#level").html(data)
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                alert("Error al Cargar, por favor seleccione nuevamente.")
-            },
-            async: true
+        var url = base_url_js + "question/get_levelsquestions";
+        $.post(url, {select: select})
+                .done(function(msg) {
+                    $("#level").html(msg)
+                }).fail(function(msg) {
+            alert("Error al Cargar, por favor seleccione nuevamente.")
         });
+//        $.ajax({
+//            data: "select=" + select,
+//            type: "POST",
+//            dataType: "html",
+//            url: base_url_js + "question/get_levelsquestions",
+//            success: function(data) {
+//                $("#level").html(data)
+//            },
+//            error: function(xhr, ajaxOptions, thrownError) {
+//                alert("Error al Cargar, por favor seleccione nuevamente.")
+//            },
+//            async: true
+//        });
     }
+
 </script>

@@ -92,8 +92,8 @@ class User_model extends CI_Model {
 
     public function get_user_username($user_username) {
         $sql_string = "SELECT *
-                      FROM {$this->db->dbprefix('usuarios')}
-                      WHERE USUARIO_NUMERODOCUMENTO = '{$user_username}'
+                      FROM {$this->db->dbprefix('usuarios')} u, {$this->db->dbprefix('tipos_usuario')} tu
+                      WHERE u.ID_TIPO_USU = tu.ID_TIPO_USU AND USUARIO_NUMERODOCUMENTO = '{$user_username}'
                       AND USUARIO_ESTADO=1";
 
         $sql_query = $this->db->query($sql_string);

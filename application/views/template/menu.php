@@ -1,15 +1,21 @@
-
 <style>
     /*ESTILO DINAMICO PARA TIPOS DE USUARIOS*/
     <?php
     switch ($this->session->userdata('ID_TIPO_USU')) {
-        case 2:$color = '#fff600';break;
-        case 3:$color = '#f000ff';break;
-        case 4:$color = '#ff0000';break;
-        case 5:$color = '#000000';break;
-        case 6:$color = '#ff9c00';break;
-        case 7:$color = '#18ff00';break;
-        default:$color = '#ccc';break;break;
+        case 2:$color = '#fff600';
+            break;
+        case 3:$color = '#f000ff';
+            break;
+        case 4:$color = '#ff0000';
+            break;
+        case 5:$color = '#000000';
+            break;
+        case 6:$color = '#ff9c00';
+            break;
+        case 7:$color = '#18ff00';
+            break;
+        default:$color = '#ccc';
+            break;
     }
     ?>
     .navbar{
@@ -30,7 +36,11 @@
         </div>
         <div class="navbar-collapse collapse">
 
-            <?php if ($this->session->userdata('ID_TIPO_USU') == 1 OR $this->session->userdata('ID_TIPO_USU') == 2 OR $this->session->userdata('ID_TIPO_USU') == 5): ?>
+            <?php
+            if ($this->session->userdata('ID_TIPO_USU') == 1 OR
+                    $this->session->userdata('ID_TIPO_USU') == 2 OR
+                    $this->session->userdata('ID_TIPO_USU') == 5):
+                ?>
                 <!--MENU CONSTRUCTOR DE ITEMS-->
                 <ul class="nav navbar-nav">
                     <li class="" class="dropdown">
@@ -46,13 +56,23 @@
             <?php endif; ?>
 
 
-            <?php if ($this->session->userdata('ID_TIPO_USU') == 1 OR $this->session->userdata('ID_TIPO_USU') == 3 OR $this->session->userdata('ID_TIPO_USU') == 4): ?>
+            <?php
+            if ($this->session->userdata('ID_TIPO_USU') == 1 OR
+                    $this->session->userdata('ID_TIPO_USU') == 3 OR
+                    $this->session->userdata('ID_TIPO_USU') == 4 OR
+                    $this->session->userdata('ID_TIPO_USU') == 6 OR
+                    $this->session->userdata('ID_TIPO_USU') == 7
+            ):
+                ?>
                 <!--MENU CONSTRUCTOR DE ITEMS-->
                 <ul class="nav navbar-nav">
                     <li class="" class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Validaci&oacute;n<b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <?php echo $this->session->userdata('NOM_TIPO_USU') ?>
+                            <b class="caret"></b>
+                        </a>
                         <ul class="dropdown-menu">
-                            <li><a href="<?php echo base_url("validation/add") ?>">Validar Items</a></li>
+                            <li><a href="<?php echo base_url("question/view") ?>">Buscar &Iacute;tems</a></li>
                         </ul>
                     </li>
                 </ul>

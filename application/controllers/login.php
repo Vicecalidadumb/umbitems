@@ -61,6 +61,7 @@ class Login extends CI_Controller {
                     'USUARIO_APELLIDOS' => $user[0]->USUARIO_APELLIDOS,
                     'USUARIO_CORREO' => $user[0]->USUARIO_CORREO,
                     'ID_TIPO_USU' => $user[0]->ID_TIPO_USU,
+                    'NOM_TIPO_USU' => $user[0]->NOM_TIPO_USU,
                     'HEADER_1' => '<div style="text-align: center">
                                         <img src="' . base_url('images/vice/ima1.png') . '" style="width: 600px;">  
                                     </div>

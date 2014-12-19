@@ -19,65 +19,52 @@ class Validation extends CI_Controller {
         validate_login($this->session->userdata('logged_in'));
     }
 
-    public function view($id_user = '0', $id_component = '0') {
+    public function view($id_component = '0', $level = '') {
         //VALIDAR PERMISO DEL ROL
         validation_permission_role($this->module_sigla, 'permission_view');
 
-        if ($id_user == '0') {
-            if ($this->session->userdata('ID_TIPO_USU') == 1 or $this->session->userdata('ID_TIPO_USU') == 3 or $this->session->userdata('ID_TIPO_USU')==4) {
-                if ($this->session->userdata('ID_TIPO_USU') == 1) {
-                    //CONSULTAR USUARIOS TIPO 2 = CONSTRUCTORES DE ITEMS
-                    $data['users'] = get_dropdown($this->user_model->get_all_users_type(2), 'USUARIO_ID', 'NOMBRES_C');
-                    $data['title'] = 'Buscara Items - Seleccion del Usuario';
-                    $data['content'] = 'question/select_user_view';
+        $id_user = $this->session->userdata('USUARIO_ID');
+
+        //CONSULTAR COMPONENTES ASOCIADOS AL USUARIO
+        $components_array = $this->component_model->get_components_id_user($id_user);
+
+
+        if (count($components_array) > 0) {
+            $data['components'] = get_dropdown($components_array, 'COMPONENTE_ID', 'COMPONENTE_NOMBRE');
+            //VALIDAR SI SE HA SELECCIONADO UN COMPONENTE
+            if ($id_component == '0') {
+                //OPTENER DATOS DEL USUARIO
+                $data['user'] = $this->user_model->get_user_id_user($id_user);
+                $data['id_user'] = $id_user;
+                $data['title'] = 'Buscar Items - Seleccion del Componente';
+                $data['content'] = 'question/select_component_view';
+                $this->load->view('template/template', $data);
+            } else {
+
+                $data['user'] = $this->user_model->get_user_id_user($id_user);
+                $id_component = deencrypt_id($id_component);
+                $component_validate = $this->component_model->get_components_id_user_id_component($id_user, $id_component);
+
+                if (count($component_validate) > 0) {
+                    //BUSCAR ITEMS
+                    //$data['component'] = $this->component_model->get_components_id($id_component);
+                    $data['id_component'] = $id_component;
+                    $data['id_user'] = $id_user;
+
+                    $data['questions'] = $this->question_model->get_questions($id_component, $id_user, $this->session->userdata("KEY_AES"), 1, deencrypt_id($level));
+                    //$data['component'] = $this->component_model->get_components_id_est($id_component);
+
+                    $data['title'] = 'Buscar Items';
+                    $data['content'] = 'question/view';
                     $this->load->view('template/template', $data);
                 } else {
-                    redirect('/question/view/' . encrypt_id($this->session->userdata('USUARIO_ID')), 'refresh');
+                    $this->session->set_flashdata(array('message' => 'No se encontraron componentes asociados al usuario seleccionado.', 'message_type' => 'warning'));
+                    redirect('/desk', 'refresh');
                 }
-            } else {
-                $this->session->set_flashdata(array('message' => 'No Posee Permisos para Realizar esta Accion.', 'message_type' => 'warning'));
-                redirect('/desk', 'refresh');
             }
         } else {
-
-            //VERIFICAR USUARIO
-            $id_user = deencrypt_id($id_user);
-
-            $components_array = $this->component_model->get_components_id_user($id_user);
-            $data['components'] = get_dropdown($components_array, 'COMPONENTE_ID', 'COMPONENTE_NOMBRE');
-
-            if (count($components_array) > 0) {
-                if ($id_component == '0') {
-                    $data['user'] = $this->user_model->get_user_id_user($id_user);
-                    $data['id_user'] = $id_user;
-                    $data['title'] = 'Buscar Items - Seleccion del Componente';
-                    $data['content'] = 'question/select_component_view';
-                    $this->load->view('template/template', $data);
-                } else {
-                    $data['user'] = $this->user_model->get_user_id_user($id_user);
-                    $id_component = deencrypt_id($id_component);
-                    $component_validate = $this->component_model->get_components_id_user_id_component($id_user, $id_component);
-
-                    if (count($component_validate) > 0) {
-                        //BUSCAR ITEMS
-                        //$data['component'] = $this->component_model->get_components_id($id_component);
-                        $data['id_component'] = $id_component;
-                        $data['id_user'] = $id_user;
-
-                        $data['questions'] = $this->question_model->get_questions($id_component, $id_user, $this->session->userdata("KEY_AES"), 1);
-
-                        $data['title'] = 'Buscar Items';
-                        $data['content'] = 'question/view';
-                        $this->load->view('template/template', $data);
-                    } else {
-                        $this->session->set_flashdata(array('message' => 'No se encontraron componentes asociados al usuario seleccionado.', 'message_type' => 'warning'));
-                        redirect('/desk', 'refresh');
-                    }
-                }
-            } else {
-                $this->session->set_flashdata(array('message' => 'No se encontraron componentes asociados al usuario seleccionado.', 'message_type' => 'warning'));
-                redirect('/desk', 'refresh');
-            }
+            $this->session->set_flashdata(array('message' => 'No se encontraron componentes asociados al usuario.', 'message_type' => 'warning'));
+            redirect('desk', 'refresh');
         }
     }
 
@@ -344,7 +331,7 @@ class Validation extends CI_Controller {
         $data['id_user'] = deencrypt_id($id_user);
 
         $data['question'] = $this->question_model->get_question($id_question, $this->session->userdata("KEY_AES"));
-        
+
         //echo '<pre>'.print_r($data['question'],true).'</pre>';
         //echo count($data['question']);
         if (count($data['question']) > 3) {
@@ -356,4 +343,5 @@ class Validation extends CI_Controller {
             redirect('desk', 'refresh');
         }
     }
+
 }

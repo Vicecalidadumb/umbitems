@@ -181,7 +181,7 @@
                                 <button style="margin-top: 8px !important;" type="button" class="btn btn-<?php echo ($question->PREGUNTA_DIAGRAMADA == 0) ? 'primary' : 'info' ?> btn-sm">
                                     <span class="glyphicon glyphicon-<?php echo ($question->PREGUNTA_DIAGRAMADA == 0) ? 'picture' : 'trash' ?>"></span>
                                     <?php echo ($question->PREGUNTA_DIAGRAMADA == 0) ? 'Diagramar Item' : 'Desseleccionar Diagra' ?>
-                                </button>  
+                                </button>
                             </a>
                             <?php
                         }
@@ -193,18 +193,18 @@
 
                     <td style="text-align: center;">
                         <?php //if ($validation_total != 0) { ?>
-                            <?php
-                            //if ($question->PREGUNTA_SELECCIONADA == 1) {
-                                if ($question->PREGUNTA_VALIDA1_OK == 1) {
-                                    echo '<span class="label label-success"><span class="glyphicon glyphicon-star"></span> SIN-SEM OK</span><br>';
-                                }
-                                if ($question->PREGUNTA_VALIDA2_OK == 1) {
-                                    echo '<span class="label label-primary"><span class="glyphicon glyphicon-star"></span> SUF-UBI-REL OK</span>';
-                                }
-                            //}
-                        /*} else {
-                            echo "--";
-                        }*/
+                        <?php
+                        //if ($question->PREGUNTA_SELECCIONADA == 1) {
+                        if ($question->PREGUNTA_VALIDA1_OK == 1) {
+                            echo '<span class="label label-success"><span class="glyphicon glyphicon-star"></span> SIN-SEM OK</span><br>';
+                        }
+                        if ($question->PREGUNTA_VALIDA2_OK == 1) {
+                            echo '<span class="label label-primary"><span class="glyphicon glyphicon-star"></span> SUF-UBI-REL OK</span>';
+                        }
+                        //}
+                        /* } else {
+                          echo "--";
+                          } */
                         ?>
                     </td>                    
                 </tr>       

@@ -15,7 +15,7 @@ class Question extends CI_Controller {
         $this->load->model('user_model');
         $this->load->model('question_model');
         $this->load->model('component_model');
-        //$this->load->model('validation_model');
+
         validate_login($this->session->userdata('logged_in'));
     }
 
@@ -27,7 +27,6 @@ class Question extends CI_Controller {
 
         //CONSULTAR COMPONENTES ASOCIADOS AL USUARIO
         $components_array = $this->component_model->get_components_id_user($id_user);
-
 
         if (count($components_array) > 0) {
             $data['components'] = get_dropdown($components_array, 'COMPONENTE_ID', 'COMPONENTE_NOMBRE');
@@ -51,8 +50,8 @@ class Question extends CI_Controller {
                     $data['id_component'] = $id_component;
                     $data['id_user'] = $id_user;
 
-                    $data['questions'] = $this->question_model->get_questions($id_component, $id_user, $this->session->userdata("KEY_AES"), 1, deencrypt_id($level));
-                    $data['component'] = $this->component_model->get_components_id_est($id_component);
+                    $data['questions'] = $this->question_model->get_questions($id_component, $id_user, $this->session->userdata("KEY_AES"), 1, deencrypt_id($level), $this->session->userdata('ID_TIPO_USU'));
+                    //$data['component'] = $this->component_model->get_components_id_est($id_component);
 
                     $data['title'] = 'Buscar Items';
                     $data['content'] = 'question/view';
@@ -374,7 +373,7 @@ class Question extends CI_Controller {
                 $id_component = $this->input->post('select');
             $USUARIO_ID = $this->session->userdata("USUARIO_ID");
             if ($id_component > 0) {
-                $levels = get_dropdown($this->component_model->get_componentslevels_id_user_id_component($USUARIO_ID, $id_component), 'PREGUNTA_NIVELPREGUNTA', 'TOTAL');
+                $levels = get_dropdown($this->component_model->get_componentslevels_id_user_id_component($USUARIO_ID, $id_component, $this->session->userdata('ID_TIPO_USU')), 'PREGUNTA_NIVELPREGUNTA', 'TOTAL');
                 if (count($levels) > 0)
                     echo form_dropdown('PREGUNTA_NIVELPREGUNTA', $levels, '', 'class="form-control"');
                 else
@@ -395,5 +394,4 @@ class Question extends CI_Controller {
             echo 'Acceso no utorizado';
         }
     }
-
 }

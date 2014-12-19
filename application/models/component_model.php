@@ -561,11 +561,15 @@ class Component_model extends CI_Model {
         return $SQL_string_query->result();
     }
 
-    public function get_componentslevels_id_user_id_component($id_user, $id_component) {
+    public function get_componentslevels_id_user_id_component($id_user, $id_component, $ID_TIPO_USU) {
+        $where = '';
+        if($ID_TIPO_USU == 1){
+           $where.= "AND `USUARIO_ID` = $id_user"; 
+        }
         $SQL_string = "SELECT `PREGUNTA_NIVELPREGUNTA`,
                         CONCAT(PREGUNTA_NIVELPREGUNTA,' ',COUNT(`PREGUNTA_ID`)) TOTAL
                         FROM `umbitems_preguntas` 
-                        WHERE `COMPONENTE_ID` = $id_component AND `USUARIO_ID` = $id_user AND `PREGUNTA_ESTADO`=1
+                        WHERE `COMPONENTE_ID` = $id_component AND `PREGUNTA_ESTADO`=1 $where
                         GROUP BY `PREGUNTA_NIVELPREGUNTA`";
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();

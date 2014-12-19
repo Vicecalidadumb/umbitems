@@ -5,15 +5,14 @@ if (!defined('BASEPATH'))
 
 class Question_model extends CI_Model {
 
-    public function get_questions($id_component, $id_user, $KEY_AES, $GROUPBY, $level) {
-        $CI = & get_instance();
+    public function get_questions($id_component, $id_user, $KEY_AES, $GROUPBY, $level, $ID_TIPO_USU) {
         $WHERE = '';
         if ($id_component == "ALL") {
             $WHERE.= '';
         } else {
             $WHERE.= " AND p.COMPONENTE_ID = '$id_component' ";
         }
-        if ($id_user != 'ALL') {
+        if ($id_user != 'ALL' && $ID_TIPO_USU == '1') {
             $WHERE.= " AND p.USUARIO_ID = '$id_user' ";
         }
         if ($GROUPBY == 1) {
@@ -21,75 +20,19 @@ class Question_model extends CI_Model {
         }
 
         $SQL_string = "SELECT 
-                        p.PREGUNTA_ID,
-                        p.PREGUNTA_TEMA,
-                        p.PREGUNTA_NIVELRUBRICA,
-                        p.PREGUNTA_NIVELPREGUNTA,
-                        p.PREGUNTA_TIPOITEM,
-                        p.PREGUNTA_NIVELDIFICULTAD,
+                        p.*,r.*,u.*,c.*,
                         AES_DECRYPT(p.PREGUNTA_ENUNCIADO,'{$KEY_AES}') PREGUNTA_ENUNCIADO,
                         AES_DECRYPT(p.PREGUNTA_CONTEXTO,'{$KEY_AES}') PREGUNTA_CONTEXTO,
                         AES_DECRYPT(p.PREGUNTA_IDRESPUESTA,'{$KEY_AES}') PREGUNTA_IDRESPUESTA,
                         AES_DECRYPT(p.PREGUNTA_OBSERVACIONES,'{$KEY_AES}') PREGUNTA_OBSERVACIONES,
-                        p.PREGUNTA_ESTADO,
-                        p.PREGUNTA_ETAPA,
-                        p.PREGUNTA_FECHADECREACION,
-                        
-                        p.COMPONENTE_ID,
-                        p.USUARIO_ID,
-                        p.PREGUNTA_SELECCIONADA,
-                        p.PREGUNTA_DIAGRAMADA,
-                        p.PREGUNTA_VALIDA1_OK,
-                        p.PREGUNTA_VALIDA2_OK,
-                        
-                        r.RESPUESTA_ID,
                         AES_DECRYPT(r.RESPUESTA_ENUNCIADO,'{$KEY_AES}') RESPUESTA_ENUNCIADO,
-                        AES_DECRYPT(r.RESPUESTA_JUSTIFICACION,'{$KEY_AES}') RESPUESTA_JUSTIFICACION,
-                        r.RESPUESTA_ESTADO,
-                        r.RESPUESTA_FECHADECREACION,
-                        r.USUARIO_ID,
-                        r.PREGUNTA_ID,
-                        
-                        CONCAT(u.USUARIO_NOMBRES,' ',u.USUARIO_APELLIDOS) AS PERSONA_CARGO,
-                        c.COMPONENTE_NOMBRE,
-                        c.COMPONENTE_SIGLA,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V1
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=1
-                        ) AS V1,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V2
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=2
-                        ) AS V2,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V3
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=3
-                        ) AS V3,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V4
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=4
-                        ) AS V4,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V5
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=5
-                        ) AS V5
-
-                      FROM 
+                        AES_DECRYPT(r.RESPUESTA_JUSTIFICACION,'{$KEY_AES}') RESPUESTA_JUSTIFICACION
+                      FROM
                             {$this->db->dbprefix('preguntas')} p,
                             {$this->db->dbprefix('respuestas')} r,
                             {$this->db->dbprefix('usuarios')} u,
                             {$this->db->dbprefix('componentes')} c
-                      WHERE 
+                      WHERE
                             p.PREGUNTA_ID = r.PREGUNTA_ID
                             AND
                             u.USUARIO_ID = p.USUARIO_ID
@@ -97,11 +40,9 @@ class Question_model extends CI_Model {
                             c.COMPONENTE_ID = p.COMPONENTE_ID
                             AND PREGUNTA_ESTADO = '1'
                             AND PREGUNTA_NIVELPREGUNTA = '$level'
-                           
                             $WHERE
                             ORDER BY PREGUNTA_FECHADECREACION DESC
                             ";
-        //echo $SQL_string;
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
     }
@@ -216,69 +157,13 @@ class Question_model extends CI_Model {
         }
 
         $SQL_string = "SELECT 
-                        p.PREGUNTA_ID,
-                        p.PREGUNTA_TEMA,
-                        p.PREGUNTA_NIVELRUBRICA,
-                        p.PREGUNTA_NIVELPREGUNTA,
-                        p.PREGUNTA_TIPOITEM,
-                        p.PREGUNTA_NIVELDIFICULTAD,
+                        p.*,r.*,u.*,c.*,
                         AES_DECRYPT(p.PREGUNTA_ENUNCIADO,'{$KEY_AES}') PREGUNTA_ENUNCIADO,
                         AES_DECRYPT(p.PREGUNTA_CONTEXTO,'{$KEY_AES}') PREGUNTA_CONTEXTO,
                         AES_DECRYPT(p.PREGUNTA_IDRESPUESTA,'{$KEY_AES}') PREGUNTA_IDRESPUESTA,
                         AES_DECRYPT(p.PREGUNTA_OBSERVACIONES,'{$KEY_AES}') PREGUNTA_OBSERVACIONES,
-                        p.PREGUNTA_ESTADO,
-                        p.PREGUNTA_ETAPA,
-                        p.PREGUNTA_FECHADECREACION,
-                        
-                        p.COMPONENTE_ID,
-                        p.USUARIO_ID,
-                        
-                        r.RESPUESTA_ID,
                         AES_DECRYPT(r.RESPUESTA_ENUNCIADO,'{$KEY_AES}') RESPUESTA_ENUNCIADO,
-                        AES_DECRYPT(r.RESPUESTA_JUSTIFICACION,'{$KEY_AES}') RESPUESTA_JUSTIFICACION,
-                        r.RESPUESTA_ESTADO,
-                        r.RESPUESTA_FECHADECREACION,
-                        r.USUARIO_ID,
-                        r.PREGUNTA_ID,
-                        p.PREGUNTA_SELECCIONADA,
-                        p.PREGUNTA_DIAGRAMADA,
-                        p.PREGUNTA_VALIDA1_OK,
-                        p.PREGUNTA_VALIDA2_OK,                        
-                        
-                        CONCAT(u.USUARIO_NOMBRES,' ',u.USUARIO_APELLIDOS) AS PERSONA_CARGO,
-                        c.COMPONENTE_NOMBRE,
-                        c.COMPONENTE_SIGLA,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V1
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=1
-                        ) AS V1,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V2
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=2
-                        ) AS V2,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V3
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=3
-                        ) AS V3,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V4
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=4
-                        ) AS V4,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V5
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=5
-                        ) AS V5
-
+                        AES_DECRYPT(r.RESPUESTA_JUSTIFICACION,'{$KEY_AES}') RESPUESTA_JUSTIFICACION
                       FROM 
                             {$this->db->dbprefix('preguntas')} p,
                             {$this->db->dbprefix('respuestas')} r,
@@ -299,75 +184,17 @@ class Question_model extends CI_Model {
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
     }
-    
+
     public function get_question_preview($PREGUNTA_ID, $KEY_AES) {
         $CI = & get_instance();
         $SQL_string = "SELECT
-                        p.PREGUNTA_ID,
-                        p.PREGUNTA_TEMA,
-                        p.PREGUNTA_NIVELRUBRICA,
-                        p.PREGUNTA_NIVELPREGUNTA,
-                        p.PREGUNTA_TIPOITEM,
-                        p.PREGUNTA_NIVELDIFICULTAD,
+                        p.*,r.*,u.*,c.*,
                         AES_DECRYPT(p.PREGUNTA_ENUNCIADO,'{$KEY_AES}') PREGUNTA_ENUNCIADO,
                         AES_DECRYPT(p.PREGUNTA_CONTEXTO,'{$KEY_AES}') PREGUNTA_CONTEXTO,
                         AES_DECRYPT(p.PREGUNTA_IDRESPUESTA,'{$KEY_AES}') PREGUNTA_IDRESPUESTA,
                         AES_DECRYPT(p.PREGUNTA_OBSERVACIONES,'{$KEY_AES}') PREGUNTA_OBSERVACIONES,
-                        p.PREGUNTA_ESTADO,
-                        p.PREGUNTA_ETAPA,
-                        p.PREGUNTA_FECHADECREACION,
-                        
-                        p.COMPONENTE_ID,
-                        p.USUARIO_ID,
-                        
-                        r.RESPUESTA_ID,
                         AES_DECRYPT(r.RESPUESTA_ENUNCIADO,'{$KEY_AES}') RESPUESTA_ENUNCIADO,
-                        AES_DECRYPT(r.RESPUESTA_JUSTIFICACION,'{$KEY_AES}') RESPUESTA_JUSTIFICACION,
-                        r.RESPUESTA_ESTADO,
-                        r.RESPUESTA_FECHADECREACION,
-                        r.USUARIO_ID,
-                        r.PREGUNTA_ID,
-                        p.PREGUNTA_SELECCIONADA,
-                        p.PREGUNTA_DIAGRAMADA,
-                        p.PREGUNTA_VALIDA1_OK,
-                        p.PREGUNTA_VALIDA2_OK,                        
-                        
-                        
-                        u.USUARIO_NOMBRES,
-                        u.USUARIO_APELLIDOS,
-                        CONCAT(u.USUARIO_NOMBRES,' ',u.USUARIO_APELLIDOS) AS PERSONA_CARGO,
-                        c.COMPONENTE_NOMBRE,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V1
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=1
-                        ) AS V1,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V2
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=2
-                        ) AS V2,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V3
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=3
-                        ) AS V3,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V4
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=4
-                        ) AS V4,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V5
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=5
-                        ) AS V5
-                        
+                        AES_DECRYPT(r.RESPUESTA_JUSTIFICACION,'{$KEY_AES}') RESPUESTA_JUSTIFICACION
                       FROM
                             {$this->db->dbprefix('preguntas')} p,
                             {$this->db->dbprefix('respuestas')} r,
@@ -386,8 +213,7 @@ class Question_model extends CI_Model {
         //echo $SQL_string;
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
-    }    
-    
+    }
 
     public function get_question($id_question, $KEY_AES, $USUARIO_ID) {
         $CI = & get_instance();
@@ -631,7 +457,7 @@ class Question_model extends CI_Model {
     }
 
     public function update_question($data, $KEY_AES) {
-        
+
         $SQL_string = "UPDATE {$this->db->dbprefix('preguntas')} SET
                        PREGUNTA_TEMA = '" . addslashes($data['PREGUNTA_TEMA']) . "',
                        PREGUNTA_NIVELRUBRICA = '{$data['PREGUNTA_NIVELRUBRICA']}',
