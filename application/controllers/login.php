@@ -16,7 +16,7 @@ class Login extends CI_Controller {
 
     public function index() {
         //VALIDAR SI EL USUARIO CUENTA CON NAVEGADOR GOOGLE CHROME
-        if ($this->agent->is_browser('Chrome')) {
+        if ($this->agent->is_browser('Chrome') or $this->agent->is_browser('Firefox')) {
             if ($this->session->userdata('logged_in')) {
                 //SI EL USUARIO TIENE SESION ABIERTA, SE REDIRIGE A ESCRITORIO
                 redirect('desk', 'refresh');

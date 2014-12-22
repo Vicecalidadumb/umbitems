@@ -54,34 +54,55 @@ function get_array_levelsquestions() {
 }
 
 function get_level_initials($level) {
-    switch ($level){
-        case 'ASISTENCIAL': return 'A'; break;
-        case 'TECNICO': return 'T'; break;
-        case 'UNIVERSITARIO': return 'U'; break;
-        case 'ESPECIALIZADO': return 'E'; break;
+    switch ($level) {
+        case 'ASISTENCIAL': return 'A';
+            break;
+        case 'TECNICO': return 'T';
+            break;
+        case 'UNIVERSITARIO': return 'U';
+            break;
+        case 'ESPECIALIZADO': return 'E';
+            break;
     }
 }
 
-function get_itemlevel_color($level){
-    switch ($level){
-        case '0': return 'warning'; break;//EN CONSTRUCCION
-        case '1': return 'enseleccion'; break;//EN SELECCION
-        case '2': return 'danger'; break;//EN VALIDACION
-        case '3': return 'enestilo'; break;//EN CORRECCION DE ESTILO
-        case '4': return 'info'; break;//EN DIAGRAMACION
-        case '5': return 'susses'; break;//DIAGRAMADA
+function get_itemlevel_color($level) {
+    switch ($level) {
+        case '0': return 'warning';
+            break; //EN CONSTRUCCION
+        case '1': return 'enseleccion';
+            break; //EN SELECCION
+        case '2': return 'danger';
+            break; //EN VALIDACION
+        case '3': return 'enestilo';
+            break; //EN CORRECCION DE ESTILO
+        case '4': return 'info';
+            break; //EN DIAGRAMACION
+        case '5': return 'susses';
+            break; //DIAGRAMADA
     }
 }
 
-function get_itemlevel_text($level){
-    switch ($level){
-        case '0': return 'En Construccion'; break;
-        case '1': return 'En Seleccion'; break;
-        case '2': return 'En Validacion'; break;
-        case '3': return 'En Corr. de Estilo'; break;
-        case '4': return 'En Diagramacion'; break;
-        case '5': return 'Diagramada'; break;
-    }    
+function get_itemlevel_text($question) {
+    switch ($question->PREGUNTA_ETAPA) {
+        case '0': return 'En Construccion';
+            break;
+        case '1': return 'En Seleccion';
+            break;
+        case '2':
+            switch ($question->PREGUNTA_VALIDA_2) {
+                case 2: return '<span style="color:yellow" class="glyphicon glyphicon-warning-sign"></span> Validada con errores';
+                    break;
+                default: return 'En Validacion';
+            }
+            break;
+        case '3': return 'En Corr. de Estilo';
+            break;
+        case '4': return 'En Diagramacion';
+            break;
+        case '5': return 'Diagramada';
+            break;
+    }
 }
 
 function get_array_item_types() {
@@ -250,7 +271,7 @@ function get_avg_validation($v1, $v2, $v3, $v4, $v5) {
         //return "$v1+$v2+$v3+$v4+$v5 - ".($v1+$v2+$v3+$v4+$v5);
         $result = round(($v1 + $v2 + $v3 + $v4 + $v5) / $dividir, 2);
         return $result;
-    }else{
+    } else {
         return 0;
     }
 }
@@ -331,10 +352,10 @@ function configuracion($url) {
             $config['c_id'] = '3';
             break;
     }
-    
-            $config['c_nombre'] = 'CONVOCATORIA No. 320 de 2014 - DPS';
-            $config['c_descripcion'] = 'CONVOCATORIA No. 320 de 2014 - DPS';
-            $config['c_imagen1'] = 'ima1.png';
-            $config['c_id'] = '1';    
+
+    $config['c_nombre'] = 'CONVOCATORIA No. 320 de 2014 - DPS';
+    $config['c_descripcion'] = 'CONVOCATORIA No. 320 de 2014 - DPS';
+    $config['c_imagen1'] = 'ima1.png';
+    $config['c_id'] = '1';
     return $config;
 }

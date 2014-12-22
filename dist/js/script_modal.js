@@ -21,6 +21,17 @@ $(document).ready(function() {
         var modal = $(this)
         modal.find('.modal-title').text('Vista Previa del Item ' + cod)
         modal.find('.modal-body').html(item)
-
     })
+
+
+    $('#exampleModal2').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget) 
+        var preguntaid = button.data('preguntaid') 
+        var cod = button.data('cod')
+
+        var modal = $(this)
+        modal.find('.modal-title').text('Validar pregunta ' + cod)
+        modal.find('#PREGUNTA_ID').val(preguntaid)
+    })
+
 });

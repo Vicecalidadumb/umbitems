@@ -12,41 +12,18 @@ class Selection extends CI_Controller {
 
         $this->load->helper('miscellaneous');
         $this->load->helper('security');
-        $this->load->model('user_model');
-        $this->load->model('question_model');
-        $this->load->model('component_model');
         $this->load->model('selection_model');
         validate_login($this->session->userdata('logged_in'));
     }
 
-    public function select($state, $id_question, $COMPONENTE_ID) {
-        $id_question = deencrypt_id($id_question);
-
-        switch ($state) {
-            case 0:
-                $data = array(
-                    'PREGUNTA_SELECCIONADA' => 1,
-                    'PREGUNTA_SELECCIONADA_FECHA' => date("Y-m-d H:i:s"),
-                    'PREGUNTA_ID' => $id_question
-                );
-                break;
-            default:
-                $data = array(
-                    'PREGUNTA_SELECCIONADA' => 0,
-                    'PREGUNTA_SELECCIONADA_FECHA' => '0000-00-00 00:00:00',
-                    'PREGUNTA_ID' => $id_question
-                );
-                break;
-        }
-
-        $insert = $this->question_model->update_question_select($data);
-
+    public function select($state, $id_question, $COMPONENTE_ID, $PREGUNTA_NIVELPREGUNTA, $campodinamico, $etapa) {
+        $insert = $this->selection_model->update_question_select($state, $id_question, $COMPONENTE_ID, $PREGUNTA_NIVELPREGUNTA, $campodinamico, $etapa);
         if ($insert) {
             $this->session->set_flashdata(array('message' => 'Pregunta Actualizada con Exito.', 'message_type' => 'info'));
-            redirect('selection/add/'.encrypt_id($this->session->userdata('USUARIO_ID')).'/'.$COMPONENTE_ID, 'refresh');
+            redirect('question/view/' . $COMPONENTE_ID . '/' . $PREGUNTA_NIVELPREGUNTA, 'refresh');
         } else {
             $this->session->set_flashdata(array('message' => 'Error al Actualizar la Pregunta.', 'message_type' => 'error'));
-            redirect('selection/add/'.encrypt_id($this->session->userdata('USUARIO_ID')).'/'.$COMPONENTE_ID, 'refresh');
+            redirect('selection/add/' . $COMPONENTE_ID . '/' . $PREGUNTA_NIVELPREGUNTA, 'refresh');
         }
     }
 
@@ -74,13 +51,13 @@ class Selection extends CI_Controller {
 
         if ($insert) {
             $this->session->set_flashdata(array('message' => 'Pregunta Actualizada con Exito.', 'message_type' => 'info'));
-            redirect('selection/add/'.encrypt_id($this->session->userdata('USUARIO_ID')).'/'.$COMPONENTE_ID, 'refresh');
+            redirect('selection/add/' . encrypt_id($this->session->userdata('USUARIO_ID')) . '/' . $COMPONENTE_ID, 'refresh');
         } else {
             $this->session->set_flashdata(array('message' => 'Error al Actualizar la Pregunta.', 'message_type' => 'error'));
-            redirect('selection/add/'.encrypt_id($this->session->userdata('USUARIO_ID')).'/'.$COMPONENTE_ID, 'refresh');
+            redirect('selection/add/' . encrypt_id($this->session->userdata('USUARIO_ID')) . '/' . $COMPONENTE_ID, 'refresh');
         }
-    } 
-    
+    }
+
     public function valida1($state, $id_question, $COMPONENTE_ID) {
         $id_question = deencrypt_id($id_question);
 
@@ -105,13 +82,13 @@ class Selection extends CI_Controller {
 
         if ($insert) {
             $this->session->set_flashdata(array('message' => 'Pregunta Actualizada con Exito.', 'message_type' => 'info'));
-            redirect('validation/add/'.encrypt_id($this->session->userdata('USUARIO_ID')).'/'.$COMPONENTE_ID, 'refresh');
+            redirect('validation/add/' . encrypt_id($this->session->userdata('USUARIO_ID')) . '/' . $COMPONENTE_ID, 'refresh');
         } else {
             $this->session->set_flashdata(array('message' => 'Error al Actualizar la Pregunta.', 'message_type' => 'error'));
-            redirect('validation/add/'.encrypt_id($this->session->userdata('USUARIO_ID')).'/'.$COMPONENTE_ID, 'refresh');
+            redirect('validation/add/' . encrypt_id($this->session->userdata('USUARIO_ID')) . '/' . $COMPONENTE_ID, 'refresh');
         }
     }
-    
+
     public function valida2($state, $id_question, $COMPONENTE_ID) {
         $id_question = deencrypt_id($id_question);
 
@@ -136,13 +113,13 @@ class Selection extends CI_Controller {
 
         if ($insert) {
             $this->session->set_flashdata(array('message' => 'Pregunta Actualizada con Exito.', 'message_type' => 'info'));
-            redirect('validation/add/'.encrypt_id($this->session->userdata('USUARIO_ID')).'/'.$COMPONENTE_ID, 'refresh');
+            redirect('validation/add/' . encrypt_id($this->session->userdata('USUARIO_ID')) . '/' . $COMPONENTE_ID, 'refresh');
         } else {
             $this->session->set_flashdata(array('message' => 'Error al Actualizar la Pregunta.', 'message_type' => 'error'));
-            redirect('validation/add/'.encrypt_id($this->session->userdata('USUARIO_ID')).'/'.$COMPONENTE_ID, 'refresh');
+            redirect('validation/add/' . encrypt_id($this->session->userdata('USUARIO_ID')) . '/' . $COMPONENTE_ID, 'refresh');
         }
-    }     
-    
+    }
+
     public function view_question($id_question) {
         //VALIDAR PERMISO DEL ROL (SIEMPRE Y CUANDO EL USUARIO NO SE EDITE A SI MISMO)
         validation_permission_role($this->module_sigla, 'permission_view');
@@ -150,7 +127,7 @@ class Selection extends CI_Controller {
         $id_question = deencrypt_id($id_question);
         $data['id_question'] = $id_question;
         $data['question'] = $this->question_model->get_question($id_question, $this->session->userdata("KEY_AES"));
-        
+
         $data['validation'] = $this->selection_model->get_validation_view($id_question);
         //echo '<pre>'.print_r($data['validation']).'</pre>';
         $data['VPE'] = '';
@@ -184,8 +161,8 @@ class Selection extends CI_Controller {
                 $data['VSE'] = $valida->EVALUACION_PUNTUACION;
                 $data['VSE_OBS'] = $valida->EVALUACION_OBSERVACION;
             }
-        }        
-        
+        }
+
         if (count($data['question']) > 0) {
             $data['title'] = 'Vista del Item';
             $data['content'] = 'selection/preview';
@@ -204,7 +181,7 @@ class Selection extends CI_Controller {
         $data['id_question'] = $id_question;
 
         $data['question'] = $this->question_model->get_question($id_question, $this->session->userdata("KEY_AES"));
-        
+
         $data['validation'] = $this->selection_model->get_validation_view($id_question);
         //echo '<pre>'.print_r($data['validation']).'</pre>';
         $data['VPE'] = '';
@@ -238,7 +215,7 @@ class Selection extends CI_Controller {
                 $data['VSE'] = $valida->EVALUACION_PUNTUACION;
                 $data['VSE_OBS'] = $valida->EVALUACION_OBSERVACION;
             }
-        }         
+        }
 
         if (count($data['question']) > 0) {
             $data['title'] = 'Modificar Item';
@@ -357,10 +334,10 @@ class Selection extends CI_Controller {
                         //$data['component'] = $this->component_model->get_components_id($id_component);
                         $data['id_component'] = $id_component;
                         $data['id_user'] = $id_user;
-                        
+
                         $data['questions'] = $this->question_model->get_questions($id_component, 'ALL', $this->session->userdata("KEY_AES"), 1);
                         $data['questions_selections'] = $this->question_model->get_questions_select($id_component, 'ALL', $this->session->userdata("KEY_AES"), 1);
-                        
+
                         //$data['questions_selections'] = $this->question_model->get_questions_select($id_component, $id_user, $this->session->userdata("KEY_AES"), 1);
                         $data['title'] = 'Buscar Items para su validacion';
                         $data['content'] = 'selection/view';

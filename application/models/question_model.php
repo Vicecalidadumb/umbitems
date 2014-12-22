@@ -216,90 +216,26 @@ class Question_model extends CI_Model {
     }
 
     public function get_question($id_question, $KEY_AES, $USUARIO_ID) {
-        $CI = & get_instance();
-        $SQL_string = "SELECT
-                        p.PREGUNTA_ID,
-                        p.PREGUNTA_TEMA,
-                        p.PREGUNTA_NIVELRUBRICA,
-                        p.PREGUNTA_NIVELPREGUNTA,
-                        p.PREGUNTA_TIPOITEM,
-                        p.PREGUNTA_NIVELDIFICULTAD,
+        $tipo=$this->session->userdata('ID_TIPO_USU');
+        $this->db->select("p.*,r.*,u.*,c.*,
+                        CONCAT(u.USUARIO_NOMBRES,' ',u.USUARIO_APELLIDOS) PERSONA_CARGO,
                         AES_DECRYPT(p.PREGUNTA_ENUNCIADO,'{$KEY_AES}') PREGUNTA_ENUNCIADO,
                         AES_DECRYPT(p.PREGUNTA_CONTEXTO,'{$KEY_AES}') PREGUNTA_CONTEXTO,
                         AES_DECRYPT(p.PREGUNTA_IDRESPUESTA,'{$KEY_AES}') PREGUNTA_IDRESPUESTA,
                         AES_DECRYPT(p.PREGUNTA_OBSERVACIONES,'{$KEY_AES}') PREGUNTA_OBSERVACIONES,
-                        p.PREGUNTA_ESTADO,
-                        p.PREGUNTA_ETAPA,
-                        p.PREGUNTA_FECHADECREACION,
-                        
-                        p.COMPONENTE_ID,
-                        p.USUARIO_ID,
-                        
-                        r.RESPUESTA_ID,
                         AES_DECRYPT(r.RESPUESTA_ENUNCIADO,'{$KEY_AES}') RESPUESTA_ENUNCIADO,
-                        AES_DECRYPT(r.RESPUESTA_JUSTIFICACION,'{$KEY_AES}') RESPUESTA_JUSTIFICACION,
-                        r.RESPUESTA_ESTADO,
-                        r.RESPUESTA_FECHADECREACION,
-                        r.USUARIO_ID,
-                        r.PREGUNTA_ID,
-                        p.PREGUNTA_SELECCIONADA,
-                        p.PREGUNTA_DIAGRAMADA,
-                        p.PREGUNTA_VALIDA1_OK,
-                        p.PREGUNTA_VALIDA2_OK,  
-                        c.COMPONENTE_SIGLA,
-                        
-                        CONCAT(u.USUARIO_NOMBRES,' ',u.USUARIO_APELLIDOS) AS PERSONA_CARGO,
-                        c.COMPONENTE_NOMBRE,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V1
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=1
-                        ) AS V1,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V2
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=2
-                        ) AS V2,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V3
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=3
-                        ) AS V3,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V4
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=4
-                        ) AS V4,
-                        
-                        (
-                        SELECT ROUND(AVG(EVALUACION_PUNTUACION),1) AS V5
-                        FROM {$this->db->dbprefix('evaluacion')} e
-                        WHERE e.PREGUNTA_ID = p.PREGUNTA_ID AND e.TIPOEVALUACION_ID=5
-                        ) AS V5
-                        
-                      FROM
-                            {$this->db->dbprefix('preguntas')} p,
-                            {$this->db->dbprefix('respuestas')} r,
-                            {$this->db->dbprefix('usuarios')} u,
-                            {$this->db->dbprefix('componentes')} c
-                      WHERE 
-                            p.PREGUNTA_ID = r.PREGUNTA_ID
-                            AND
-                            p.PREGUNTA_ID = '$id_question'
-                            AND
-                            u.USUARIO_ID = p.USUARIO_ID
-                            AND
-                            c.COMPONENTE_ID = p.COMPONENTE_ID
-                            AND PREGUNTA_ESTADO = '1'
-                            AND p.USUARIO_ID = $USUARIO_ID
-                            ";
+                        AES_DECRYPT(r.RESPUESTA_JUSTIFICACION,'{$KEY_AES}') RESPUESTA_JUSTIFICACION",false);
+        $this->db->where('p.PREGUNTA_ID','r.PREGUNTA_ID',false);                
+        $this->db->where('p.PREGUNTA_ID',$id_question,false);                
+        $this->db->where('u.USUARIO_ID','p.USUARIO_ID',false);                
+        $this->db->where('c.COMPONENTE_ID',' p.COMPONENTE_ID',false);                
+        $this->db->where('PREGUNTA_ESTADO',1,false);                
+        if($tipo!=3)
+        $this->db->where('p.USUARIO_ID',$USUARIO_ID,false);                
+        $this->db->from('preguntas p,respuestas r,usuarios u,componentes c');                   
+        $datos=$this->db->get();        
         //echo $SQL_string;
-        $SQL_string_query = $this->db->query($SQL_string);
-        return $SQL_string_query->result();
+        return $datos->result();
     }
 
     public function insert_question($data, $KEY_AES) {
@@ -374,19 +310,6 @@ class Question_model extends CI_Model {
         return $PREGUNTA_ID;
     }
 
-    public function update_question_select($data) {
-        //echo '<pre>' . print_r($data['question'], true) . '</pre>';
-        $SQL_string = "UPDATE {$this->db->dbprefix('preguntas')} SET
-                       PREGUNTA_SELECCIONADA = '{$data['PREGUNTA_SELECCIONADA']}',
-                       PREGUNTA_SELECCIONADA_FECHA = '{$data['PREGUNTA_SELECCIONADA_FECHA']}'    
-                       WHERE
-                       PREGUNTA_ID = {$data['PREGUNTA_ID']}
-                       ";
-        $return = $SQL_string_query = $this->db->query($SQL_string);
-
-        return $return;
-    }
-
     public function update_question_diagra($data) {
         //echo '<pre>' . print_r($data['question'], true) . '</pre>';
         $SQL_string = "UPDATE {$this->db->dbprefix('preguntas')} SET
@@ -455,6 +378,16 @@ class Question_model extends CI_Model {
         //echo '<textarea>'.$SQL_string.'</textarea>';
         $SQL_string_query = $this->db->query($SQL_string);
     }
+    
+    public function update_question_nivelpregunta($PREGUNTA_NIVELPREGUNTA, $PREGUNTA_ID) {
+        $SQL_string = "UPDATE {$this->db->dbprefix('preguntas')} SET
+                       PREGUNTA_NIVELPREGUNTA = '{$PREGUNTA_NIVELPREGUNTA}'
+                       WHERE
+                       PREGUNTA_ID = {$PREGUNTA_ID}
+                       ";
+        //echo '<textarea>'.$SQL_string.'</textarea>';
+        $SQL_string_query = $this->db->query($SQL_string);
+    }    
 
     public function update_question($data, $KEY_AES) {
 
@@ -508,7 +441,7 @@ class Question_model extends CI_Model {
                        PREGUNTA_MODIFICACION_IDUSUARIOCREADOR,
                        PREGUNTA_ID
                        )
-                      VALUES 
+                      VALUES
                        (
                        AES_ENCRYPT('" . addslashes($data['PREGUNTA_MODIFICACION_ENUNCIADO']) . "','{$KEY_AES}'),
                        AES_ENCRYPT('" . addslashes($data['PREGUNTA_MODIFICACION_CONTEXTO']) . "','{$KEY_AES}'),    

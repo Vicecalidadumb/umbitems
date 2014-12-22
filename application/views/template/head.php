@@ -52,7 +52,5 @@
             var base_url_js = '<?php echo base_url(); ?>';
         </script>
 
-
-
     </head>
     <body>

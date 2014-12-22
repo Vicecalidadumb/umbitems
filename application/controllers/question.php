@@ -175,6 +175,7 @@ class Question extends CI_Controller {
 
         $data['question'] = $this->question_model->get_question($id_question, $this->session->userdata("KEY_AES"), $this->session->userdata("USUARIO_ID"));
         if (count($data['question']) > 0) {
+
             $data['title'] = 'Editar Item';
             $data['content'] = 'question/edit';
             $this->load->view('template/template', $data);
@@ -242,51 +243,47 @@ class Question extends CI_Controller {
         }
     }
 
-    public function preview($id_question) {
-        //VALIDAR PERMISO DEL ROL (SIEMPRE Y CUANDO EL USUARIO NO SE EDITE A SI MISMO)
-        validation_permission_role($this->module_sigla, 'permission_view');
-
-        $id_question = deencrypt_id($id_question);
-        $data['id_question'] = $id_question;
-
-        $data['question'] = $this->question_model->get_question($id_question, $this->session->userdata("KEY_AES"));
-        if (count($data['question']) > 0) {
-            $data['title'] = 'Vista del Item';
-            $data['content'] = 'question/preview';
-            $this->load->view('template/template', $data);
-        } else {
-            $this->session->set_flashdata(array('message' => 'Error al Consultar el Registro', 'message_type' => 'error'));
-            redirect('user', 'refresh');
-        }
-    }
-
-    public function view_validation($id_question) {
-        //validation_permission_role($this->module_sigla, 'permission_edit');
-
-        $data['validation'] = $this->validation_model->get_validation_view(deencrypt_id($id_question));
-        $id_question = deencrypt_id($id_question);
-        $data['id_question'] = $id_question;
-        $data['question'] = $this->question_model->get_question($id_question, $this->session->userdata("KEY_AES"));
-
-        if (count($data['question']) > 0) {
-            $data['title'] = 'Ver Validar';
-            $data['content'] = 'question/view_validation';
-            $this->load->view('template/template', $data);
-        } else {
-            $this->session->set_flashdata(array('message' => 'Error al Consultar el Registro', 'message_type' => 'error'));
-            redirect('user', 'refresh');
-        }
-    }
+//    public function preview($id_question) {
+//        //VALIDAR PERMISO DEL ROL (SIEMPRE Y CUANDO EL USUARIO NO SE EDITE A SI MISMO)
+//        validation_permission_role($this->module_sigla, 'permission_view');
+//
+//        $id_question = deencrypt_id($id_question);
+//        $data['id_question'] = $id_question;
+//
+//        $data['question'] = $this->question_model->get_question($id_question, $this->session->userdata("KEY_AES"));
+//        if (count($data['question']) > 0) {
+//            $data['title'] = 'Vista del Item';
+//            $data['content'] = 'question/preview';
+//            $this->load->view('template/template', $data);
+//        } else {
+//            $this->session->set_flashdata(array('message' => 'Error al Consultar el Registro', 'message_type' => 'error'));
+//            redirect('user', 'refresh');
+//        }
+//    }
+//    public function view_validation($id_question) {
+//        //validation_permission_role($this->module_sigla, 'permission_edit');
+//
+//        $data['validation'] = $this->validation_model->get_validation_view(deencrypt_id($id_question));
+//        $id_question = deencrypt_id($id_question);
+//        $data['id_question'] = $id_question;
+//        $data['question'] = $this->question_model->get_question($id_question, $this->session->userdata("KEY_AES"));
+//
+//        if (count($data['question']) > 0) {
+//            $data['title'] = 'Ver Validar';
+//            $data['content'] = 'question/view_validation';
+//            $this->load->view('template/template', $data);
+//        } else {
+//            $this->session->set_flashdata(array('message' => 'Error al Consultar el Registro', 'message_type' => 'error'));
+//            redirect('user', 'refresh');
+//        }
+//    }
 
     public function edit_question($id_question) {
         //MODIFICAR PREGUNTA
         //validation_permission_role('VMO', 'permission_edit');
-
         $id_question = deencrypt_id($id_question);
         $data['id_question'] = $id_question;
-
-        $data['question'] = $this->question_model->get_question($id_question, $this->session->userdata("KEY_AES"));
-
+        $data['question'] = $this->question_model->get_question($id_question, $this->session->userdata("KEY_AES"), $this->session->userdata("USUARIO_ID"));
         if (count($data['question']) > 0) {
             $data['title'] = 'Modificar Item';
             $data['content'] = 'question/edit_question';
@@ -298,44 +295,28 @@ class Question extends CI_Controller {
     }
 
     public function update_modify() {
-        //echo '<pre><textarea>' . print_r($this->input->post(), true) . '</textarea></pre>';
-
-        $question = $this->question_model->get_question($this->input->post('PREGUNTA_ID', TRUE), $this->session->userdata("KEY_AES"));
-
-        $PREGUNTA_ENUNCIADO = str_replace('<p><br></p>', '', $this->input->post('PREGUNTA_ENUNCIADO'));
-        $PREGUNTA_CONTEXTO = str_replace('<p><br></p>', '', $this->input->post('PREGUNTA_CONTEXTO'));
-        $PREGUNTA_OBSERVACIONES = str_replace('<p><br></p>', '', $this->input->post('PREGUNTA_OBSERVACIONES'));
-
-        $RESPUESTA_ENUNCIADO_1 = str_replace('<p><br></p>', '', $this->input->post('RESPUESTA_ENUNCIADO_1'));
-        $RESPUESTA_JUSTIFICACION_1 = str_replace('<p><br></p>', '', $this->input->post('RESPUESTA_JUSTIFICACION_1'));
-        $RESPUESTA_ENUNCIADO_2 = str_replace('<p><br></p>', '', $this->input->post('RESPUESTA_ENUNCIADO_2'));
-        $RESPUESTA_JUSTIFICACION_2 = str_replace('<p><br></p>', '', $this->input->post('RESPUESTA_JUSTIFICACION_2'));
-        $RESPUESTA_ENUNCIADO_3 = str_replace('<p><br></p>', '', $this->input->post('RESPUESTA_ENUNCIADO_3'));
-        $RESPUESTA_JUSTIFICACION_3 = str_replace('<p><br></p>', '', $this->input->post('RESPUESTA_JUSTIFICACION_3'));
-        $RESPUESTA_ENUNCIADO_4 = str_replace('<p><br></p>', '', $this->input->post('RESPUESTA_ENUNCIADO_4'));
-        $RESPUESTA_JUSTIFICACION_4 = str_replace('<p><br></p>', '', $this->input->post('RESPUESTA_JUSTIFICACION_4'));
+        $question = $this->question_model->get_question($this->input->post('PREGUNTA_ID'), $this->session->userdata("KEY_AES"), $this->session->userdata("USUARIO_ID"));
 
         $data = array(
             'PREGUNTA_ID' => $this->input->post('PREGUNTA_ID', TRUE),
-            'PREGUNTA_MODIFICACION_ENUNCIADO' => $PREGUNTA_ENUNCIADO,
-            'PREGUNTA_MODIFICACION_CONTEXTO' => $PREGUNTA_CONTEXTO,
-            'PREGUNTA_MODIFICACION_OBSERVACIONES' => $PREGUNTA_OBSERVACIONES,
+            'PREGUNTA_MODIFICACION_ENUNCIADO' => $this->input->post('PREGUNTA_ENUNCIADO'),
+            'PREGUNTA_MODIFICACION_CONTEXTO' => $this->input->post('PREGUNTA_CONTEXTO'),
+            'PREGUNTA_MODIFICACION_OBSERVACIONES' => $this->input->post('PREGUNTA_OBSERVACIONES'),
             'PREGUNTA_MODIFICACION_FECHA' => date("Y-m-d H:i:s"),
             'PREGUNTA_MODIFICACION_IDUSUARIOCREADOR' => $this->session->userdata('USUARIO_ID'),
-            'RESPUESTA_ENUNCIADO_1' => $RESPUESTA_ENUNCIADO_1,
-            'RESPUESTA_ENUNCIADO_2' => $RESPUESTA_ENUNCIADO_2,
-            'RESPUESTA_ENUNCIADO_3' => $RESPUESTA_ENUNCIADO_3,
-            'RESPUESTA_ENUNCIADO_4' => $RESPUESTA_ENUNCIADO_4,
-            'RESPUESTA_JUSTIFICACION_1' => $RESPUESTA_JUSTIFICACION_1,
-            'RESPUESTA_JUSTIFICACION_2' => $RESPUESTA_JUSTIFICACION_2,
-            'RESPUESTA_JUSTIFICACION_3' => $RESPUESTA_JUSTIFICACION_3,
-            'RESPUESTA_JUSTIFICACION_4' => $RESPUESTA_JUSTIFICACION_4,
+            'RESPUESTA_ENUNCIADO_1' => $this->input->post('RESPUESTA_ENUNCIADO_1'),
+            'RESPUESTA_ENUNCIADO_2' => $this->input->post('RESPUESTA_ENUNCIADO_2'),
+            'RESPUESTA_ENUNCIADO_3' => $this->input->post('RESPUESTA_ENUNCIADO_3'),
+            'RESPUESTA_ENUNCIADO_4' => $this->input->post('RESPUESTA_ENUNCIADO_4'),
+            'RESPUESTA_JUSTIFICACION_1' => $this->input->post('RESPUESTA_JUSTIFICACION_1'),
+            'RESPUESTA_JUSTIFICACION_2' => $this->input->post('RESPUESTA_JUSTIFICACION_2'),
+            'RESPUESTA_JUSTIFICACION_3' => $this->input->post('RESPUESTA_JUSTIFICACION_3'),
+            'RESPUESTA_JUSTIFICACION_4' => $this->input->post('RESPUESTA_JUSTIFICACION_4'),
             'question' => $question
         );
         $insert = $this->question_model->update_question_modify($data, $this->session->userdata("KEY_AES"));
 
         if ($insert) {
-
             //MODIFICAR NIVEL DE RUBRICA
             $PREGUNTA_NIVELRUBRICA = $this->input->post('PREGUNTA_NIVELRUBRICA', TRUE);
             $this->question_model->update_question_rubrica($PREGUNTA_NIVELRUBRICA, $this->input->post('PREGUNTA_ID', TRUE));
@@ -348,16 +329,16 @@ class Question extends CI_Controller {
             $PREGUNTA_NIVELDIFICULTAD = $this->input->post('PREGUNTA_NIVELDIFICULTAD', TRUE);
             $this->question_model->update_question_dificultad($PREGUNTA_NIVELDIFICULTAD, $this->input->post('PREGUNTA_ID', TRUE));
 
+            //MODIFICAR NIVEL PREGUNTA
+            $PREGUNTA_NIVELPREGUNTA = $this->input->post('PREGUNTA_NIVELPREGUNTA', TRUE);
+            $this->question_model->update_question_nivelpregunta($PREGUNTA_NIVELPREGUNTA, $this->input->post('PREGUNTA_ID', TRUE));
+
             $this->session->set_flashdata(array('message' => 'Pregunta Modificada con Exito.', 'message_type' => 'info'));
-            if ($this->session->userdata('ID_TIPO_USU') == 3 or $this->session->userdata('ID_TIPO_USU') == 4) {
-                redirect('validation/add/' . encrypt_id($this->session->userdata('USUARIO_ID')) . '/' . encrypt_id($question[0]->COMPONENTE_ID), 'refresh');
-                //base_url("validation/add/" . encrypt_id($this->session->userdata('USUARIO_ID')) . "/" . encrypt_id($component->COMPONENTE_ID))
-            } else {
-                redirect('desk', 'refresh');
-            }
+
+            redirect('/question/view/' . encrypt_id($question[0]->COMPONENTE_ID) . '/' . encrypt_id($this->input->post('PREGUNTA_NIVELPREGUNTA', TRUE)), 'refresh');
         } else {
             $this->session->set_flashdata(array('message' => 'Error al Modificar la Pregunta.', 'message_type' => 'error'));
-            redirect('desk', 'refresh');
+            redirect('/question/view/' . encrypt_id($question[0]->COMPONENTE_ID) . '/' . encrypt_id($this->input->post('PREGUNTA_NIVELPREGUNTA', TRUE)), 'refresh');
         }
     }
 
@@ -394,4 +375,5 @@ class Question extends CI_Controller {
             echo 'Acceso no utorizado';
         }
     }
+
 }

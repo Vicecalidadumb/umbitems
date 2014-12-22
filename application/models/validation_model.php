@@ -5,13 +5,37 @@ if (!defined('BASEPATH'))
 
 class Validation_model extends CI_Model {
 
+    public function update_question_validate() {
+        $post = $this->input->post();
+        switch ($post['PREGUNTA_VALIDA_2']) {
+            case 1:
+                $data = array(
+                    'PREGUNTA_VALIDA_2' => 1,
+                    'PREGUNTA_ETAPA' => 3,
+                    'PREGUNTA_VALIDA_2_FECHA' => date("Y-m-d H:i:s")
+                );
+                break;
+            case 2:
+                $data = array(
+                    'PREGUNTA_VALIDA_2' => 2,
+                    'PREGUNTA_VALIDA_2_FECHA' => '0000-00-00 00:00:00'
+                );
+                break;
+        }
+        $this->db->set('PREGUNTA_VALIDA_2_TEXT1','concat(PREGUNTA_VALIDA_2_TEXT1,'."'".$post['PREGUNTA_VALIDA_2_TEXT1']."<br>".date('d/m/Y')."<hr>"."')",false);
+        $this->db->set('PREGUNTA_VALIDA_2_TEXT2','concat(PREGUNTA_VALIDA_2_TEXT2,'."'".$post['PREGUNTA_VALIDA_2_TEXT2']."<br>".date('d/m/Y')."<hr>"."')",false);
+        
+        $this->db->where('PREGUNTA_ID', $post['PREGUNTA_ID']);
+        return $TT=$this->db->update("preguntas", $data);
+    }
+
     public function insert($data) {
-        
+
         $this->db->query("DELETE FROM {$this->db->dbprefix('evaluacion')} WHERE "
-        . "PREGUNTA_ID = '{$data['PREGUNTA_ID']}' AND "
-        . "TIPOEVALUACION_ID = '{$data['TIPOEVALUACION_ID']}' AND "
-        . "EVALUACION_ID_USUARIOCREADOR = '{$data['EVALUACION_ID_USUARIOCREADOR']}'");
-        
+                . "PREGUNTA_ID = '{$data['PREGUNTA_ID']}' AND "
+                . "TIPOEVALUACION_ID = '{$data['TIPOEVALUACION_ID']}' AND "
+                . "EVALUACION_ID_USUARIOCREADOR = '{$data['EVALUACION_ID_USUARIOCREADOR']}'");
+
         $SQL_string = "INSERT INTO {$this->db->dbprefix('evaluacion')}
                       (
                        EVALUACION_OBSERVACION,
@@ -33,24 +57,24 @@ class Validation_model extends CI_Model {
                        ";
         return $this->db->query($SQL_string);
     }
-    
-    public function get_validation($id_question,$id_user){
+
+    public function get_validation($id_question, $id_user) {
         $SQL_string = "SELECT * FROM {$this->db->dbprefix('evaluacion')} WHERE "
-                        . "PREGUNTA_ID = '{$id_question}' AND "
-                        . "EVALUACION_ID_USUARIOCREADOR = '{$id_user}' ";
-                        //echo $SQL_string;
+                . "PREGUNTA_ID = '{$id_question}' AND "
+                . "EVALUACION_ID_USUARIOCREADOR = '{$id_user}' ";
+        //echo $SQL_string;
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
-    }    
-    
-    public function get_validation_view($id_question){
+    }
+
+    public function get_validation_view($id_question) {
         $SQL_string = "SELECT * FROM "
                 . "{$this->db->dbprefix('evaluacion')} e, {$this->db->dbprefix('usuarios')} u "
                 . "WHERE  u.USUARIO_ID = e.EVALUACION_ID_USUARIOCREADOR"
-                        . " AND PREGUNTA_ID = '{$id_question}' ORDER BY TIPOEVALUACION_ID";
-                        //echo $SQL_string;
+                . " AND PREGUNTA_ID = '{$id_question}' ORDER BY TIPOEVALUACION_ID";
+        //echo $SQL_string;
         $SQL_string_query = $this->db->query($SQL_string);
-        return $SQL_string_query->result();        
+        return $SQL_string_query->result();
     }
 
     public function update_question($data, $KEY_AES) {
