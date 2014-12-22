@@ -1,6 +1,25 @@
 <?php
 $validate_modify_item = get_modify_item($question[0]->PREGUNTA_ID);
 ?>
+<?php if (!empty($question[0]->PREGUNTA_VALIDA_2_TEXT1)) { ?>
+    <div class="well" style="background-color: rgb(250, 243, 243) !important;border: 1px solid red !important;">
+        <ul>
+            <li>
+                <strong>Observaciones en Suficiencia:</strong>
+            </li>
+            <li>
+                <?php echo $question[0]->PREGUNTA_VALIDA_2_TEXT1; ?>
+            </li>
+            <li>
+                <strong>Observaciones en Ubicacion:</strong>
+            </li>
+            <li>
+                <?php echo $question[0]->PREGUNTA_VALIDA_2_TEXT2; ?>
+            </li>         
+        </ul>    
+    </div>
+<?php } ?>
+
 <div class="">
 
     <div class="row">
