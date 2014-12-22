@@ -18,7 +18,7 @@ class User_model extends CI_Model {
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
     }
-    
+
     public function get_user($user_id) {
         $SQL_string = "SELECT *
                       FROM {$this->db->dbprefix('usuarios')} u
@@ -26,8 +26,8 @@ class User_model extends CI_Model {
                       WHERE USUARIO_ID = '{$user_id}'";
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
-    }     
-    
+    }
+
     public function get_all_users_rol($state = 1) {
         $CI = & get_instance();
         $SQL_string = "SELECT USUARIO_ID,CONCAT(u.USUARIO_NOMBRES,' - ',t.NOM_TIPO_USU) AS USUARIO_NOMBRES
@@ -40,7 +40,7 @@ class User_model extends CI_Model {
                       ORDER BY USUARIO_NOMBRES";
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
-    }    
+    }
 
     public function get_all_users_type($type_id) {
         $CI = & get_instance();
@@ -63,7 +63,7 @@ class User_model extends CI_Model {
 
     public function insert_user($data) {
         $CI = & get_instance();
-        
+
         $SQL_string = "INSERT INTO {$this->db->dbprefix('usuarios')}
                       (
                        USUARIO_NOMBRES,  
@@ -72,8 +72,7 @@ class User_model extends CI_Model {
                        USUARIO_NUMERODOCUMENTO,     
                        USUARIO_CORREO,     
                        USUARIO_CLAVE,
-                       ID_TIPO_USU,
-                       CONFIGURACION_ID
+                       ID_TIPO_USU
                        )
                       VALUES 
                        (
@@ -83,8 +82,7 @@ class User_model extends CI_Model {
                 . "'{$data['USUARIO_NUMERODOCUMENTO']}',"
                 . "'{$data['USUARIO_CORREO']}',"
                 . "'{$data['USUARIO_CLAVE']}',"
-                . "'{$data['ID_TIPO_USU']}',
-                    '{$CI->session->userdata('c_id')}'
+                . "'{$data['ID_TIPO_USU']}'
                        )
                        ";
         return $this->db->query($SQL_string);
@@ -99,14 +97,14 @@ class User_model extends CI_Model {
         $sql_query = $this->db->query($sql_string);
         return $sql_query->result();
     }
-    
+
     public function get_all_roles() {
         $SQL_string = "SELECT *
                       FROM {$this->db->dbprefix('tipos_usuario')}
                       WHERE ACT_TIPO_USU=1";
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
-    }   
+    }
 
     public function update_user($data) {
         $SQL_string = "UPDATE {$this->db->dbprefix('usuarios')} SET
@@ -120,7 +118,7 @@ class User_model extends CI_Model {
                        USUARIO_ID = {$data['USUARIO_ID']}
                        ";
         return $SQL_string_query = $this->db->query($SQL_string);
-    }   
+    }
 
     public function update_user_password($new_password, $user_id) {
         $SQL_string = "UPDATE {$this->db->dbprefix('usuarios')} SET
@@ -130,7 +128,7 @@ class User_model extends CI_Model {
                        ";
         $SQL_string_query = $this->db->query($SQL_string);
     }
-    
+
     public function insert_event($array) {
         $SQL_string = "INSERT INTO {$this->db->dbprefix('log')}
                       (
@@ -150,6 +148,6 @@ class User_model extends CI_Model {
                        )
                        ";
         return $this->db->query($SQL_string);
-    }    
-    
+    }
+
 }
