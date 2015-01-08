@@ -11,13 +11,13 @@ class Validation_model extends CI_Model {
             case 1:
                 $data = array(
                     'PREGUNTA_VALIDA_2' => 1,
-                    'PREGUNTA_ETAPA' => 3,
+                    'PREGUNTA_ETAPA' => 2,
                     'PREGUNTA_VALIDA_2_FECHA' => date("Y-m-d H:i:s")
                 );
                 break;
             case 2:
                 $data = array(
-                    'PREGUNTA_VALIDA_2' => 2,
+                    'PREGUNTA_VALIDA_2' => 1,
                     'PREGUNTA_VALIDA_2_FECHA' => '0000-00-00 00:00:00'
                 );
                 break;

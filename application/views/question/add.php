@@ -66,7 +66,7 @@
         </div>
 
         <div class="form-group">
-            <label for="exampleInputEmail1">Nivel de la Pregunta:</label>
+            <label for="exampleInputEmail1">Nivel de Cargo:</label>
             <?php echo form_dropdown('PREGUNTA_NIVELPREGUNTA', get_array_levelsquestions(), '', 'class="form-control"'); ?>
         </div>         
 
@@ -78,12 +78,12 @@
         </div>  
 
         <div class="form-group">
-            <label for="exampleInputEmail1">Nivel de Rubrica</label>
+            <label for="exampleInputEmail1">Grado Desarrollo de la Competencia</label>
             <?php echo form_dropdown('PREGUNTA_NIVELRUBRICA', get_array_rubrics(), '', 'class="form-control"'); ?>
         </div>  
 
         <div class="form-group">
-            <label for="exampleInputEmail1">Nivel de Dificultad</label>
+            <label for="exampleInputEmail1">Categoria del Cargo</label>
             <?php echo form_dropdown('PREGUNTA_NIVELDIFICULTAD', get_array_difficulty_level(), '', 'class="form-control"'); ?>
         </div>
     </div>   

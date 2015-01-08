@@ -1,5 +1,10 @@
 <?php
 $validate_modify_item = get_modify_item($question[0]->PREGUNTA_ID);
+$user = $this->session->userdata('ID_TIPO_USU');
+if($user!=3)
+    $colu=6;
+else
+    $colu=12;
 ?>
 <?php if (!empty($question[0]->PREGUNTA_VALIDA_2_TEXT1)) { ?>
     <div class="well" style="background-color: rgb(250, 243, 243) !important;border: 1px solid red !important;">
@@ -51,13 +56,13 @@ $validate_modify_item = get_modify_item($question[0]->PREGUNTA_ID);
             </div>
 
             <div class="form-group">
-                <label for="exampleInputEmail1">Nivel de Rubrica</label>
+                <label for="exampleInputEmail1">Grado Desarrollo de la Competencia</label>
                 <br>
                 <?php echo $question[0]->PREGUNTA_NIVELRUBRICA; ?>
             </div>
 
             <div class="form-group">
-                <label for="exampleInputEmail1">Nivel de Dificultad</label>
+                <label for="exampleInputEmail1">Categoria del Cargo</label>
                 <br>
                 <?php echo $question[0]->PREGUNTA_NIVELDIFICULTAD; ?>
             </div>
@@ -126,7 +131,7 @@ $validate_modify_item = get_modify_item($question[0]->PREGUNTA_ID);
 
     <div class="row">
 
-        <div class="col-md-6">
+        <div class="col-md-<?php echo $colu; ?>">
             <div class="form-group">
                 <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Opcion de Respuesta 1 </label>
                 <br>
@@ -145,32 +150,36 @@ $validate_modify_item = get_modify_item($question[0]->PREGUNTA_ID);
             </div> 
             <br><br>
         </div> 
+        <?php
+        if ($user != 3) {
+            ?>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Justificacion de la Respuesta 1 </label>
+                    <br>
+                    <?php
+                    $validate_modify_resp = get_modify_resp($question[0]->RESPUESTA_ID);
 
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Justificacion de la Respuesta 1 </label>
-                <br>
-                <?php
-                $validate_modify_resp = get_modify_resp($question[0]->RESPUESTA_ID);
-
-                $RESPUESTA_JUSTIFICACION_1 = '';
-                if (count($validate_modify_resp) > 0) {
-                    if ($validate_modify_resp[0]->RESPUESTA_MODIFICACION_JUSTIFICACION != '')
-                        $RESPUESTA_JUSTIFICACION_1 = $validate_modify_resp[0]->RESPUESTA_MODIFICACION_JUSTIFICACION;
-                    else
+                    $RESPUESTA_JUSTIFICACION_1 = '';
+                    if (count($validate_modify_resp) > 0) {
+                        if ($validate_modify_resp[0]->RESPUESTA_MODIFICACION_JUSTIFICACION != '')
+                            $RESPUESTA_JUSTIFICACION_1 = $validate_modify_resp[0]->RESPUESTA_MODIFICACION_JUSTIFICACION;
+                        else
+                            $RESPUESTA_JUSTIFICACION_1 = $question[0]->RESPUESTA_JUSTIFICACION;
+                    }else {
                         $RESPUESTA_JUSTIFICACION_1 = $question[0]->RESPUESTA_JUSTIFICACION;
-                }else {
-                    $RESPUESTA_JUSTIFICACION_1 = $question[0]->RESPUESTA_JUSTIFICACION;
-                }
-                echo $RESPUESTA_JUSTIFICACION_1;
-                //echo form_textarea('RESPUESTA_JUSTIFICACION_1', $RESPUESTA_JUSTIFICACION_1, 'id="RESPUESTA_JUSTIFICACION_1" class="textarea_umb"');
-                ?>
-            </div> 
-            <br><br>
-        </div>     
+                    }
+                    echo $RESPUESTA_JUSTIFICACION_1;
+                    //echo form_textarea('RESPUESTA_JUSTIFICACION_1', $RESPUESTA_JUSTIFICACION_1, 'id="RESPUESTA_JUSTIFICACION_1" class="textarea_umb"');
+                    ?>
+                </div> 
+                <br><br>
+            </div>     
 
-
-        <div class="col-md-6">
+            <?php
+        }
+        ?>
+        <div class="col-md-<?php echo $colu; ?>">
             <div class="form-group">
                 <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Opcion de Respuesta 2 </label>
                 <br>
@@ -189,31 +198,36 @@ $validate_modify_item = get_modify_item($question[0]->PREGUNTA_ID);
             </div> 
             <br><br>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Justificacion de la Respuesta 2 </label>
-                <br>
-                <?php
-                $validate_modify_resp = get_modify_resp($question[1]->RESPUESTA_ID);
+        <?php
+        if ($user != 3) {
+            ?>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Justificacion de la Respuesta 2 </label>
+                    <br>
+                    <?php
+                    $validate_modify_resp = get_modify_resp($question[1]->RESPUESTA_ID);
 
-                $RESPUESTA_JUSTIFICACION_2 = '';
-                if (count($validate_modify_resp) > 0) {
-                    if ($validate_modify_resp[0]->RESPUESTA_MODIFICACION_JUSTIFICACION != '')
-                        $RESPUESTA_JUSTIFICACION_2 = $validate_modify_resp[0]->RESPUESTA_MODIFICACION_JUSTIFICACION;
-                    else
+                    $RESPUESTA_JUSTIFICACION_2 = '';
+                    if (count($validate_modify_resp) > 0) {
+                        if ($validate_modify_resp[0]->RESPUESTA_MODIFICACION_JUSTIFICACION != '')
+                            $RESPUESTA_JUSTIFICACION_2 = $validate_modify_resp[0]->RESPUESTA_MODIFICACION_JUSTIFICACION;
+                        else
+                            $RESPUESTA_JUSTIFICACION_2 = $question[1]->RESPUESTA_JUSTIFICACION;
+                    }else {
                         $RESPUESTA_JUSTIFICACION_2 = $question[1]->RESPUESTA_JUSTIFICACION;
-                }else {
-                    $RESPUESTA_JUSTIFICACION_2 = $question[1]->RESPUESTA_JUSTIFICACION;
-                }
-                echo $RESPUESTA_JUSTIFICACION_2;
-                //echo form_textarea('RESPUESTA_JUSTIFICACION_2', $RESPUESTA_JUSTIFICACION_2, 'id="RESPUESTA_JUSTIFICACION_2" class="textarea_umb"');
-                ?>
-            </div> 
-            <br><br>
-        </div>     
+                    }
+                    echo $RESPUESTA_JUSTIFICACION_2;
+                    //echo form_textarea('RESPUESTA_JUSTIFICACION_2', $RESPUESTA_JUSTIFICACION_2, 'id="RESPUESTA_JUSTIFICACION_2" class="textarea_umb"');
+                    ?>
+                </div> 
+                <br><br>
+            </div>     
+            <?php
+        }
+        ?>
 
-
-        <div class="col-md-6">
+        <div class="col-md-<?php echo $colu; ?>">
             <div class="form-group">
                 <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Opcion de Respuesta 3 </label>
                 <br>
@@ -232,31 +246,35 @@ $validate_modify_item = get_modify_item($question[0]->PREGUNTA_ID);
             </div> 
             <br><br>
         </div>
+        <?php
+        if ($user != 3) {
+            ?>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Justificacion de la Respuesta 3 </label>
+                    <br>
+                    <?php
+                    $validate_modify_resp = get_modify_resp($question[2]->RESPUESTA_ID);
 
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Justificacion de la Respuesta 3 </label>
-                <br>
-                <?php
-                $validate_modify_resp = get_modify_resp($question[2]->RESPUESTA_ID);
-
-                $RESPUESTA_JUSTIFICACION_3 = '';
-                if (count($validate_modify_resp) > 0) {
-                    if ($RESPUESTA_JUSTIFICACION_3 = $validate_modify_resp[0]->RESPUESTA_MODIFICACION_JUSTIFICACION != '')
-                        $RESPUESTA_JUSTIFICACION_3 = $validate_modify_resp[0]->RESPUESTA_MODIFICACION_JUSTIFICACION;
-                    else
+                    $RESPUESTA_JUSTIFICACION_3 = '';
+                    if (count($validate_modify_resp) > 0) {
+                        if ($RESPUESTA_JUSTIFICACION_3 = $validate_modify_resp[0]->RESPUESTA_MODIFICACION_JUSTIFICACION != '')
+                            $RESPUESTA_JUSTIFICACION_3 = $validate_modify_resp[0]->RESPUESTA_MODIFICACION_JUSTIFICACION;
+                        else
+                            $RESPUESTA_JUSTIFICACION_3 = $question[2]->RESPUESTA_JUSTIFICACION;
+                    }else {
                         $RESPUESTA_JUSTIFICACION_3 = $question[2]->RESPUESTA_JUSTIFICACION;
-                }else {
-                    $RESPUESTA_JUSTIFICACION_3 = $question[2]->RESPUESTA_JUSTIFICACION;
-                }
-                echo $RESPUESTA_JUSTIFICACION_3;
-                //echo form_textarea('RESPUESTA_JUSTIFICACION_3', $RESPUESTA_JUSTIFICACION_3, 'id="RESPUESTA_JUSTIFICACION_3" class="textarea_umb"');
-                ?>
-            </div> 
-            <br><br>
-        </div>    
-
-        <div class="col-md-6">
+                    }
+                    echo $RESPUESTA_JUSTIFICACION_3;
+                    //echo form_textarea('RESPUESTA_JUSTIFICACION_3', $RESPUESTA_JUSTIFICACION_3, 'id="RESPUESTA_JUSTIFICACION_3" class="textarea_umb"');
+                    ?>
+                </div> 
+                <br><br>
+            </div>    
+            <?php
+        }
+        ?>
+        <div class="col-md-<?php echo $colu; ?>">
             <div class="form-group">
                 <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Opcion de Respuesta 4 </label>
                 <?php
@@ -274,28 +292,33 @@ $validate_modify_item = get_modify_item($question[0]->PREGUNTA_ID);
             </div> 
             <br><br>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Justificacion de la Respuesta 4 </label>
-                <?php
-                $validate_modify_resp = get_modify_resp($question[3]->RESPUESTA_ID);
+        <?php
+        if ($user != 3) {
+            ?>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Justificacion de la Respuesta 4 </label>
+                    <?php
+                    $validate_modify_resp = get_modify_resp($question[3]->RESPUESTA_ID);
 
-                $RESPUESTA_JUSTIFICACION_4 = '';
-                if (count($validate_modify_resp) > 0) {
-                    if ($validate_modify_resp[0]->RESPUESTA_MODIFICACION_JUSTIFICACION != '')
-                        $RESPUESTA_JUSTIFICACION_4 = $validate_modify_resp[0]->RESPUESTA_MODIFICACION_JUSTIFICACION;
-                    else
+                    $RESPUESTA_JUSTIFICACION_4 = '';
+                    if (count($validate_modify_resp) > 0) {
+                        if ($validate_modify_resp[0]->RESPUESTA_MODIFICACION_JUSTIFICACION != '')
+                            $RESPUESTA_JUSTIFICACION_4 = $validate_modify_resp[0]->RESPUESTA_MODIFICACION_JUSTIFICACION;
+                        else
+                            $RESPUESTA_JUSTIFICACION_4 = $question[3]->RESPUESTA_JUSTIFICACION;
+                    }else {
                         $RESPUESTA_JUSTIFICACION_4 = $question[3]->RESPUESTA_JUSTIFICACION;
-                }else {
-                    $RESPUESTA_JUSTIFICACION_4 = $question[3]->RESPUESTA_JUSTIFICACION;
-                }
-                echo $RESPUESTA_JUSTIFICACION_4;
-                //echo form_textarea('RESPUESTA_JUSTIFICACION_4', $RESPUESTA_JUSTIFICACION_4, 'id="RESPUESTA_JUSTIFICACION_4" class="textarea_umb"');
-                ?>
-            </div> 
-            <br><br>
-        </div>    
-
+                    }
+                    echo $RESPUESTA_JUSTIFICACION_4;
+                    //echo form_textarea('RESPUESTA_JUSTIFICACION_4', $RESPUESTA_JUSTIFICACION_4, 'id="RESPUESTA_JUSTIFICACION_4" class="textarea_umb"');
+                    ?>
+                </div> 
+                <br><br>
+            </div>    
+            <?php
+        }
+        ?>
     </div>
 
 </div>

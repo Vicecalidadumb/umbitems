@@ -26,7 +26,7 @@ $components[''] = "---SELECCIONE UN COMPONENTE---";
 </div>
 
 <div class="form-group">
-    <label for="exampleInputEmail1">Nivel de la Pregunta:</label>
+    <label for="exampleInputEmail1">Nivel de Cargo:</label>
     <span id="level">
         <?php echo form_dropdown('PREGUNTA_NIVELPREGUNTA', array('' => '---SELECCIONE UN COMPONENTE---'), '', 'class="form-control"'); ?>
     </span>

@@ -87,14 +87,14 @@ function get_itemlevel_text($question) {
     switch ($question->PREGUNTA_ETAPA) {
         case '0': return 'En Construccion';
             break;
-        case '1': return 'En Seleccion';
-            break;
-        case '2':
+        case '1':
             switch ($question->PREGUNTA_VALIDA_2) {
-                case 2: return '<span style="color:yellow" class="glyphicon glyphicon-warning-sign"></span> Validada con errores';
+                case 1: return '<span style="color:yellow" class="glyphicon glyphicon-warning-sign"></span> Debe Corregirse';
                     break;
                 default: return 'En Validacion';
             }
+            break;
+        case '2': return 'En Seleccion';
             break;
         case '3': return 'En Corr. de Estilo';
             break;
@@ -114,22 +114,26 @@ function get_array_item_types() {
 
 function get_array_difficulty_level() {
     $array = array(
-        '1' => 'BAJO',
-        '2' => 'MEDIO',
-        '3' => 'ALTO'
+        '1' => 'TIPO1',
+        '2' => 'TIPO2',
+        '3' => 'TIPO3'
     );
+    
     return $array;
 }
 
 function get_difficulty_level($id) {
-    switch ($id) {
-        case 1:return "BAJO";
-            break;
-        case 2:return "MEDIO";
-            break;
-        case 3:return "ALTO";
-            break;
-    }
+    $datos=get_array_difficulty_level();
+//    print_r($datos);
+//    switch ($id) {
+//        case 1:return "BAJO";
+//            break;
+//        case 2:return "MEDIO";
+//            break;
+//        case 3:return "ALTO";
+//            break;
+//    }
+    return $datos[$id];
 }
 
 function get_array_number_questions() {

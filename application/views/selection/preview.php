@@ -54,12 +54,12 @@ $VERSION_HTML = "***************VERSION HTML PARA DIAGRAMAR***************<br><b
         </div>
 
         <div class="form-group">
-            <label for="exampleInputEmail1">Nivel de Rubrica</label>
+            <label for="exampleInputEmail1">Grado Desarrollo de la Competencia</label>
             <?php echo form_dropdown('PREGUNTA_NIVELRUBRICA', get_array_rubrics(), $question[0]->PREGUNTA_NIVELRUBRICA, 'class="form-control" disabled'); ?>
         </div>
 
         <div class="form-group">
-            <label for="exampleInputEmail1">Nivel de Dificultad</label>
+            <label for="exampleInputEmail1">Categoria del Cargo</label>
             <?php echo form_dropdown('PREGUNTA_NIVELDIFICULTAD', get_array_difficulty_level(), $question[0]->PREGUNTA_NIVELDIFICULTAD, 'class="form-control" disabled'); ?>
         </div>
 

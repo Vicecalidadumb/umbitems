@@ -154,7 +154,7 @@ class Question extends CI_Controller {
                 'PREGUNTA_ID' => $insert,
                 'LOG_TIPO' => '1',
                 'LOG_DESCRIPCION' => 'Agrego una Pregunta',
-                'LOG_IDREFERENCIA' => ''
+                'LOG_IDREFERENCIA' => '0'
             );
             $this->user_model->insert_event($array_event);
 
@@ -317,7 +317,7 @@ class Question extends CI_Controller {
         $insert = $this->question_model->update_question_modify($data, $this->session->userdata("KEY_AES"));
 
         if ($insert) {
-            //MODIFICAR NIVEL DE RUBRICA
+            //MODIFICAR Grado Desarrollo de la Competencia
             $PREGUNTA_NIVELRUBRICA = $this->input->post('PREGUNTA_NIVELRUBRICA', TRUE);
             $this->question_model->update_question_rubrica($PREGUNTA_NIVELRUBRICA, $this->input->post('PREGUNTA_ID', TRUE));
 
@@ -325,7 +325,7 @@ class Question extends CI_Controller {
             $PREGUNTA_TEMA = $this->input->post('PREGUNTA_TEMA', TRUE);
             $this->question_model->update_question_tema($PREGUNTA_TEMA, $this->input->post('PREGUNTA_ID', TRUE));
 
-            //MODIFICAR NIVEL DE DIFICULTAD
+            //MODIFICAR Tipo de competencia
             $PREGUNTA_NIVELDIFICULTAD = $this->input->post('PREGUNTA_NIVELDIFICULTAD', TRUE);
             $this->question_model->update_question_dificultad($PREGUNTA_NIVELDIFICULTAD, $this->input->post('PREGUNTA_ID', TRUE));
 

@@ -77,6 +77,7 @@
                         <td>
                             <?php
                             $etapa = $question->PREGUNTA_ETAPA;
+//                            echo  "****".$this->session->userdata('ID_TIPO_USU');
                             switch ($etapa) {
                                 case 0://EDITAR ITEM ORIGINAL (ESTADO 0 Y TIPO DE USUARIO 2 - CONSTRUCTOR)
                                     if ($this->session->userdata('ID_TIPO_USU') == 2) {
@@ -88,17 +89,6 @@
                                         <?php
                                     }
                                     break;
-                                case 2:
-                                    //VALIDAR ITEM (ESTADO 2 Y TIPO DE USUARIO 4 - VALIDADOR)
-                                    if ($this->session->userdata('ID_TIPO_USU') == 4) {
-                                        $validate_modify_item = get_modify_item($question->PREGUNTA_ID);
-                                        ?>
-                                        <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#exampleModal2" data-preguntaid="<?php echo $question->PREGUNTA_ID; ?>" data-cod="<?php echo $question->COMPONENTE_SIGLA . '_' . get_level_initials($question->PREGUNTA_NIVELPREGUNTA) . '_' . $question->PREGUNTA_ID; ?>">
-                                            <span class="glyphicon glyphicon-ok"></span>
-                                            <?php echo (count($validate_modify_item) > 0) ? 'Validar Modificaci&oacute;n' : 'Validar'; ?>
-                                        </a>
-                                        <?php
-                                    }
                                 case 3:
                                     if ($this->session->userdata('ID_TIPO_USU') == 2 or $this->session->userdata('ID_TIPO_USU') == 3) {
                                         $validate_modify_item = get_modify_item($question->PREGUNTA_ID);
@@ -127,12 +117,23 @@
                                             <?php echo ($question->PREGUNTA_DIAGRAMADA == 0) ? 'Diagramada' : 'Sin Diagramar'; ?>
                                         </a>
                                         <?php
-                                    }                                    
+                                    }
                                 case 1:
-                                    //SELECCIONAR ITEM (ESTADO 1 O 2 Y TIPO DE USUARIO 6 - SELECCIONAROR)
-                                    if ($this->session->userdata('ID_TIPO_USU') == 6 && $etapa != 3) {
+                                case 2:
+                                    //VALIDAR ITEM (ESTADO 2 Y TIPO DE USUARIO 4 - VALIDADOR)
+                                    if ($this->session->userdata('ID_TIPO_USU') == 4 && $etapa == 1) {
+                                        $validate_modify_item = get_modify_item($question->PREGUNTA_ID);
                                         ?>
-                                        <a href="<?php echo base_url("selection/select/" . $question->PREGUNTA_SELECCIONADA . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_SELECCIONADA/2'; ?>" class="btn btn-<?php echo ($question->PREGUNTA_SELECCIONADA == 0) ? 'success' : 'danger' ?> btn-xs">
+                                        <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#exampleModal2" data-preguntaid="<?php echo $question->PREGUNTA_ID; ?>" data-cod="<?php echo $question->COMPONENTE_SIGLA . '_' . get_level_initials($question->PREGUNTA_NIVELPREGUNTA) . '_' . $question->PREGUNTA_ID; ?>">
+                                            <span class="glyphicon glyphicon-ok"></span>
+                                            <?php echo (count($validate_modify_item) > 0) ? 'Validar Modificaci&oacute;n' : 'Validar'; ?>
+                                        </a>
+                                        <?php
+                                    }
+                                    //SELECCIONAR ITEM (ESTADO 1 O 2 Y TIPO DE USUARIO 6 - SELECCIONAROR)   
+                                    if ($this->session->userdata('ID_TIPO_USU') == 6 && ($etapa == 3 || $etapa == 2)) {
+                                        ?>
+                                        <a href="<?php echo base_url("selection/select/" . $question->PREGUNTA_SELECCIONADA . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_SELECCIONADA/3'; ?>" class="btn btn-<?php echo ($question->PREGUNTA_SELECCIONADA == 0) ? 'success' : 'danger' ?> btn-xs">
                                             <span class="glyphicon glyphicon-<?php echo ($question->PREGUNTA_SELECCIONADA == 0) ? 'ok' : 'remove' ?>"></span>
                                             <?php echo ($question->PREGUNTA_SELECCIONADA == 0) ? 'Seleccionar Item' : 'Desseleccionar' ?>
                                         </a>
