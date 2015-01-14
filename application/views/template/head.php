@@ -49,7 +49,7 @@
         <script src="<?php echo base_url('docs-assets/js/holder.js'); ?>"></script>        
 
         <script>
-            var base_url_js = '<?php echo base_url(); ?>';
+            var base_url_js = '<?php echo base_url('index.php'); ?>/';
         </script>
 
     </head>

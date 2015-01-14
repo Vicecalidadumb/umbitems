@@ -16,7 +16,7 @@
     </div>
 <?php } ?>
 
-<?php echo form_open('question/select_component_view/', 'class="form-signin" role="form" autocomplete="off" method="POST"'); ?>
+<?php echo form_open('index.php/question/select_component_view/', 'class="form-signin" role="form" autocomplete="off" method="POST"'); ?>
 <?php
 $components[''] = "---SELECCIONE UN COMPONENTE---";
 ?>

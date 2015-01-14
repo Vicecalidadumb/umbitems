@@ -32,7 +32,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?php echo base_url("/") ?>">Administraci&oacute;n de &Iacute;tems</a>
+            <a class="navbar-brand" href="<?php echo base_url("index.php//") ?>">Administraci&oacute;n de &Iacute;tems</a>
         </div>
         <div class="navbar-collapse collapse">
 
@@ -47,9 +47,9 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Construcci&oacute;n de Items<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <?php if ($this->session->userdata('ID_TIPO_USU') == 1 OR $this->session->userdata('ID_TIPO_USU') == 2): ?>
-                                <li><a href="<?php echo base_url("question/add") ?>">Agregar Item</a></li>
+                                <li><a href="<?php echo base_url("index.php/question/add") ?>">Agregar Item</a></li>
                             <?php endif; ?>
-                            <li><a href="<?php echo base_url("question/view") ?>">Buscar Items</a></li>
+                            <li><a href="<?php echo base_url("index.php/question/view") ?>">Buscar Items</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -72,7 +72,7 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="<?php echo base_url("question/view") ?>">Buscar &Iacute;tems</a></li>
+                            <li><a href="<?php echo base_url("index.php/question/view") ?>">Buscar &Iacute;tems</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -84,8 +84,8 @@
                     <li class="" class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Componentes<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="<?php echo base_url("component") ?>">Ver Listado de Componentes</a></li>
-                            <li><a href="<?php echo base_url("component/add") ?>">Agregar Componente</a></li>
+                            <li><a href="<?php echo base_url("index.php/component") ?>">Ver Listado de Componentes</a></li>
+                            <li><a href="<?php echo base_url("index.php/component/add") ?>">Agregar Componente</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -98,8 +98,8 @@
                     <li class="" class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="<?php echo base_url("user") ?>">Ver Listado de Usuarios</a></li>
-                            <li><a href="<?php echo base_url("user/add") ?>">Agregar Usuario</a></li>
+                            <li><a href="<?php echo base_url("index.php/user") ?>">Ver Listado de Usuarios</a></li>
+                            <li><a href="<?php echo base_url("index.php/user/add") ?>">Agregar Usuario</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -111,7 +111,7 @@
                     <li class="" class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sistema<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="<?php echo base_url("config/roles") ?>">Administrar Roles</a></li>
+                            <li><a href="<?php echo base_url("index.php/config/roles") ?>">Administrar Roles</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -125,7 +125,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuario: <strong><?php echo $this->session->userdata('USUARIO_NOMBRES') . ' ' . $this->session->userdata('USUARIO_APELLIDOS'); ?></strong><b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo base_url('login/logout'); ?>">Cerrar Sesion</a></li>
+                        <li><a href="<?php echo base_url('index.php/login/logout'); ?>">Cerrar Sesion</a></li>
                     </ul>
                 </li>
             </ul>            

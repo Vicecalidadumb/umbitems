@@ -19,14 +19,14 @@ class Login extends CI_Controller {
         if ($this->agent->is_browser('Chrome') or $this->agent->is_browser('Firefox')) {
             if ($this->session->userdata('logged_in')) {
                 //SI EL USUARIO TIENE SESION ABIERTA, SE REDIRIGE A ESCRITORIO
-                redirect('desk', 'refresh');
+                redirect('index.php/desk', 'refresh');
             } else {
                 //SI EL USUARIO NO TIENE SESION ABIERTA, CARGAR VISTA DE LOGIN
                 $this->load->view('login/index');
             }
         } else {
             $this->session->set_flashdata(array('message' => 'Se recomienda utilizar el navegador <strong>GOOGLE CHROME</strong> para este aplicativo, lo puede descargar <a href="http://www.google.com/intl/es-419/chrome/" target="_blank">AQUI</a>', 'message_type' => 'danger'));
-            redirect('login/error1', 'refresh');
+            redirect('index.php/login/error1', 'refresh');
         }
     }
 
@@ -80,16 +80,16 @@ class Login extends CI_Controller {
                 $this->session->set_userdata($newdata);
                 
                 //ENVIAR AL ESCRITORIO
-                redirect('desk', 'location');
+                redirect('index.php/desk', 'location');
             } else {
                 //ERROR EN CONTRASEÑA
                 $this->session->set_flashdata(array('message' => '<strong>Error</strong> Contrase&ntilde;a Incorrecta.', 'message_type' => 'danger'));
-                redirect('', 'refresh');
+                redirect('index.php/', 'refresh');
             }
         } else {
             //ERROR: USUARIO NO EXISTE O ESTA INACTIVO
             $this->session->set_flashdata(array('message' => 'Debe ingresar un Usuario Valido.', 'message_type' => 'warning'));
-            redirect('', 'refresh');
+            redirect('index.php/', 'refresh');
         }
     }
 
@@ -98,7 +98,7 @@ class Login extends CI_Controller {
         $this->session->set_userdata('logged_in', FALSE);
         $this->session->sess_destroy();
         //$this->load->view('login/index');
-        redirect('login', 'location');
+        redirect('index.php/login', 'location');
     }
 
 }

@@ -16,7 +16,7 @@
 $components['ALL'] = "TODOS";
 ?>
 
-<?php echo form_open('question/select_component_view/' . $id_user, 'class="form-signin" role="form" autocomplete="off" method="POST"'); ?>
+<?php echo form_open('index.php/question/select_component_view/' . $id_user, 'class="form-signin" role="form" autocomplete="off" method="POST"'); ?>
 <div class="form-group">
     <label for="exampleInputEmail1">Componentes del usuario <?php echo $user[0]->USUARIO_NOMBRES . ' ' . $user[0]->USUARIO_APELLIDOS; ?>:</label>
     <?php echo form_dropdown('COMPONENTE_ID', $components, '', 'class="form-control"'); ?>
