@@ -163,7 +163,7 @@
                                             $date_modify = (count($validate_modify_item) > 0) ? $validate_modify_item[0]->PREGUNTA_MODIFICACION_FECHA : '';
                                             $idcreador_modify = (count($validate_modify_item) > 0) ? $validate_modify_item[0]->PREGUNTA_MODIFICACION_IDUSUARIOCREADOR : '';
                                             ?>
-                                            <a href="<?php echo base_url("question/edit_question/" . encrypt_id($question->PREGUNTA_ID)); ?>">
+                                            <a href="<?php echo base_url("index.php/question/edit_question/" . encrypt_id($question->PREGUNTA_ID)); ?>">
                                                 <button type="button" class="btn btn-<?php echo $color_modify; ?> btn-sm">
                                                     <span class="glyphicon glyphicon-edit"></span> <?php echo $title_modify; ?>
                                                 </button>
@@ -186,7 +186,7 @@
                                             $date_modify = (count($validate_modify_item) > 0) ? $validate_modify_item[0]->PREGUNTA_MODIFICACION_FECHA : '';
                                             $idcreador_modify = (count($validate_modify_item) > 0) ? $validate_modify_item[0]->PREGUNTA_MODIFICACION_IDUSUARIOCREADOR : '';
                                             ?>
-                                            <a href="<?php echo base_url("question/edit_question/" . encrypt_id($question->PREGUNTA_ID)); ?>">
+                                            <a href="<?php echo base_url("index.php/question/edit_question/" . encrypt_id($question->PREGUNTA_ID)); ?>">
                                                 <button type="button" class="btn btn-<?php echo $color_modify; ?> btn-sm">
                                                     <span class="glyphicon glyphicon-edit"></span> <?php echo $title_modify; ?>
                                                 </button>
@@ -208,7 +208,7 @@
                                             $date_modify = (count($validate_modify_item) > 0) ? $validate_modify_item[0]->PREGUNTA_MODIFICACION_FECHA : '';
                                             $idcreador_modify = (count($validate_modify_item) > 0) ? $validate_modify_item[0]->PREGUNTA_MODIFICACION_IDUSUARIOCREADOR : '';
                                             ?>
-                                            <a href="<?php echo base_url("question/edit_question/" . encrypt_id($question->PREGUNTA_ID)); ?>">
+                                            <a href="<?php echo base_url("index.php/question/edit_question/" . encrypt_id($question->PREGUNTA_ID)); ?>">
                                                 <button type="button" class="btn btn-<?php echo $color_modify; ?> btn-sm">
                                                     <span class="glyphicon glyphicon-edit"></span> <?php echo $title_modify; ?>
                                                 </button>

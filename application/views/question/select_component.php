@@ -10,7 +10,7 @@
     <h1 style="color:#2aabd2">Agregar Item</h1>
 </div>
 
-<?php echo form_open('question/select_component/' . $id_user, 'class="form-signin" role="form" autocomplete="off" method="POST"'); ?>
+<?php echo form_open('index.php/question/select_component/' . $id_user, 'class="form-signin" role="form" autocomplete="off" method="POST"'); ?>
 <div class="form-group">
     <label for="exampleInputEmail1">Selecci&oacute;n del Componente:</label>
     <?php echo form_dropdown('COMPONENTE_ID', $components, '', 'class="form-control"'); ?>

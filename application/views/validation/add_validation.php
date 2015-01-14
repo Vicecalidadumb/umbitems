@@ -20,7 +20,7 @@
 
 <?php //echo '<pre><textarea>' . print_r($validation, true) . '</textarea></pre>'; ?>
 
-<?php echo form_open('validation/insert', 'id="validation_insert" class="form-signin" role="form" method="POST"'); ?>
+<?php echo form_open('index.php/validation/insert', 'id="validation_insert" class="form-signin" role="form" method="POST"'); ?>
 
 <?php echo form_hidden('PREGUNTA_ID', $id_question); ?>
 <?php echo form_hidden('EVALUACION_ID_USUARIOCREADOR', $id_user); ?>

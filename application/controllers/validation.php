@@ -21,10 +21,10 @@ class Validation extends CI_Controller {
         $insert = $this->validation_model->update_question_validate();
         if ($insert) {
             $this->session->set_flashdata(array('message' => 'Pregunta Actualizada con Exito.', 'message_type' => 'info'));
-            redirect('question/view/' . $COMPONENTE_ID . '/' . $PREGUNTA_NIVELPREGUNTA, 'refresh');
+            redirect('index.php/question/view/' . $COMPONENTE_ID . '/' . $PREGUNTA_NIVELPREGUNTA, 'refresh');
         } else {
             $this->session->set_flashdata(array('message' => 'Error al Actualizar la Pregunta.', 'message_type' => 'error'));
-            redirect('selection/view/' . $COMPONENTE_ID . '/' . $PREGUNTA_NIVELPREGUNTA, 'refresh');
+            redirect('index.php/selection/view/' . $COMPONENTE_ID . '/' . $PREGUNTA_NIVELPREGUNTA, 'refresh');
         }
     }
 

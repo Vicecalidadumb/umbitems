@@ -58,7 +58,7 @@ class Question extends CI_Controller {
                     $this->load->view('template/template', $data);
                 } else {
                     $this->session->set_flashdata(array('message' => 'No se encontraron componentes asociados al usuario seleccionado.', 'message_type' => 'warning'));
-                    redirect('index.php//desk', 'refresh');
+                    redirect('index.php/desk', 'refresh');
                 }
             }
         } else {
@@ -109,12 +109,12 @@ class Question extends CI_Controller {
                     $this->load->view('template/template', $data);
                 } else {
                     $this->session->set_flashdata(array('message' => 'Error: Componente no asignado al usuario.', 'message_type' => 'warning'));
-                    redirect('index.php//desk', 'refresh');
+                    redirect('index.php/desk', 'refresh');
                 }
             }
         } else {
             $this->session->set_flashdata(array('message' => 'No se encontraron componentes asociados al usuario.', 'message_type' => 'warning'));
-            redirect('index.php//desk', 'refresh');
+            redirect('index.php/desk', 'refresh');
         }
     }
 
@@ -227,7 +227,7 @@ class Question extends CI_Controller {
     public function select_component() {
         validation_permission_role($this->module_sigla, 'permission_add');
         $id_component = $this->input->post('COMPONENTE_ID', TRUE);
-        redirect('index.php//question/add/' . encrypt_id($id_component), 'refresh');
+        redirect('index.php/question/add/' . encrypt_id($id_component), 'refresh');
     }
 
     public function select_component_view() {
@@ -236,10 +236,10 @@ class Question extends CI_Controller {
         $id_component = $this->input->post('COMPONENTE_ID', TRUE);
         $level = $this->input->post('PREGUNTA_NIVELPREGUNTA', TRUE);
         if ($id_component > 0) {
-            redirect('index.php//question/view/' . encrypt_id($id_component) . '/' . encrypt_id($level), 'refresh');
+            redirect('index.php/question/view/' . encrypt_id($id_component) . '/' . encrypt_id($level), 'refresh');
         } else {
             $this->session->set_flashdata(array('message' => 'Error al Consultar el Componente.', 'message_type' => 'error'));
-            redirect('index.php//question/view', 'refresh');
+            redirect('index.php/question/view', 'refresh');
         }
     }
 
@@ -335,10 +335,10 @@ class Question extends CI_Controller {
 
             $this->session->set_flashdata(array('message' => 'Pregunta Modificada con Exito.', 'message_type' => 'info'));
 
-            redirect('index.php//question/view/' . encrypt_id($question[0]->COMPONENTE_ID) . '/' . encrypt_id($this->input->post('PREGUNTA_NIVELPREGUNTA', TRUE)), 'refresh');
+            redirect('index.php/question/view/' . encrypt_id($question[0]->COMPONENTE_ID) . '/' . encrypt_id($this->input->post('PREGUNTA_NIVELPREGUNTA', TRUE)), 'refresh');
         } else {
             $this->session->set_flashdata(array('message' => 'Error al Modificar la Pregunta.', 'message_type' => 'error'));
-            redirect('index.php//question/view/' . encrypt_id($question[0]->COMPONENTE_ID) . '/' . encrypt_id($this->input->post('PREGUNTA_NIVELPREGUNTA', TRUE)), 'refresh');
+            redirect('index.php/question/view/' . encrypt_id($question[0]->COMPONENTE_ID) . '/' . encrypt_id($this->input->post('PREGUNTA_NIVELPREGUNTA', TRUE)), 'refresh');
         }
     }
 

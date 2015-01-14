@@ -12,7 +12,7 @@
     <?php echo $this->session->userdata('HEADER_2'); ?>
 </div>
 
-<?php echo form_open('question/view', 'class="form-signin" role="form" method="POST"'); ?>
+<?php echo form_open('index.php/question/view', 'class="form-signin" role="form" method="POST"'); ?>
 
 <?php
 $users['ALL'] ='Todos';

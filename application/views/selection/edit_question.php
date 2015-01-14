@@ -51,7 +51,7 @@ $VERSION_HTML = "***************VERSION HTML PARA DIAGRAMAR***************<br><b
 
 <?php //echo '<pre><textarea>' . print_r($question, true) . '</textarea></pre>'; ?>
 
-<?php echo form_open('question/update_modify', 'id="question_update_modify" class="form-signin" role="form" method="POST"'); ?>
+<?php echo form_open('index.php/question/update_modify', 'id="question_update_modify" class="form-signin" role="form" method="POST"'); ?>
 
 <?php echo form_hidden('PREGUNTA_ID', $id_question); ?>
 

@@ -20,7 +20,7 @@ class Selection extends CI_Controller {
         $insert = $this->selection_model->update_question_select($state, $id_question, $COMPONENTE_ID, $PREGUNTA_NIVELPREGUNTA, $campodinamico, $etapa);
         if ($insert) {
             $this->session->set_flashdata(array('message' => 'Pregunta Actualizada con Exito.', 'message_type' => 'info'));
-            redirect('question/view/' . $COMPONENTE_ID . '/' . $PREGUNTA_NIVELPREGUNTA, 'refresh');
+            redirect('index.php/question/view/' . $COMPONENTE_ID . '/' . $PREGUNTA_NIVELPREGUNTA, 'refresh');
         } else {
             $this->session->set_flashdata(array('message' => 'Error al Actualizar la Pregunta.', 'message_type' => 'error'));
             redirect('selection/add/' . $COMPONENTE_ID . '/' . $PREGUNTA_NIVELPREGUNTA, 'refresh');
@@ -240,7 +240,7 @@ class Selection extends CI_Controller {
                     $data['content'] = 'question/select_user_view';
                     $this->load->view('template/template', $data);
                 } else {
-                    redirect('/question/view/' . encrypt_id($this->session->userdata('USUARIO_ID')), 'refresh');
+                    redirect('index.php/question/view/' . encrypt_id($this->session->userdata('USUARIO_ID')), 'refresh');
                 }
             } else {
                 $this->session->set_flashdata(array('message' => 'No Posee Permisos para Realizar esta Accion.', 'message_type' => 'warning'));

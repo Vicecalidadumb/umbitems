@@ -44,7 +44,7 @@
 </div>
 
 
-<?php echo form_open('question/insert', 'id="question_insert" class="form-signin" role="form" method="POST"'); ?>
+<?php echo form_open('index.php/question/insert', 'id="question_insert" class="form-signin" role="form" method="POST"'); ?>
 <?php echo form_hidden('COMPONENTE_ID', $id_component); ?>
 
 <div class="row">

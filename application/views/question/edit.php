@@ -36,7 +36,7 @@
     </ul>    
 </div>
 
-<?php echo form_open('question/update', 'id="question_update" class="form-signin" role="form" method="POST"'); ?>
+<?php echo form_open('index.php/question/update', 'id="question_update" class="form-signin" role="form" method="POST"'); ?>
 <?php echo form_hidden('PREGUNTA_ID', $id_question); ?>
 <?php echo form_hidden('COMPONENTE_ID', $question[0]->COMPONENTE_ID); ?>
 

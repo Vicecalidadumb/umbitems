@@ -30,11 +30,11 @@
         </em>
         <br><br>
 
-        <a href="<?php echo base_url('question/add/' . encrypt_id($questions[0]->COMPONENTE_ID)) ?>" class="btn btn-primary btn-sm">
+        <a href="<?php echo base_url('index.php/question/add/' . encrypt_id($questions[0]->COMPONENTE_ID)) ?>" class="btn btn-primary btn-sm">
             <span class="glyphicon glyphicon-plus"></span> 
             Agregar Nueva Pregunta en <?php echo $questions[0]->COMPONENTE_SIGLA . ' - ' . $questions[0]->COMPONENTE_NOMBRE; ?>
         </a>  
-        <a href="<?php echo base_url('question/view'); ?>" class="btn btn-warning btn-sm">
+        <a href="<?php echo base_url('index.php/question/view'); ?>" class="btn btn-warning btn-sm">
             <span class="glyphicon glyphicon-arrow-left"></span> 
             Volver atr&aacute;s
         </a>          
@@ -82,7 +82,7 @@
                                 case 0://EDITAR ITEM ORIGINAL (ESTADO 0 Y TIPO DE USUARIO 2 - CONSTRUCTOR)
                                     if ($this->session->userdata('ID_TIPO_USU') == 2) {
                                         ?>
-                                        <a href="<?php echo base_url("question/edit/" . encrypt_id($question->PREGUNTA_ID)); ?>" class="btn btn-info btn-xs">
+                                        <a href="<?php echo base_url("index.php/question/edit/" . encrypt_id($question->PREGUNTA_ID)); ?>" class="btn btn-info btn-xs">
                                             <span class="glyphicon glyphicon-edit"></span> 
                                             Editar
                                         </a>
@@ -93,7 +93,7 @@
                                     if ($this->session->userdata('ID_TIPO_USU') == 2 or $this->session->userdata('ID_TIPO_USU') == 3) {
                                         $validate_modify_item = get_modify_item($question->PREGUNTA_ID);
                                         ?>
-                                        <a href="<?php echo base_url("question/edit_question/" . encrypt_id($question->PREGUNTA_ID)); ?>" class="btn btn-<?php echo (count($validate_modify_item) > 0) ? 'success' : 'info'; ?> btn-xs">
+                                        <a href="<?php echo base_url("index.php/question/edit_question/" . encrypt_id($question->PREGUNTA_ID)); ?>" class="btn btn-<?php echo (count($validate_modify_item) > 0) ? 'success' : 'info'; ?> btn-xs">
                                             <span class="glyphicon glyphicon-edit"></span> 
                                             <?php echo (count($validate_modify_item) > 0) ? 'Pregunta Modificada' : 'Modificar Pregunta'; ?>
                                         </a>
@@ -103,7 +103,7 @@
                                     if ($this->session->userdata('ID_TIPO_USU') == 3 && $etapa != 2) {
                                         $validate_modify_item = get_modify_item($question->PREGUNTA_ID);
                                         ?>
-                                        <a href="<?php echo base_url("selection/select/" . $question->PREGUNTA_VALIDA_CE . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_VALIDA_CE/4'; ?>" class="btn btn-<?php echo ($question->PREGUNTA_VALIDA_CE == 0) ? 'success' : 'danger' ?> btn-xs">
+                                        <a href="<?php echo base_url("index.php/selection/select/" . $question->PREGUNTA_VALIDA_CE . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_VALIDA_CE/4'; ?>" class="btn btn-<?php echo ($question->PREGUNTA_VALIDA_CE == 0) ? 'success' : 'danger' ?> btn-xs">
                                             <span class="glyphicon glyphicon-edit"></span> 
                                             <?php echo ($question->PREGUNTA_VALIDA_CE == 0) ? 'Correccion de Estilo OK' : 'Sin Correccion de Estilo'; ?>
                                         </a>
@@ -112,16 +112,24 @@
                                 case 5:
                                     if ($this->session->userdata('ID_TIPO_USU') == 7 && $etapa != 3 && $etapa != 2) {
                                         ?>
-                                        <a href="<?php echo base_url("selection/select/" . $question->PREGUNTA_DIAGRAMADA . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_DIAGRAMADA/5'; ?>" class="btn btn-<?php echo ($question->PREGUNTA_DIAGRAMADA == 0) ? 'success' : 'danger' ?> btn-xs">
+                                        <a href="<?php echo base_url("index.php/selection/select/" . $question->PREGUNTA_DIAGRAMADA . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_DIAGRAMADA/5'; ?>" class="btn btn-<?php echo ($question->PREGUNTA_DIAGRAMADA == 0) ? 'success' : 'danger' ?> btn-xs">
                                             <span class="glyphicon glyphicon-edit"></span> 
                                             <?php echo ($question->PREGUNTA_DIAGRAMADA == 0) ? 'Diagramada' : 'Sin Diagramar'; ?>
                                         </a>
                                         <?php
                                     }
                                 case 1:
+                                    if ($this->session->userdata('ID_TIPO_USU') == 2 && $question->PREGUNTA_VALIDA_2== 1 && $etapa==1) {
+                                        ?>
+                                        <a href="<?php echo base_url("index.php/question/edit/" . encrypt_id($question->PREGUNTA_ID)); ?>" class="btn btn-info btn-xs">
+                                            <span class="glyphicon glyphicon-edit"></span> 
+                                            Editar
+                                        </a>
+                                        <?php
+                                    }
                                 case 2:
                                     //VALIDAR ITEM (ESTADO 2 Y TIPO DE USUARIO 4 - VALIDADOR)
-                                    if ($this->session->userdata('ID_TIPO_USU') == 4 && $etapa == 1) {
+                                    if ($this->session->userdata('ID_TIPO_USU') == 4 && $etapa == 1  ) {
                                         $validate_modify_item = get_modify_item($question->PREGUNTA_ID);
                                         ?>
                                         <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#exampleModal2" data-preguntaid="<?php echo $question->PREGUNTA_ID; ?>" data-cod="<?php echo $question->COMPONENTE_SIGLA . '_' . get_level_initials($question->PREGUNTA_NIVELPREGUNTA) . '_' . $question->PREGUNTA_ID; ?>">
@@ -133,7 +141,7 @@
                                     //SELECCIONAR ITEM (ESTADO 1 O 2 Y TIPO DE USUARIO 6 - SELECCIONAROR)   
                                     if ($this->session->userdata('ID_TIPO_USU') == 6 && ($etapa == 3 || $etapa == 2)) {
                                         ?>
-                                        <a href="<?php echo base_url("selection/select/" . $question->PREGUNTA_SELECCIONADA . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_SELECCIONADA/3'; ?>" class="btn btn-<?php echo ($question->PREGUNTA_SELECCIONADA == 0) ? 'success' : 'danger' ?> btn-xs">
+                                        <a href="<?php echo base_url("index.php/selection/select/" . $question->PREGUNTA_SELECCIONADA . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_SELECCIONADA/3'; ?>" class="btn btn-<?php echo ($question->PREGUNTA_SELECCIONADA == 0) ? 'success' : 'danger' ?> btn-xs">
                                             <span class="glyphicon glyphicon-<?php echo ($question->PREGUNTA_SELECCIONADA == 0) ? 'ok' : 'remove' ?>"></span>
                                             <?php echo ($question->PREGUNTA_SELECCIONADA == 0) ? 'Seleccionar Item' : 'Desseleccionar' ?>
                                         </a>
@@ -164,7 +172,7 @@
         <div class="alert alert-warning">
             No se encontraron registros
             <br>
-            <a href="<?php echo base_url('question/view'); ?>" class="btn btn-warning btn-sm">
+            <a href="<?php echo base_url('index.php/question/view'); ?>" class="btn btn-warning btn-sm">
                 <span class="glyphicon glyphicon-arrow-left"></span> 
                 Volver atr&aacute;s
             </a>            
@@ -205,7 +213,7 @@
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                     <h4 class="modal-title" id="exampleModalLabel">Validar</h4>
                 </div>
-                <form action="<?php echo base_url('validation/insert/' . encrypt_id($question->COMPONENTE_ID) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA)); ?>" role="form" method="POST">
+                <form action="<?php echo base_url('index.php/validation/insert/' . encrypt_id($question->COMPONENTE_ID) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA)); ?>" role="form" method="POST">
                     <div class="modal-body">
                         <input type="hidden" name="PREGUNTA_ID" id="PREGUNTA_ID">
                         <div class="form-group">
