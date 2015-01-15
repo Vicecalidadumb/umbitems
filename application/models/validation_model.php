@@ -26,7 +26,9 @@ class Validation_model extends CI_Model {
         $this->db->set('PREGUNTA_VALIDA_2_TEXT2','concat(PREGUNTA_VALIDA_2_TEXT2,'."'".$post['PREGUNTA_VALIDA_2_TEXT2']."<br>".date('d/m/Y H:i:s')."<br>"."')",false);
         
         $this->db->where('PREGUNTA_ID', $post['PREGUNTA_ID']);
-        return $TT=$this->db->update("preguntas", $data);
+        $TT=$this->db->update("preguntas", $data);
+//        echo $this->db->last_query();
+        return $TT;
     }
 
     public function insert($data) {

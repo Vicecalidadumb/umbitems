@@ -5,6 +5,7 @@ if($user!=3)
     $colu=6;
 else
     $colu=12;
+//echo $question[0]->PREGUNTA_VALIDA_2_TEXT1."*********";
 ?>
 <?php if (!empty($question[0]->PREGUNTA_VALIDA_2_TEXT1)) { ?>
     <div class="well" style="background-color: rgb(250, 243, 243) !important;border: 1px solid red !important;">
