@@ -397,6 +397,7 @@ class Question_model extends CI_Model {
                        PREGUNTA_NIVELPREGUNTA = '{$data['PREGUNTA_NIVELPREGUNTA']}',
                        PREGUNTA_TIPOITEM = '{$data['PREGUNTA_TIPOITEM']}',
                        PREGUNTA_ETAPA = '{$data['PREGUNTA_ETAPA']}',
+                       PREGUNTA_VALIDA_2 = '0',
                        PREGUNTA_NIVELDIFICULTAD = '{$data['PREGUNTA_NIVELDIFICULTAD']}',
                        PREGUNTA_ENUNCIADO = AES_ENCRYPT('" . addslashes($data['PREGUNTA_ENUNCIADO']) . "','{$KEY_AES}'),
                        PREGUNTA_CONTEXTO = AES_ENCRYPT('" . addslashes($data['PREGUNTA_CONTEXTO']) . "','{$KEY_AES}'),    
