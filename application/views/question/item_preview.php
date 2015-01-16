@@ -1,10 +1,10 @@
 <?php
 $validate_modify_item = get_modify_item($question[0]->PREGUNTA_ID);
 $user = $this->session->userdata('ID_TIPO_USU');
-if($user!=3)
-    $colu=6;
+if ($user != 3)
+    $colu = 6;
 else
-    $colu=12;
+    $colu = 12;
 ?>
 <?php if (!empty($question[0]->PREGUNTA_VALIDA_2_TEXT1)) { ?>
     <div class="well" style="background-color: rgb(250, 243, 243) !important;border: 1px solid red !important;">
@@ -179,6 +179,8 @@ else
             <?php
         }
         ?>
+    </div>    
+    <div class="row">    
         <div class="col-md-<?php echo $colu; ?>">
             <div class="form-group">
                 <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Opcion de Respuesta 2 </label>
@@ -226,7 +228,8 @@ else
             <?php
         }
         ?>
-
+    </div>    
+    <div class="row"> 
         <div class="col-md-<?php echo $colu; ?>">
             <div class="form-group">
                 <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Opcion de Respuesta 3 </label>
@@ -274,6 +277,8 @@ else
             <?php
         }
         ?>
+    </div>    
+    <div class="row"> 
         <div class="col-md-<?php echo $colu; ?>">
             <div class="form-group">
                 <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Opcion de Respuesta 4 </label>
