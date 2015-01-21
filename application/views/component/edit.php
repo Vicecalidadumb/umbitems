@@ -20,7 +20,7 @@
 </div>
 
 
-<?php echo form_open('component/update', 'id="component_update" class="form-signin" role="form" method="POST"'); ?>
+<?php echo form_open('index.php/component/update', 'id="component_update" class="form-signin" role="form" method="POST"'); ?>
 
 <?php echo form_hidden('COMPONENTE_ID', $component[0]->COMPONENTE_ID); ?>
 

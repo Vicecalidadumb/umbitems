@@ -17,7 +17,7 @@
 <div class="page-header">
     <h1 style="color:#2aabd2">
         Listado de Usuarios del Sistema
-        <a href="<?php echo base_url("user/add"); ?>">
+        <a href="<?php echo base_url("index.php/user/add"); ?>">
             <button type="button" class="btn btn-primary btn-lg">Agregar Registro</button>
         </a>
     </h1>

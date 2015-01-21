@@ -20,13 +20,13 @@ $array_color_2 = array('#5cb85c', '#f0ad4e', '#d9534f');
 <div class="page-header">
     <h1 style="color:#2aabd2">
         Listado de Componentes
-        <a href="<?php echo base_url("component/add"); ?>">
+        <a href="<?php echo base_url("index.php/component/add"); ?>">
             <button type="button" class="btn btn-primary btn-lg">Agregar Registro</button>
         </a>
-        <a href="<?php echo base_url("component/report2"); ?>" target="_blank">
+        <a href="<?php echo base_url("index.php/component/report2"); ?>" target="_blank">
             <button type="button" class="btn btn-success btn-lg">Descargar Reporte xls</button>
         </a>  
-        <a href="<?php echo base_url("component/report3"); ?>" target="_blank">
+        <a href="<?php echo base_url("index.php/component/report3"); ?>" target="_blank">
             <button type="button" class="btn btn-warning btn-lg">Descargar Reporte Total de Items</button>
         </a>        
     </h1>

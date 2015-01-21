@@ -20,7 +20,7 @@
 </div>
 
 
-<?php echo form_open('user/insert', 'id="user_insert" class="form-signin" role="form" method="POST"'); ?>
+<?php echo form_open('index.php/user/insert', 'id="user_insert" class="form-signin" role="form" method="POST"'); ?>
 
 <div class="row">
     <div class="col-md-6">

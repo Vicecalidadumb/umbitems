@@ -48,7 +48,7 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-/*
+
  //Conexion Servidor de Items DPS
 $db['default']['hostname'] = '172.16.210.38';
 $db['default']['username'] = 'dps_admin';
@@ -56,7 +56,7 @@ $db['default']['password'] = '5MvdrG69oO';
 $db['default']['database'] = 'itemsdps'; 
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = 'umbitems_';
-$db['default']['pconnect'] = TRUE;
+$db['default']['pconnect'] = FALSE;
 $db['default']['db_debug'] = TRUE;
 $db['default']['cache_on'] = FALSE;
 $db['default']['cachedir'] = '';
@@ -65,9 +65,9 @@ $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
- * 
- */
+
  //Conexion Local
+/*
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
 $db['default']['password'] = '';
@@ -82,7 +82,7 @@ $db['default']['char_set'] = 'utf8';
 $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
-$db['default']['stricton'] = FALSE;
+$db['default']['stricton'] = FALSE;*/
 
 
 

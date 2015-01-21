@@ -19,7 +19,7 @@
 </div>
 
 
-<?php echo form_open('component/insert', 'id="component_insert" class="form-signin" role="form" method="POST"'); ?>
+<?php echo form_open('index.php/component/insert', 'id="component_insert" class="form-signin" role="form" method="POST"'); ?>
 
 <div class="row">
     <div class="col-md-6">

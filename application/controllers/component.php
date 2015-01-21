@@ -131,10 +131,10 @@ class Component extends CI_Controller {
             $insert_2 = $this->component_model->insert_component_users($data, $insert);
 
             $this->session->set_flashdata(array('message' => 'Registro agregado con exito', 'message_type' => 'info'));
-            redirect('component', 'refresh');
+            redirect('index.php/component', 'refresh');
         } else {
             $this->session->set_flashdata(array('message' => 'Error al insertar el registro', 'message_type' => 'error'));
-            redirect('component', 'refresh');
+            redirect('index.php/component', 'refresh');
         }
     }
 
@@ -153,7 +153,7 @@ class Component extends CI_Controller {
             $this->load->view('template/template', $data);
         } else {
             $this->session->set_flashdata(array('message' => 'Error al Consultar el Registro', 'message_type' => 'warning'));
-            redirect('user', 'refresh');
+            redirect('index.php/user', 'refresh');
         }
     }
 
@@ -174,10 +174,10 @@ class Component extends CI_Controller {
         if ($update) {
             $insert_2 = $this->component_model->insert_component_users($data, $data['COMPONENTE_ID']);
             $this->session->set_flashdata(array('message' => 'Registro editado con exito', 'message_type' => 'info'));
-            redirect('component', 'refresh');
+            redirect('index.php/component', 'refresh');
         } else {
             $this->session->set_flashdata(array('message' => 'Error al editar el Registro', 'message_type' => 'warning'));
-            redirect('component', 'refresh');
+            redirect('index.php/component', 'refresh');
         }
     }
 

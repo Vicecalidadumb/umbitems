@@ -20,7 +20,7 @@
 </div>
 
 
-<?php echo form_open('user/update', 'id="user_update" class="form-signin" role="form" method="POST"'); ?>
+<?php echo form_open('index.php/user/update', 'id="user_update" class="form-signin" role="form" method="POST"'); ?>
 
 <?php echo form_hidden('USUARIO_ID', $user[0]->USUARIO_ID); ?>
 
