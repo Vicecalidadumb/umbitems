@@ -54,6 +54,9 @@
             <tbody>
                 <?php
                 $count = 1;
+                $etapa_val = 0;
+                $etapa_val2 = 0;
+                $validada2 = 0;
                 foreach ($questions as $question) {
                     ?>
                     <tr class="<?php echo get_itemlevel_color($question->PREGUNTA_ETAPA); ?>">
@@ -119,7 +122,7 @@
                                         <?php
                                     }
                                 case 1:
-                                    if ($this->session->userdata('ID_TIPO_USU') == 2 && $question->PREGUNTA_VALIDA_2== 1 && $etapa==1) {
+                                    if ($this->session->userdata('ID_TIPO_USU') == 2 && $question->PREGUNTA_VALIDA_2 == 1 && $etapa == 1) {
                                         ?>
                                         <a href="<?php echo base_url("index.php/question/edit/" . encrypt_id($question->PREGUNTA_ID)); ?>" class="btn btn-info btn-xs">
                                             <span class="glyphicon glyphicon-edit"></span> 
@@ -129,7 +132,7 @@
                                     }
                                 case 2:
                                     //VALIDAR ITEM (ESTADO 2 Y TIPO DE USUARIO 4 - VALIDADOR)
-                                    if ($this->session->userdata('ID_TIPO_USU') == 4 && $etapa == 1  ) {
+                                    if ($this->session->userdata('ID_TIPO_USU') == 4 && $etapa == 1) {
                                         $validate_modify_item = get_modify_item($question->PREGUNTA_ID);
                                         ?>
                                         <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#exampleModal2" data-preguntaid="<?php echo $question->PREGUNTA_ID; ?>" data-cod="<?php echo $question->COMPONENTE_SIGLA . '_' . get_level_initials($question->PREGUNTA_NIVELPREGUNTA) . '_' . $question->PREGUNTA_ID; ?>">
@@ -163,11 +166,47 @@
                     </tr>
                     <?php
                     $count++;
+                    if (($question->PREGUNTA_ETAPA) > 0) {
+                        $etapa_val++;
+                    }
+                    if (($question->PREGUNTA_ETAPA) == 1 && ($question->PREGUNTA_VALIDA_2) == 0) {
+                        $etapa_val2++;
+                    }
+                    if (($question->PREGUNTA_ETAPA) == 1 && ($question->PREGUNTA_VALIDA_2) == 1)
+                        $validada2++;
                 }
+//                $count = $count - 1;
+//                echo "<br>".$etapa_val2."*".$validada2."*".$etapa_val."//".$count;
+//                $resul =  $validada2;
+//                $porce = ($resul / $count) * 100;
+
+
+                $resul = $etapa_val + (-$etapa_val2);
+                $porce = ($resul / $etapa_val) * 100;
+                //echo $count."**".$resul;
                 ?>
             </tbody>
+            <p>
+                <?php // echo $this->session->userdata('ID_TIPO_USU');
+                if ($this->session->userdata('ID_TIPO_USU') == 4) {
+                    ?>
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <div class="progress" style="width: 300px">
+                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $porce; ?>%">
+                                <span class="sr-only"><?php echo $porce; ?>% completado</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <span ><?php echo number_format($porce); ?>% completado</span>
+                    </div>
+                </div>
+    <?php } ?>
+
+
         </table>
-    <?php } else { ?>
+<?php } else { ?>
 
         <div class="alert alert-warning">
             No se encontraron registros
@@ -178,7 +217,7 @@
             </a>            
         </div>
 
-    <?php } ?>
+<?php } ?>
 
 </div>
 <div class="container">
@@ -218,7 +257,7 @@
                         <input type="hidden" name="PREGUNTA_ID" id="PREGUNTA_ID">
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">Estado:</label>
-                            <?php echo form_dropdown('PREGUNTA_VALIDA_2', array(1 => 'VALIDACION OK', 2 => 'ERROR AL VALIDAR'), '', 'class="form-control"'); ?>
+<?php echo form_dropdown('PREGUNTA_VALIDA_2', array(1 => 'VALIDACION OK', 2 => 'ERROR AL VALIDAR'), '', 'class="form-control"'); ?>
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">Suficiencia:</label>
