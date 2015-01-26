@@ -53,15 +53,42 @@
             Usuarios Asignados
         </h3>
     </div>
-
-    <div class="col-md-12">
-    <?php
-    $array_users = explode(',',$component[0]->ASIGNADOS);
-    ?>
+    <div class="col-md-6 bs-example">
         <div class="form-group">
-            <label for="exampleInputEmail1">Seleccione los Usuarios Asignados al Componente</label>
-            <?php echo form_multiselect('USUARIO_IDs[]', $users, $array_users, 'class="form-control"'); ?>
+            <label for="exampleInputEmail1">Seleccione los Constructores</label>
         </div>  
+        <?php
+        $array_users = explode(',', $component[0]->ASIGNADOS);
+        foreach ($users_c as $user_c) {
+            ?>
+            <div class="checkbox">
+                <label>
+                    <?php echo form_checkbox('USUARIO_IDs[]', $user_c->USUARIO_ID, (array_search($user_c->USUARIO_ID,$array_users))?true:false, 'id="'.$user_c->USUARIO_ID.'"'); ?>
+                    <?php echo $user_c->USUARIO_NOMBRES . ' ' . $user_c->USUARIO_APELLIDOS; ?>
+                    <?php echo ' - ROL:' . $user_c->NOM_TIPO_USU; ?>
+                </label>
+            </div>
+            <?php
+        }
+        ?>
+    </div>
+    <div class="col-md-6 bs-example">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Seleccion del grupo de validacion</label>
+        </div>  
+        <?php
+        foreach ($users_ad as $user_c) {
+            ?>
+            <div class="checkbox">
+                <label>
+                    <?php echo form_checkbox('USUARIO_IDs[]', $user_c->USUARIO_ID, false (), ''); ?>
+                    <?php echo $user_c->USUARIO_NOMBRES . ' ' . $user_c->USUARIO_APELLIDOS; ?>
+                    <?php echo ' - ROL:' . $user_c->NOM_TIPO_USU; ?>
+                </label>
+            </div>
+            <?php
+        }
+        ?>
     </div>    
 </div>
 
@@ -98,11 +125,11 @@
                     highlight: function(element) {
                         $(element).closest('.control-group').removeClass('success').addClass('error');
                     }/*,
-                    success: function(element) {
-                        element
-                                .text('OK!').addClass('valid')
-                                .closest('.control-group').removeClass('error').addClass('success');
-                    }*/
+                     success: function(element) {
+                     element
+                     .text('OK!').addClass('valid')
+                     .closest('.control-group').removeClass('error').addClass('success');
+                     }*/
                 });
     });
 </script>

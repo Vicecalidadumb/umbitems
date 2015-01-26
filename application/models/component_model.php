@@ -6,16 +6,15 @@ if (!defined('BASEPATH'))
 class Component_model extends CI_Model {
 
     public function get_components() {
-        $CI = & get_instance();
         $SQL_string = "SELECT c.*,
                         (
-                        SELECT GROUP_CONCAT(CONCAT(u.USUARIO_NOMBRES,' ',u.USUARIO_APELLIDOS,': <strong>',t.NOM_TIPO_USU) SEPARATOR '</strong><br>') FROM 
+                        SELECT GROUP_CONCAT(CONCAT(u.USUARIO_NOMBRES,' ',u.USUARIO_APELLIDOS) SEPARATOR '<br>') FROM 
                         umbitems_usuarios_componentes uc,
                         umbitems_usuarios u,
                         umbitems_tipos_usuario t
                         WHERE uc.USUARIO_ID = u.USUARIO_ID
                         AND t.ID_TIPO_USU = u.ID_TIPO_USU
-                        AND uc.COMPONENTE_ID = c.COMPONENTE_ID
+                        AND uc.COMPONENTE_ID = c.COMPONENTE_ID AND u.ID_TIPO_USU=2
                         )
                         ASIGNADOS,
                         (

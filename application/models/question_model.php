@@ -19,7 +19,7 @@ class Question_model extends CI_Model {
             $WHERE.= 'GROUP BY p.PREGUNTA_ID';
         }
 
-        $SQL_string = "SELECT 
+        $SQL_string = "SELECT
                         p.*,r.*,u.*,c.*,
                         AES_DECRYPT(p.PREGUNTA_ENUNCIADO,'{$KEY_AES}') PREGUNTA_ENUNCIADO,
                         AES_DECRYPT(p.PREGUNTA_CONTEXTO,'{$KEY_AES}') PREGUNTA_CONTEXTO,
@@ -43,6 +43,7 @@ class Question_model extends CI_Model {
                             $WHERE
                             ORDER BY PREGUNTA_FECHADECREACION DESC
                             ";
+        //echo $SQL_string;
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
     }
@@ -216,7 +217,7 @@ class Question_model extends CI_Model {
     }
 
     public function get_question($id_question, $KEY_AES, $USUARIO_ID) {
-        $tipo=$this->session->userdata('ID_TIPO_USU');
+        $tipo = $this->session->userdata('ID_TIPO_USU');
         $this->db->select("p.*,r.*,u.*,c.*,
                         CONCAT(u.USUARIO_NOMBRES,' ',u.USUARIO_APELLIDOS) PERSONA_CARGO,
                         AES_DECRYPT(p.PREGUNTA_ENUNCIADO,'{$KEY_AES}') PREGUNTA_ENUNCIADO,
@@ -224,16 +225,16 @@ class Question_model extends CI_Model {
                         AES_DECRYPT(p.PREGUNTA_IDRESPUESTA,'{$KEY_AES}') PREGUNTA_IDRESPUESTA,
                         AES_DECRYPT(p.PREGUNTA_OBSERVACIONES,'{$KEY_AES}') PREGUNTA_OBSERVACIONES,
                         AES_DECRYPT(r.RESPUESTA_ENUNCIADO,'{$KEY_AES}') RESPUESTA_ENUNCIADO,
-                        AES_DECRYPT(r.RESPUESTA_JUSTIFICACION,'{$KEY_AES}') RESPUESTA_JUSTIFICACION",false);
-        $this->db->where('p.PREGUNTA_ID','r.PREGUNTA_ID',false);                
-        $this->db->where('p.PREGUNTA_ID',$id_question,false);                
-        $this->db->where('u.USUARIO_ID','p.USUARIO_ID',false);                
-        $this->db->where('c.COMPONENTE_ID',' p.COMPONENTE_ID',false);                
-        $this->db->where('PREGUNTA_ESTADO',1,false);                
-        if($tipo!=3)
-        $this->db->where('p.USUARIO_ID',$USUARIO_ID,false);                
-        $this->db->from('preguntas p,respuestas r,usuarios u,componentes c');                   
-        $datos=$this->db->get();        
+                        AES_DECRYPT(r.RESPUESTA_JUSTIFICACION,'{$KEY_AES}') RESPUESTA_JUSTIFICACION", false);
+        $this->db->where('p.PREGUNTA_ID', 'r.PREGUNTA_ID', false);
+        $this->db->where('p.PREGUNTA_ID', $id_question, false);
+        $this->db->where('u.USUARIO_ID', 'p.USUARIO_ID', false);
+        $this->db->where('c.COMPONENTE_ID', ' p.COMPONENTE_ID', false);
+        $this->db->where('PREGUNTA_ESTADO', 1, false);
+        if ($tipo != 3)
+            $this->db->where('p.USUARIO_ID', $USUARIO_ID, false);
+        $this->db->from('preguntas p,respuestas r,usuarios u,componentes c');
+        $datos = $this->db->get();
         //echo $SQL_string;
         return $datos->result();
     }
@@ -378,7 +379,7 @@ class Question_model extends CI_Model {
         //echo '<textarea>'.$SQL_string.'</textarea>';
         $SQL_string_query = $this->db->query($SQL_string);
     }
-    
+
     public function update_question_nivelpregunta($PREGUNTA_NIVELPREGUNTA, $PREGUNTA_ID) {
         $SQL_string = "UPDATE {$this->db->dbprefix('preguntas')} SET
                        PREGUNTA_NIVELPREGUNTA = '{$PREGUNTA_NIVELPREGUNTA}'
@@ -387,7 +388,7 @@ class Question_model extends CI_Model {
                        ";
         //echo '<textarea>'.$SQL_string.'</textarea>';
         $SQL_string_query = $this->db->query($SQL_string);
-    }    
+    }
 
     public function update_question($data, $KEY_AES) {
 

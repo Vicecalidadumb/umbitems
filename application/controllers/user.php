@@ -22,7 +22,7 @@ class User extends CI_Controller {
         //VALIDAR PERMISO DEL ROL
         validation_permission_role($this->module_sigla, 'permission_view');
 
-        $data['users'] = $this->user_model->get_all_users(1,$this->session->userdata('c_id'));
+        $data['users'] = $this->user_model->get_all_users(1,$this->session->userdata('c_id'),1);
         $data['title'] = 'Usuarios';
         $data['content'] = 'user/index';
         $this->load->view('template/template', $data);

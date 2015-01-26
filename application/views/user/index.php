@@ -1,4 +1,4 @@
-<?php //echo '<pre>'.print_r($users,true).'<pre>'; ?>
+<?php //echo '<pre>'.print_r($users,true).'<pre>';     ?>
 
 <?php if ($this->session->flashdata('message')) { ?>
     <div class="alert alert-<?php echo $this->session->flashdata('message_type'); ?>">
@@ -70,7 +70,7 @@
                 <?php echo $user->USUARIO_CORREO ?>
             </td>
             <td>
-                <a href="<?php echo base_url("user/edit/" . encrypt_id($user->USUARIO_ID)); ?>">
+                <a href="<?php echo base_url("index.php/user/edit/" . encrypt_id($user->USUARIO_ID)); ?>">
                     <button type="button" class="btn btn-info btn-sm">
                         <span class="glyphicon glyphicon-edit"></span> Editar
                     </button>
@@ -78,5 +78,4 @@
             </td>            
         </tr>  
     <?php } ?>
-
 </table>

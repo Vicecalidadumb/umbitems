@@ -44,10 +44,10 @@ class Component extends CI_Controller {
 
         if ($insert) {
             $this->session->set_flashdata(array('message' => 'Componente Actualizada con Exito.', 'message_type' => 'info'));
-            redirect('desk', 'refresh');
+            redirect('index.php/desk', 'refresh');
         } else {
             $this->session->set_flashdata(array('message' => 'Error al Actualizar el Componente.', 'message_type' => 'error'));
-            redirect('desk', 'refresh');
+            redirect('index.php/desk', 'refresh');
         }
     }
 
@@ -104,6 +104,8 @@ class Component extends CI_Controller {
         validation_permission_role($this->module_sigla, 'permission_add');
 
         $data['users'] = get_dropdown($this->user_model->get_all_users_rol(), 'USUARIO_ID', 'USUARIO_NOMBRES');
+        $data['users_c'] = $this->user_model->get_all_users_type(2);
+        $data['users_ad'] = $this->user_model->get_all_users_type();
 
         $data['title'] = 'Nuevo Componente';
         $data['content'] = 'component/add';
@@ -142,12 +144,11 @@ class Component extends CI_Controller {
         $COMPONENTE_ID = deencrypt_id($COMPONENTE_ID);
 
         validation_permission_role($this->module_sigla, 'permission_edit');
-
         $data['component'] = $this->component_model->get_component_id($COMPONENTE_ID);
         if (count($data['component']) > 0) {
-
             $data['users'] = get_dropdown($this->user_model->get_all_users_rol(), 'USUARIO_ID', 'USUARIO_NOMBRES');
-
+            $data['users_c'] = $this->user_model->get_all_users_type(2);
+            $data['users_ad'] = $this->user_model->get_all_users_type();
             $data['title'] = 'Editar Componente';
             $data['content'] = 'component/edit';
             $this->load->view('template/template', $data);
@@ -183,14 +184,14 @@ class Component extends CI_Controller {
 
     public function report3() {
         validation_permission_role($this->module_sigla, 'permission_view');
-        $data['components'] = $this->question_model->get_questions_report3('ALL','ALL',$this->session->userdata("KEY_AES"),0);
-        
+        $data['components'] = $this->question_model->get_questions_report3('ALL', 'ALL', $this->session->userdata("KEY_AES"), 0);
+
         header("Content-type: application/octet-stream; charset=UTF-8");
         header("Content-Disposition: attachment; filename=reporte_items_construidos_" . date("Y_m_d_H_i_s") . ".xls");
         header('Content-Type: text/html; charset=UTF-8');
         header("Pragma: no-cache");
         header("Expires: 0");
-        
+
 
         //$data['content'] = 'component/report2';
         $this->load->view('component/report3', $data);

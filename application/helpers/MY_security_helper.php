@@ -25,7 +25,7 @@ function validation_permission_role($module_sigla, $permission_type) {
         return TRUE;
     } else {
         $CI->session->set_flashdata(array('message' => 'No Posee Permisos para Realizar esta Accion.', 'message_type' => 'warning'));
-        redirect('/desk', 'refresh');
+        redirect('index.php/desk', 'refresh');
     }
 }
 

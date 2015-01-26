@@ -50,7 +50,9 @@ $active_record = TRUE;
 
 
  //Conexion Servidor de Items DPS
+
 $db['default']['hostname'] = '172.16.210.38';
+$db['default']['port'] = 3306;
 $db['default']['username'] = 'dps_admin';
 $db['default']['password'] = '5MvdrG69oO';
 $db['default']['database'] = 'itemsdps'; 
@@ -67,11 +69,12 @@ $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
 
  //Conexion Local
+
 /*
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
 $db['default']['password'] = '';
-$db['default']['database'] = 'umb_itemsdps'; 
+$db['default']['database'] = 'itemsdps';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = 'umbitems_';
 $db['default']['pconnect'] = TRUE;

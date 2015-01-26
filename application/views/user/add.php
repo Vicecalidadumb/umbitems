@@ -60,6 +60,9 @@
 
         <div class="form-group">
             <label for="exampleInputEmail1">Rol</label>
+            <?php
+            $roles = ($this->session->userdata('ID_TIPO_USU') == 5)?array('2' => 'Constructor'):$roles;
+            ?>
             <?php echo form_dropdown('ID_TIPO_USU', $roles, '', 'class="form-control"'); ?>
         </div>        
 

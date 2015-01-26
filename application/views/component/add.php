@@ -50,12 +50,41 @@
             Usuarios Asignados
         </h3>
     </div>
-
-    <div class="col-md-12">
+    <div class="col-md-6 bs-example">
         <div class="form-group">
-            <label for="exampleInputEmail1">Seleccione los Usuarios Asignados al Componente</label>
-            <?php echo form_multiselect('USUARIO_IDs[]', $users, '', 'id="USUARIO_IDs" class="form-control"'); ?>
+            <label for="exampleInputEmail1">Seleccione los Constructores</label>
         </div>  
+        <?php
+        foreach ($users_c as $user_c) {
+            ?>
+            <div class="checkbox">
+                <label>
+                    <?php echo form_checkbox('USUARIO_IDs[]', $user_c->USUARIO_ID, false, ''); ?>
+                    <?php echo $user_c->USUARIO_NOMBRES . ' ' . $user_c->USUARIO_APELLIDOS; ?>
+                    <?php echo ' - ROL:' . $user_c->NOM_TIPO_USU; ?>
+                </label>
+            </div>
+            <?php
+        }
+        ?>
+    </div>
+    <div class="col-md-6 bs-example">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Seleccion del grupo de validacion</label>
+        </div>  
+        <?php
+        foreach ($users_ad as $user_c) {
+            ?>
+            <div class="checkbox">
+                <label>
+                    <?php echo form_checkbox('USUARIO_IDs[]', $user_c->USUARIO_ID, false, ''); ?>
+                    <?php echo $user_c->USUARIO_NOMBRES . ' ' . $user_c->USUARIO_APELLIDOS; ?>
+                    <?php echo ' - ROL:' . $user_c->NOM_TIPO_USU; ?>
+                </label>
+            </div>
+            <?php
+        }
+        ?>
     </div>    
 </div>
 
@@ -73,32 +102,23 @@
 
 <script>
     $(document).ready(function() {
-        $('#component_insert').validate(
-                {
-                    rules: {
-                        COMPONENTE_NOMBRE: {
-                            minlength: 2,
-                            required: true
-                        },
-                        COMPONENTE_PREGUNTAS: {
-                            required: true
-                        },
-                        COMPONENTE_SIGLA: {
-                            minlength: 2,
-                            required: true
-                        },
-                        USUARIO_IDs: {
-                            required: true
-                        }
-                    },
-                    highlight: function(element) {
-                        $(element).closest('.control-group').removeClass('success').addClass('error');
-                    }/*,
-                    success: function(element) {
-                        element
-                                .text('OK!').addClass('valid')
-                                .closest('.control-group').removeClass('error').addClass('success');
-                    }*/
-                });
+    $('#component_insert').validate(
+    {
+    rules: {
+    COMPONENTE_NOMBRE: {
+    minlength: 2,
+            required: true
+    },
+            COMPONENTE_PREGUNTAS: {
+            required: true
+            }
+    USUARIO_IDs: {
+    required: true
+    }
+    },
+            highlight: function(element) {
+            $(element).closest('.control-group').removeClass('success').addClass('error');
+            }
+    });
     });
 </script>

@@ -5,15 +5,18 @@ if (!defined('BASEPATH'))
 
 class User_model extends CI_Model {
 
-    public function get_all_users($state = 1) {
-        $CI = & get_instance();
+    public function get_all_users($state = 1, $restric = 0) {
+        $where = '';
+        if ($this->session->userdata('ID_TIPO_USU') == 5 && $restric = 1) {
+            $where.=' AND u.ID_TIPO_USU=2 ';
+        }
         $SQL_string = "SELECT *
                       FROM 
                         {$this->db->dbprefix('usuarios')} u,
                         {$this->db->dbprefix('tipos_usuario')} tu
                       WHERE 
                       u.ID_TIPO_USU = tu.ID_TIPO_USU
-                      AND USUARIO_ESTADO=$state
+                      AND USUARIO_ESTADO=$state $where
                       ORDER BY tu.NOM_TIPO_USU";
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
@@ -29,25 +32,30 @@ class User_model extends CI_Model {
     }
 
     public function get_all_users_rol($state = 1) {
-        $CI = & get_instance();
-        $SQL_string = "SELECT USUARIO_ID,CONCAT(u.USUARIO_NOMBRES,' - ',t.NOM_TIPO_USU) AS USUARIO_NOMBRES
+
+        $SQL_string = "SELECT u.*,t.*,USUARIO_ID,CONCAT(u.USUARIO_NOMBRES,' - ',t.NOM_TIPO_USU) AS USUARIO_NOMBRES
                       FROM 
                         {$this->db->dbprefix('usuarios')} u,
                         {$this->db->dbprefix('tipos_usuario')} t
                       WHERE 
                       u.USUARIO_ESTADO=$state 
                       AND t.ID_TIPO_USU = u.ID_TIPO_USU
-                      ORDER BY USUARIO_NOMBRES";
+                      ORDER BY NOM_TIPO_USU,USUARIO_NOMBRES";
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
     }
 
-    public function get_all_users_type($type_id) {
-        $CI = & get_instance();
-        $SQL_string = "SELECT *, CONCAT(USUARIO_NOMBRES,' ',USUARIO_APELLIDOS) AS NOMBRES_C
-                      FROM {$this->db->dbprefix('usuarios')}
-                      WHERE USUARIO_ESTADO = '1' 
-                      AND ID_TIPO_USU = $type_id ";
+    public function get_all_users_type($type_id = "nocons") {
+        $wheretype = " AND u.ID_TIPO_USU = $type_id ";
+        $where = '';
+        if($type_id=='nocons'){
+            $wheretype = '';
+            $where.=' AND (u.ID_TIPO_USU=3 OR u.ID_TIPO_USU=4 OR u.ID_TIPO_USU=6 OR u.ID_TIPO_USU=7) ';
+        }
+        $SQL_string = "SELECT t.*,u.*, CONCAT(USUARIO_NOMBRES,' ',USUARIO_APELLIDOS) AS NOMBRES_C
+                      FROM {$this->db->dbprefix('usuarios')} u,{$this->db->dbprefix('tipos_usuario')} t
+                      WHERE USUARIO_ESTADO = '1' AND t.ID_TIPO_USU = u.ID_TIPO_USU $wheretype $where
+                      ORDER BY NOM_TIPO_USU";
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
     }

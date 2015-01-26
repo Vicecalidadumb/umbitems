@@ -38,8 +38,7 @@
 
             <?php
             if ($this->session->userdata('ID_TIPO_USU') == 1 OR
-                    $this->session->userdata('ID_TIPO_USU') == 2 OR
-                    $this->session->userdata('ID_TIPO_USU') == 5):
+                    $this->session->userdata('ID_TIPO_USU') == 2):
                 ?>
                 <!--MENU CONSTRUCTOR DE ITEMS-->
                 <ul class="nav navbar-nav">
