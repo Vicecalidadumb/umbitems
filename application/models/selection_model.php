@@ -121,4 +121,11 @@ class Selection_model extends CI_Model {
         return $return;
     }
 
+    function devolver($id_pregunta) {
+        $this->db->set('PREGUNTA_ETAPA', 1);
+        $this->db->set('PREGUNTA_VALIDA_2', 0);
+        $this->db->where('PREGUNTA_ID', $id_pregunta);
+        $this->db->update('preguntas');
+    }
+
 }

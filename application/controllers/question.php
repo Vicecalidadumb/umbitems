@@ -41,6 +41,7 @@ class Question extends CI_Controller {
             } else {
 
                 $data['user'] = $this->user_model->get_user_id_user($id_user);
+                $data['id_component2']=$id_component."/".$level;
                 $id_component = deencrypt_id($id_component);
                 $component_validate = $this->component_model->get_components_id_user_id_component($id_user, $id_component);
 

@@ -141,6 +141,17 @@
                                         </a>
                                         <?php
                                     }
+                                    //DEVOLVER EN CASO DE QUE SEA ERRONEO LA INFORMACION 
+                                    if ($this->session->userdata('ID_TIPO_USU') == 4 && $etapa == 2) {
+                                        $validate_modify_item = get_modify_item($question->PREGUNTA_ID);
+                                        ?>
+                                        <a href="<?php echo base_url("index.php/selection/devolver/" . $question->PREGUNTA_ID."/".$id_component2); ?>" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                            Desseleccionar
+                                        </a>
+                                        <?php
+                                    }
+                                    
                                     //SELECCIONAR ITEM (ESTADO 1 O 2 Y TIPO DE USUARIO 6 - SELECCIONAROR)   
                                     if ($this->session->userdata('ID_TIPO_USU') == 6 && ($etapa == 3 || $etapa == 2)) {
                                         ?>

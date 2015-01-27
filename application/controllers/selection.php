@@ -565,5 +565,9 @@ class Selection extends CI_Controller {
             redirect('user', 'refresh');
         }
     }
+    function devolver($id_pregunta,$id_component,$level){
+        $this->selection_model->devolver($id_pregunta);
+        redirect('index.php/question/view/'.$id_component."/".$level, 'refresh');
+    }
 
 }
