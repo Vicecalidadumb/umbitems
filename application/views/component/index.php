@@ -45,17 +45,26 @@ $array_color_2 = array('#5cb85c', '#f0ad4e', '#d9534f');
         </td>
         <td>
             <strong>Constructor</strong>
-        </td>       
-        <td>
-            <strong>Numero de Items</strong>
-        </td>
-        <td>
-            <strong>Items Construidos</strong>
-        </td>
+        </td> 
+
+        <td class="text-primary" style="background-color: #DDDBDB;"><strong>A</strong></td>
+        <td class="text-primary" style="background-color: #DDDBDB;"><strong>CA</strong></td>
+
+        <td class="text-success"><strong>T</strong></td>
+        <td class="text-success"><strong>CT</strong></td>
+
+        <td class="text-warning" style="background-color: #DDDBDB;"><strong>U</strong></td>
+        <td class="text-warning" style="background-color: #DDDBDB;"><strong>CU</strong></td>
+
+        <td class="text-danger"><strong>E</strong></td>
+        <td class="text-danger"><strong>CE</strong></td>
+
+
         <td>
             <strong>Opciones</strong>
         </td>        
     </tr>
+
     <?php
     $count = 1;
     foreach ($components as $component) {
@@ -70,25 +79,45 @@ $array_color_2 = array('#5cb85c', '#f0ad4e', '#d9534f');
             <td style="font-size: 11px !important;">
                 <?php echo str_replace(":", ":<br>", $component->ASIGNADOS); ?>
             </td>
-            <td style="font-size: 11px !important;">
-                <?php echo $component->COMPONENTE_PREGUNTAS; ?>
-            </td>						
-            <td style="font-size: 11px !important;">
-                <?php
-                if ($component->COMPONENTE_PREGUNTAS > 0) {
-//                    $porcen = ($component->ITEMS * 100) / $component->COMPONENTE_PREGUNTAS;
-//                    echo round($porcen) . '% |  ' . $component->ITEMS . ' de ' . $component->COMPONENTE_PREGUNTAS . ' Items';
-                    echo $component->ITEMS;
-                } else {
-                    echo "Sin Items";
-                }
-                ?>
-                <!--                <div class="progress progress-striped active">
-                                    <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo round($porcen); ?>%">
-                                        <span class="sr-only"></span>
-                                    </div>
-                                </div>-->
+
+
+            <td style="font-size: 11px !important;background-color: #DDDBDB;" class="text-primary">
+                <?php echo $component->COMPONENTE_PREGUNTAS_ASIS; ?>
             </td>
+            <td style="font-size: 11px !important;background-color: #DDDBDB;" class="text-primary">
+                <?php
+                echo ($component->ITEMS_ASIS > 0) ? $component->ITEMS_ASIS : "N/O";
+                ?>
+            </td>
+
+            <td style="font-size: 11px !important;" class="text-success">
+                <?php echo $component->COMPONENTE_PREGUNTAS_TECN; ?>
+            </td>
+            <td style="font-size: 11px !important;" class="text-success">
+                <?php
+                echo ($component->ITEMS_TECN > 0) ? $component->ITEMS_TECN : "N/O";
+                ?>
+            </td>
+
+            <td style="font-size: 11px !important;background-color: #DDDBDB;" class="text-warning">
+                <?php echo $component->COMPONENTE_PREGUNTAS_UNIV; ?>
+            </td>
+            <td style="font-size: 11px !important;background-color: #DDDBDB;" class="text-warning">
+                <?php
+                echo ($component->ITEMS_UNIV > 0) ? $component->ITEMS_UNIV : "N/O";
+                ?>
+            </td>
+
+            <td style="font-size: 11px !important;" class="text-danger">
+                <?php echo $component->COMPONENTE_PREGUNTAS_ESPE; ?>
+            </td>
+            <td style="font-size: 11px !important;" class="text-danger">
+                <?php
+                echo ($component->ITEMS_ESPE > 0) ? $component->ITEMS_ESPE : "N/O";
+                ?>
+            </td>
+
+
             <td style="font-size: 11px !important;">
                 <a href="<?php echo base_url("index.php/component/edit/" . encrypt_id($component->COMPONENTE_ID)); ?>">
                     <button type="button" class="btn btn-info btn-sm">

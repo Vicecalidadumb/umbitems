@@ -16,8 +16,15 @@
 <div class="page-header">
     <h1 style="color:#2aabd2">
         Editar Componente
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            Agregar Usuario
+        </button>
     </h1>
 </div>
+
+<?php
+echo $dom_modal;
+?>
 
 
 <?php echo form_open('index.php/component/update', 'id="component_update" class="form-signin" role="form" method="POST"'); ?>
@@ -31,20 +38,42 @@
             <label for="exampleInputEmail1">Componente </label>
             <?php echo form_input('COMPONENTE_NOMBRE', $component[0]->COMPONENTE_NOMBRE, 'id="COMPONENTE_NOMBRE" placeholder="Nombre del Componente" class="form-control"') ?>
         </div>
-
-        <div class="form-group">
-            <label for="exampleInputEmail1">Numero de Items a Construir</label>
-            <?php echo form_input('COMPONENTE_PREGUNTAS', $component[0]->COMPONENTE_PREGUNTAS, 'id="COMPONENTE_PREGUNTAS" placeholder="Numero de Preguntas" class="form-control"') ?>
-        </div>
-
-
     </div>
+
     <div class="col-md-6">
         <div class="form-group">
             <label for="exampleInputEmail1">Sigla </label>
             <?php echo form_input('COMPONENTE_SIGLA', $component[0]->COMPONENTE_SIGLA, 'id="COMPONENTE_SIGLA" placeholder="Sigla del Componente" class="form-control"') ?>
         </div>      
+    </div>    
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="exampleInputEmail1">No. de Items Asistencial</label>
+            <?php echo form_input('COMPONENTE_PREGUNTAS_ASIS', $component[0]->COMPONENTE_PREGUNTAS_ASIS, 'id="COMPONENTE_PREGUNTAS_ASIS" placeholder="" class="form-control"') ?>
+        </div>
     </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="exampleInputEmail1">No. de Items T&eacute;cnico</label>
+            <?php echo form_input('COMPONENTE_PREGUNTAS_TECN', $component[0]->COMPONENTE_PREGUNTAS_TECN, 'id="COMPONENTE_PREGUNTAS_TECN" placeholder="" class="form-control"') ?>
+        </div>
+    </div>  
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="exampleInputEmail1">No. de Items Universitario</label>
+            <?php echo form_input('COMPONENTE_PREGUNTAS_UNIV', $component[0]->COMPONENTE_PREGUNTAS_UNIV, 'id="COMPONENTE_PREGUNTAS_UNIV" placeholder="" class="form-control"') ?>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="exampleInputEmail1">No. de Items Prof Esp.</label>
+            <?php echo form_input('COMPONENTE_PREGUNTAS_ESPE', $component[0]->COMPONENTE_PREGUNTAS_ESPE, 'id="COMPONENTE_PREGUNTAS_ESPE" placeholder="" class="form-control"') ?>
+        </div>
+    </div>    
 </div>
 
 <div class="row">
@@ -63,7 +92,7 @@
             ?>
             <div class="checkbox">
                 <label>
-                    <?php echo form_checkbox('USUARIO_IDs[]', $user_c->USUARIO_ID, (array_search($user_c->USUARIO_ID,$array_users))?true:false, 'id="'.$user_c->USUARIO_ID.'"'); ?>
+                    <?php echo form_checkbox('USUARIO_IDs[]', $user_c->USUARIO_ID, (in_array($user_c->USUARIO_ID, $array_users)) ? true : false, 'id="' . $user_c->USUARIO_ID . '"'); ?>
                     <?php echo $user_c->USUARIO_NOMBRES . ' ' . $user_c->USUARIO_APELLIDOS; ?>
                     <?php echo ' - ROL:' . $user_c->NOM_TIPO_USU; ?>
                 </label>
@@ -81,7 +110,7 @@
             ?>
             <div class="checkbox">
                 <label>
-                    <?php echo form_checkbox('USUARIO_IDs[]', $user_c->USUARIO_ID, false (), ''); ?>
+                    <?php echo form_checkbox('USUARIO_IDs[]', $user_c->USUARIO_ID, (in_array($user_c->USUARIO_ID, $array_users)) ? true : false, ''); ?>
                     <?php echo $user_c->USUARIO_NOMBRES . ' ' . $user_c->USUARIO_APELLIDOS; ?>
                     <?php echo ' - ROL:' . $user_c->NOM_TIPO_USU; ?>
                 </label>
