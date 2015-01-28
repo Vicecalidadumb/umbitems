@@ -107,13 +107,16 @@ class Component extends CI_Controller {
         $data['users_c'] = $this->user_model->get_all_users_type(2);
         $data['users_ad'] = $this->user_model->get_all_users_type();
 
+        $data['url_adduser'] = 'component/add';
+        $data['roles'] = get_dropdown($this->user_model->get_all_roles(), 'ID_TIPO_USU', 'NOM_TIPO_USU');
+        $data['dom_modal'] = $this->load->view('user/modal', $data, true);
+
         $data['title'] = 'Nuevo Componente';
         $data['content'] = 'component/add';
         $this->load->view('template/template', $data);
     }
 
     public function insert() {
-
         //echo print_y($this->input->post());
         //VALIDAR PERMISO DEL ROL
         validation_permission_role($this->module_sigla, 'permission_add');
@@ -122,16 +125,17 @@ class Component extends CI_Controller {
             'COMPONENTE_NOMBRE' => $this->input->post('COMPONENTE_NOMBRE', TRUE),
             'COMPONENTE_SIGLA' => $this->input->post('COMPONENTE_SIGLA', TRUE),
             'COMPONENTE_ESTADO' => 1,
-            'COMPONENTE_PREGUNTAS' => $this->input->post('COMPONENTE_PREGUNTAS', TRUE),
+            'COMPONENTE_PREGUNTAS_ASIS' => $this->input->post('COMPONENTE_PREGUNTAS_ASIS'),
+            'COMPONENTE_PREGUNTAS_TECN' => $this->input->post('COMPONENTE_PREGUNTAS_TECN'),
+            'COMPONENTE_PREGUNTAS_UNIV' => $this->input->post('COMPONENTE_PREGUNTAS_UNIV'),
+            'COMPONENTE_PREGUNTAS_ESPE' => $this->input->post('COMPONENTE_PREGUNTAS_ESPE'),
             'USUARIO_IDs' => $this->input->post('USUARIO_IDs', TRUE)
         );
 
         $insert = $this->component_model->insert_component($data);
 
         if ($insert) {
-
             $insert_2 = $this->component_model->insert_component_users($data, $insert);
-
             $this->session->set_flashdata(array('message' => 'Registro agregado con exito', 'message_type' => 'info'));
             redirect('index.php/component', 'refresh');
         } else {
@@ -149,6 +153,11 @@ class Component extends CI_Controller {
             $data['users'] = get_dropdown($this->user_model->get_all_users_rol(), 'USUARIO_ID', 'USUARIO_NOMBRES');
             $data['users_c'] = $this->user_model->get_all_users_type(2);
             $data['users_ad'] = $this->user_model->get_all_users_type();
+
+            $data['url_adduser'] = 'component/edit/' . encrypt_id($COMPONENTE_ID);
+            $data['roles'] = get_dropdown($this->user_model->get_all_roles(), 'ID_TIPO_USU', 'NOM_TIPO_USU');
+            $data['dom_modal'] = $this->load->view('user/modal', $data, true);
+
             $data['title'] = 'Editar Componente';
             $data['content'] = 'component/edit';
             $this->load->view('template/template', $data);
@@ -166,7 +175,10 @@ class Component extends CI_Controller {
             'COMPONENTE_NOMBRE' => $this->input->post('COMPONENTE_NOMBRE', TRUE),
             'COMPONENTE_SIGLA' => $this->input->post('COMPONENTE_SIGLA', TRUE),
             'COMPONENTE_ESTADO' => 1,
-            'COMPONENTE_PREGUNTAS' => $this->input->post('COMPONENTE_PREGUNTAS', TRUE),
+            'COMPONENTE_PREGUNTAS_ASIS' => $this->input->post('COMPONENTE_PREGUNTAS_ASIS'),
+            'COMPONENTE_PREGUNTAS_TECN' => $this->input->post('COMPONENTE_PREGUNTAS_TECN'),
+            'COMPONENTE_PREGUNTAS_UNIV' => $this->input->post('COMPONENTE_PREGUNTAS_UNIV'),
+            'COMPONENTE_PREGUNTAS_ESPE' => $this->input->post('COMPONENTE_PREGUNTAS_ESPE'),
             'USUARIO_IDs' => $this->input->post('USUARIO_IDs', TRUE)
         );
 
@@ -175,7 +187,7 @@ class Component extends CI_Controller {
         if ($update) {
             $insert_2 = $this->component_model->insert_component_users($data, $data['COMPONENTE_ID']);
             $this->session->set_flashdata(array('message' => 'Registro editado con exito', 'message_type' => 'info'));
-            redirect('index.php/component', 'refresh');
+            redirect('index.php/component/edit/' . encrypt_id($this->input->post('COMPONENTE_ID', TRUE)), 'refresh');
         } else {
             $this->session->set_flashdata(array('message' => 'Error al editar el Registro', 'message_type' => 'warning'));
             redirect('index.php/component', 'refresh');

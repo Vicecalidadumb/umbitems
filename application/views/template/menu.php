@@ -81,11 +81,11 @@
                 <!--MENU CONSTRUCTOR DE ITEMS-->
                 <ul class="nav navbar-nav">
                     <li class="" class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Componentes<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
+                        <a href="<?php echo base_url("index.php/component") ?>">Componentes</a>
+<!--                        <ul class="dropdown-menu">
                             <li><a href="<?php echo base_url("index.php/component") ?>">Ver Listado de Componentes</a></li>
                             <li><a href="<?php echo base_url("index.php/component/add") ?>">Agregar Componente</a></li>
-                        </ul>
+                        </ul>-->
                     </li>
                 </ul>
             <?php endif; ?>
@@ -95,11 +95,12 @@
                 <!--MENU CONSTRUCTOR DE ITEMS-->
                 <ul class="nav navbar-nav">
                     <li class="" class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
+                        
+                        <a href="<?php echo base_url("index.php/user") ?>">Usuarios</a>
+<!--                        <ul class="dropdown-menu">
                             <li><a href="<?php echo base_url("index.php/user") ?>">Ver Listado de Usuarios</a></li>
                             <li><a href="<?php echo base_url("index.php/user/add") ?>">Agregar Usuario</a></li>
-                        </ul>
+                        </ul>-->
                     </li>
                 </ul>
             <?php endif; ?>

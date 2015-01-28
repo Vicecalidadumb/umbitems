@@ -21,9 +21,30 @@ class Component_model extends CI_Model {
                         SELECT COUNT(p.PREGUNTA_ID) FROM 
                         umbitems_preguntas p
                         WHERE p.COMPONENTE_ID = c.COMPONENTE_ID
-                        AND p.PREGUNTA_ESTADO = 1
+                        AND p.PREGUNTA_ESTADO = 1 AND PREGUNTA_NIVELPREGUNTA='ASISTENCIAL'
                         )
-                        ITEMS,
+                        ITEMS_ASIS,
+                        (
+                        SELECT COUNT(p.PREGUNTA_ID) FROM 
+                        umbitems_preguntas p
+                        WHERE p.COMPONENTE_ID = c.COMPONENTE_ID
+                        AND p.PREGUNTA_ESTADO = 1 AND PREGUNTA_NIVELPREGUNTA='TECNICO'
+                        )
+                        ITEMS_TECN,
+                        (
+                        SELECT COUNT(p.PREGUNTA_ID) FROM 
+                        umbitems_preguntas p
+                        WHERE p.COMPONENTE_ID = c.COMPONENTE_ID
+                        AND p.PREGUNTA_ESTADO = 1 AND PREGUNTA_NIVELPREGUNTA='UNIVERSITARIO'
+                        )
+                        ITEMS_UNIV,
+                        (
+                        SELECT COUNT(p.PREGUNTA_ID) FROM 
+                        umbitems_preguntas p
+                        WHERE p.COMPONENTE_ID = c.COMPONENTE_ID
+                        AND p.PREGUNTA_ESTADO = 1 AND PREGUNTA_NIVELPREGUNTA='ESPECIALIZADO'
+                        )
+                        ITEMS_ESPE,
                         (
                         SELECT  GROUP_CONCAT(PREGUNTA_NIVELRUBRICA   SEPARATOR ',')  FROM 
                         umbitems_preguntas p
@@ -41,7 +62,7 @@ class Component_model extends CI_Model {
                       FROM 
                         {$this->db->dbprefix('componentes')} c
                       WHERE 
-                        COMPONENTE_ESTADO = '1'";
+                        COMPONENTE_ESTADO = '1' ORDER BY COMPONENTE_SIGLA";
         //echo $SQL_string;  
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
@@ -581,14 +602,20 @@ class Component_model extends CI_Model {
                        COMPONENTE_NOMBRE,  
                        COMPONENTE_SIGLA,     
                        COMPONENTE_ESTADO,
-                       COMPONENTE_PREGUNTAS
+                       COMPONENTE_PREGUNTAS_ASIS,
+                       COMPONENTE_PREGUNTAS_TECN,
+                       COMPONENTE_PREGUNTAS_UNIV,
+                       COMPONENTE_PREGUNTAS_ESPE
                        )
                       VALUES 
                        (
                        '{$data['COMPONENTE_NOMBRE']}',"
                     . "'{$data['COMPONENTE_SIGLA']}',"
                     . "'{$data['COMPONENTE_ESTADO']}',"
-                    . "'{$data['COMPONENTE_PREGUNTAS']}'
+                    . "'{$data['COMPONENTE_PREGUNTAS_ASIS']}',"
+                    . "'{$data['COMPONENTE_PREGUNTAS_TECN']}',"
+                    . "'{$data['COMPONENTE_PREGUNTAS_UNIV']}',"
+                    . "'{$data['COMPONENTE_PREGUNTAS_ESPE']}'
                        )
                        ";
         if ($this->db->query($SQL_string)) {
@@ -626,7 +653,10 @@ class Component_model extends CI_Model {
                        COMPONENTE_NOMBRE = '{$data['COMPONENTE_NOMBRE']}', 
                        COMPONENTE_SIGLA = '{$data['COMPONENTE_SIGLA']}',  
                        COMPONENTE_ESTADO = '{$data['COMPONENTE_ESTADO']}',
-                       COMPONENTE_PREGUNTAS= '{$data['COMPONENTE_PREGUNTAS']}'
+                       	COMPONENTE_PREGUNTAS_ASIS= '{$data['COMPONENTE_PREGUNTAS_ASIS']}',
+                           COMPONENTE_PREGUNTAS_TECN= '{$data['COMPONENTE_PREGUNTAS_TECN']}',
+                               COMPONENTE_PREGUNTAS_UNIV= '{$data['COMPONENTE_PREGUNTAS_UNIV']}',
+                                   COMPONENTE_PREGUNTAS_ESPE= '{$data['COMPONENTE_PREGUNTAS_ESPE']}'
                        WHERE
                        COMPONENTE_ID = {$data['COMPONENTE_ID']}
                        ";

@@ -22,8 +22,13 @@ class User extends CI_Controller {
         //VALIDAR PERMISO DEL ROL
         validation_permission_role($this->module_sigla, 'permission_view');
 
-        $data['users'] = $this->user_model->get_all_users(1,$this->session->userdata('c_id'),1);
+        $data['users'] = $this->user_model->get_all_users(1, $this->session->userdata('c_id'), 1);
         $data['title'] = 'Usuarios';
+
+        $data['url_adduser'] = 'user';
+        $data['roles'] = get_dropdown($this->user_model->get_all_roles(), 'ID_TIPO_USU', 'NOM_TIPO_USU');
+        $data['dom_modal'] = $this->load->view('user/modal', $data, true);
+
         $data['content'] = 'user/index';
         $this->load->view('template/template', $data);
     }
@@ -56,10 +61,16 @@ class User extends CI_Controller {
         $insert = $this->user_model->insert_user($data);
         if ($insert) {
             $this->session->set_flashdata(array('message' => 'Usuario agregado con exito', 'message_type' => 'info'));
-            redirect('index.php/user', 'refresh');
+            if ($this->input->post('url_adduser')) {
+                redirect('index.php/' . $this->input->post('url_adduser'), 'refresh');
+            } else
+                redirect('index.php/user', 'refresh');
         } else {
             $this->session->set_flashdata(array('message' => 'Error al insertar usuario', 'message_type' => 'error'));
-            redirect('index.php/user', 'refresh');
+            if ($this->input->post('url_adduser')) {
+                redirect('index.php/' . $this->input->post('url_adduser'), 'refresh');
+            } else
+                redirect('index.php/user', 'refresh');
         }
     }
 
