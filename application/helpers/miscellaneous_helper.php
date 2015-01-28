@@ -114,9 +114,9 @@ function get_array_item_types() {
 
 function get_array_difficulty_level() {
     $array = array(
-        '1' => 'TIPO1',
-        '2' => 'TIPO2',
-        '3' => 'TIPO3'
+        '1' => 'GRADO1',
+        '2' => 'GRADO2',
+        '3' => 'GRADO3'
     );
     
     return $array;
