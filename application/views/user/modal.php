@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <?php echo form_open('index.php/user/insert', 'id="user_insert" class="form-signin" role="form" method="POST"'); ?>
-                <?php echo form_hidden('url_adduser',$url_adduser); ?>
+                <?php echo form_hidden('url_adduser', $url_adduser); ?>
                 <div class="row">
                     <div class="col-md-6">
 
@@ -48,7 +48,7 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Rol</label>
                             <?php
-                            $roles = ($this->session->userdata('ID_TIPO_USU') == 5)?array('2' => 'Constructor','6' => 'Selector'):$roles;
+                            $roles = ($this->session->userdata('ID_TIPO_USU') == 5) ? array('2' => 'Constructor', '6' => 'Selector') : $roles;
                             ?>
                             <?php echo form_dropdown('ID_TIPO_USU', $roles, '', 'class="form-control"'); ?>
                         </div>        
