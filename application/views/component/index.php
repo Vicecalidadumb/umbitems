@@ -16,12 +16,14 @@ $array_color_2 = array('#5cb85c', '#f0ad4e', '#d9534f');
     <h2>Componentes</h2>
     <?php echo $this->session->userdata('HEADER_2'); ?>
 </div>
-
 <div class="page-header">
     <h1 style="color:#2aabd2">
         Listado de Componentes
         <a href="<?php echo base_url("index.php/component/add"); ?>">
             <button type="button" class="btn btn-primary btn-lg">Agregar Componente</button>
+        </a>
+        <a href="<?php echo base_url("index.php/component/imprimir_excel"); ?>" target="_black">
+            <button type="button" class="btn btn-primary btn-lg">Imprimir Reporte</button>
         </a>
 <!--        <a href="<?php echo base_url("index.php/component/report2"); ?>" target="_blank">
             <button type="button" class="btn btn-success btn-lg">Descargar Reporte xls</button>

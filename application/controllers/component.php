@@ -208,5 +208,17 @@ class Component extends CI_Controller {
         //$data['content'] = 'component/report2';
         $this->load->view('component/report3', $data);
     }
+    function imprimir_excel(){
+        $data['components'] = $this->component_model->imprimir_excel();
+//        echo "<pre>";
+//        print_r($data['components']);
+//        echo "</pre>";
+        header("Content-type: application/octet-stream; charset=UTF-8");
+        header("Content-Disposition: attachment; filename=reporte_items_construidos_" . date("Y_m_d_H_i_s") . ".xls");
+        header('Content-Type: text/html; charset=UTF-8');
+        header("Pragma: no-cache");
+        header("Expires: 0");
+        $this->load->view('component/report4', $data);
+    }
 
 }

@@ -676,5 +676,22 @@ class Component_model extends CI_Model {
 
         return $return;
     }
+    function imprimir_excel(){
+        
+        $datos=$this->db->query('select  PREGUNTA_ID, PREGUNTA_TEMA, PREGUNTA_NIVELRUBRICA,PREGUNTA_NIVELPREGUNTA,PREGUNTA_TIPOITEM,PREGUNTA_NIVELDIFICULTAD,PREGUNTA_ETAPA,
+PREGUNTA_VALIDA_2,PREGUNTA_VALIDA_2_TEXT1,PREGUNTA_VALIDA_2_TEXT2,umbitems_componentes.COMPONENTE_ID,umbitems_componentes.COMPONENTE_NOMBRE,
+COMPONENTE_PREGUNTAS,USUARIO_NOMBRES, USUARIO_APELLIDOS,USUARIO_NUMERODOCUMENTO,USUARIO_CORREO
+from umbitems_preguntas 
+join umbitems_componentes on umbitems_preguntas.COMPONENTE_ID= umbitems_componentes.COMPONENTE_ID
+join umbitems_usuarios on umbitems_usuarios.USUARIO_ID=umbitems_preguntas.USUARIO_ID
+');
+        $datos=$datos->result();
+        return $datos;
+//        print_y($datos->result());
+//        $SQL_string_query = $this->db->query($SQL_string);
+//        print_y($SQL_string_query);
+//        $datos= $SQL_string_query->result();
+//        print_y($datos);
+    }
 
 }
