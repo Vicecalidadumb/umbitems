@@ -54,7 +54,7 @@ echo $dom_modal;
                 <tr>
                     <td>
                         <?php echo $user->NOM_TIPO_USU ?>
-                    </td>            
+                    </td>
                     <td>
                         <?php echo $user->USUARIO_NOMBRES ?>
                     </td>
@@ -66,7 +66,7 @@ echo $dom_modal;
                     </td>
                     <td>
                         <?php echo $user->USUARIO_NUMERODOCUMENTO ?>
-                    </td>  
+                    </td>
                     <td>
                         <?php echo $user->USUARIO_CORREO ?>
                     </td>
@@ -75,8 +75,8 @@ echo $dom_modal;
                             <button type="button" class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-edit"></span> Editar
                             </button>
-                        </a>    
-                    </td>            
+                        </a>
+                    </td>
                 </tr>
             <?php } ?>
         <?php } ?>
