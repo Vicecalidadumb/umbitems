@@ -7,7 +7,6 @@
         <td>PREGUNTA_TIPOITEM</td>
         <td>PREGUNTA_NIVELDIFICULTAD</td>
         <td>PREGUNTA_ETAPA</td>
-        <td>PREGUNTA_VALIDA_2</td>
         <td>PREGUNTA_VALIDA_2_TEXT1</td>
         <td>PREGUNTA_VALIDA_2_TEXT2</td>
         <td>COMPONENTE_ID</td>
