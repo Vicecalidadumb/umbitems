@@ -145,21 +145,32 @@
                                     if ($this->session->userdata('ID_TIPO_USU') == 4 && $etapa == 2) {
                                         $validate_modify_item = get_modify_item($question->PREGUNTA_ID);
                                         ?>
-                                        <a href="<?php echo base_url("index.php/selection/devolver/" . $question->PREGUNTA_ID."/".$id_component2); ?>" class="btn btn-danger btn-xs">
+                                        <a href="<?php echo base_url("index.php/selection/devolver/" . $question->PREGUNTA_ID . "/" . $id_component2); ?>" class="btn btn-danger btn-xs">
                                             <span class="glyphicon glyphicon-remove"></span>
                                             Desseleccionar
                                         </a>
                                         <?php
                                     }
-                                    
+
                                     //SELECCIONAR ITEM (ESTADO 1 O 2 Y TIPO DE USUARIO 6 - SELECCIONAROR)   
                                     if ($this->session->userdata('ID_TIPO_USU') == 6 && ($etapa == 3 || $etapa == 2)) {
-                                        ?>
-                                        <a href="<?php echo base_url("index.php/selection/select/" . $question->PREGUNTA_SELECCIONADA . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_SELECCIONADA/3'; ?>" class="btn btn-<?php echo ($question->PREGUNTA_SELECCIONADA == 0) ? 'success' : 'danger' ?> btn-xs">
-                                            <span class="glyphicon glyphicon-<?php echo ($question->PREGUNTA_SELECCIONADA == 0) ? 'ok' : 'remove' ?>"></span>
-                                            <?php echo ($question->PREGUNTA_SELECCIONADA == 0) ? 'Seleccionar Item' : 'Desseleccionar' ?>
-                                        </a>
-                                        <?php
+                                        if ($question->PREGUNTA_SELECCIONADA == 0) {
+                                            ?>
+                                            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#exampleModal3" 
+                                               data-preguntaid="<?php echo $question->PREGUNTA_ID; ?>" 
+                                               data-envio="<?php echo base_url("index.php/selection/select/" . $question->PREGUNTA_SELECCIONADA . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_SELECCIONADA/3' ?>">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                                <?php echo 'Seleccionar Item'; ?>
+                                            </a>
+                                            <?php
+                                        } else {
+                                            ?>
+                                            <a href="<?php echo base_url("index.php/selection/select/" . $question->PREGUNTA_SELECCIONADA . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_SELECCIONADA/3'; ?>" class="btn btn-<?php echo ($question->PREGUNTA_SELECCIONADA == 0) ? 'success' : 'danger' ?> btn-xs">
+                                                <span class="glyphicon glyphicon-<?php echo ($question->PREGUNTA_SELECCIONADA == 0) ? 'ok' : 'remove' ?>"></span>
+                                                <?php echo ($question->PREGUNTA_SELECCIONADA == 0) ? 'Seleccionar Item' : 'Desseleccionar' ?>
+                                            </a>
+                                            <?php
+                                        }
                                     }
                                     break;
                             }
@@ -198,7 +209,8 @@
                 ?>
             </tbody>
             <p>
-                <?php // echo $this->session->userdata('ID_TIPO_USU');
+                <?php
+                // echo $this->session->userdata('ID_TIPO_USU');
                 if ($this->session->userdata('ID_TIPO_USU') == 4) {
                     ?>
                 <div class="col-md-12">
@@ -213,11 +225,11 @@
                         <span ><?php echo number_format($porce); ?>% completado</span>
                     </div>
                 </div>
-    <?php } ?>
+            <?php } ?>
 
 
         </table>
-<?php } else { ?>
+    <?php } else { ?>
 
         <div class="alert alert-warning">
             No se encontraron registros
@@ -228,7 +240,7 @@
             </a>            
         </div>
 
-<?php } ?>
+    <?php } ?>
 
 </div>
 <div class="container">
@@ -268,7 +280,7 @@
                         <input type="hidden" name="PREGUNTA_ID" id="PREGUNTA_ID">
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">Estado:</label>
-<?php echo form_dropdown('PREGUNTA_VALIDA_2', array(1 => 'VALIDACION OK', 2 => 'ERROR AL VALIDAR'), '', 'class="form-control"'); ?>
+                            <?php echo form_dropdown('PREGUNTA_VALIDA_2', array(1 => 'VALIDACION OK', 2 => 'ERROR AL VALIDAR'), '', 'class="form-control"'); ?>
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">Suficiencia:</label>
@@ -277,6 +289,29 @@
                         <div class="form-group">
                             <label for="message-text" class="control-label">Ubicacion:</label>
                             <textarea name="PREGUNTA_VALIDA_2_TEXT2" class="form-control" id="PREGUNTA_VALIDA_2_TEXT2"></textarea>
+                        </div>                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>    
+    <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">Validar</h4>
+                </div>
+                <form id="form_seleccion" action="" role="form" method="POST">
+                    <div class="modal-body">
+                        <input type="hidden" name="PREGUNTA_ID" id="PREGUNTA_ID">
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">Observaci&oacute;n:</label>
+                            <textarea name="PREGUNTA_SELEC_1_TEXT2" class="form-control" id="PREGUNTA_SELEC_1_TEXT2"></textarea>
                         </div>                        
                     </div>
                     <div class="modal-footer">

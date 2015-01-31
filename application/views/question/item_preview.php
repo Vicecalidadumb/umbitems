@@ -24,6 +24,18 @@ else
         </ul>    
     </div>
 <?php } ?>
+<?php if (!empty($question[0]->PREGUNTA_VALIDA_2_TEXT1)) { ?>
+    <div class="well" style="background-color: #d9edf7 !important;border: 1px solid #0000FF !important;">
+        <ul>
+            <li>
+                <strong>Observaciones</strong>
+            </li>
+            <li>
+                <?php echo $question[0]->PREGUNTA_SELEC_1_TEXT2; ?>
+            </li>     
+        </ul>    
+    </div>
+<?php } ?>
 
 <div class="">
 

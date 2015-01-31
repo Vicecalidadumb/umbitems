@@ -7,6 +7,7 @@ class Selection_model extends CI_Model {
 
     public function update_question_select($state, $id_question, $COMPONENTE_ID, $PREGUNTA_NIVELPREGUNTA, $campodinamico, $etapa) {
         $id_question = deencrypt_id($id_question);
+        $post = $this->input->post();
         switch ($state) {
             case 0:
                 $data = array(
@@ -14,6 +15,7 @@ class Selection_model extends CI_Model {
                     'PREGUNTA_ETAPA' => $etapa,
                     $campodinamico . '_FECHA' => date("Y-m-d H:i:s")
                 );
+                $this->db->set('PREGUNTA_SELEC_1_TEXT2','concat(PREGUNTA_SELEC_1_TEXT2,'."'".$post['PREGUNTA_SELEC_1_TEXT2']."<br>".date('d/m/Y H:i:s')."<br>"."')",false);
                 break;
             default:
                 $data = array(
