@@ -8,7 +8,7 @@ class User_model extends CI_Model {
     public function get_all_users($state = 1, $restric = 0) {
         $where = '';
         if ($this->session->userdata('ID_TIPO_USU') == 5 && $restric = 1) {
-            $where.=' AND u.ID_TIPO_USU=2 ';
+            $where.=' AND (u.ID_TIPO_USU=2 OR  u.ID_TIPO_USU=6) ';
         }
         $SQL_string = "SELECT *
                       FROM 
