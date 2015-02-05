@@ -5,9 +5,94 @@ if (!defined('BASEPATH'))
 
 class Selection_model extends CI_Model {
 
-    public function update_question_select($state, $id_question, $COMPONENTE_ID, $PREGUNTA_NIVELPREGUNTA, $campodinamico, $etapa) {
+    public function update_question_select($state, $id_question, $COMPONENTE_ID, $PREGUNTA_NIVELPREGUNTA, $campodinamico, $etapa, $KEY_AES) {
         $id_question = deencrypt_id($id_question);
+//        echo $id_question." id question<br> etapa ";
         $post = $this->input->post();
+
+
+        if ($etapa == 4 && $state == 0) {
+            $SQL = "SELECT
+umbitems_respuestas.RESPUESTA_ID,
+AES_DECRYPT(PREGUNTA_IDRESPUESTA,'kjgw&&3%$&887Dvvc600') AS PREGUNTA_IDRESPUESTA,
+AES_DECRYPT(RESPUESTA_ENUNCIADO,'kjgw&&3%$&887Dvvc600') AS RESPUESTA_ENUNCIADO,
+AES_DECRYPT(RESPUESTA_JUSTIFICACION,'kjgw&&3%$&887Dvvc600') AS RESPUESTA_JUSTIFICACION,
+AES_DECRYPT(RESPUESTA_MODIFICACION_ENUNCIADO,'kjgw&&3%$&887Dvvc600') AS RESPUESTA_MODIFICACION_ENUNCIADO,
+AES_DECRYPT(RESPUESTA_MODIFICACION_JUSTIFICACION,'kjgw&&3%$&887Dvvc600') AS RESPUESTA_MODIFICACION_JUSTIFICACION
+FROM
+umbitems_preguntas
+INNER JOIN umbitems_respuestas ON umbitems_preguntas.PREGUNTA_ID = umbitems_respuestas.PREGUNTA_ID
+left JOIN umbitems_respuesta_modificacion ON umbitems_respuestas.RESPUESTA_ID = umbitems_respuesta_modificacion.RESPUESTA_ID
+WHERE umbitems_preguntas.PREGUNTA_ID=" . $id_question;
+
+            $ramdom = $this->db->query($SQL);
+            $ramdom = $ramdom->result();
+            $bara = array(0, 1, 2, 3);
+            $bara[] = shuffle($bara);
+
+            //echo "**".$ramdom[$bara[2]]->RESPUESTA_ID."<br><p>";
+
+//            echo print_y($ramdom);
+//            echo print_y($bara);
+//            echo "**" . $ramdom[0]->PREGUNTA_IDRESPUESTA . "<br><p>";
+
+            for ($i = 0; $i < count($bara) - 1; $i++) {
+
+                //echo "**".$ramdom[$bara[$i]]->RESPUESTA_ID."<br>";
+
+                if (($ramdom[0]->PREGUNTA_IDRESPUESTA) == ($ramdom[$bara[$i]]->RESPUESTA_ID)) {
+                     $respuesta = $ramdom[$i]->RESPUESTA_ID;
+                }
+                $this->db->query("update umbitems_respuestas set "
+//                . "PREGUNTA_IDRESPUESTA=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_ID)."--".$ramdom[$i]->RESPUESTA_ID  . "','{$KEY_AES}'),"
+                        . "RESPUESTA_ENUNCIADO=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_ENUNCIADO) . "','{$KEY_AES}'),"
+                        . "RESPUESTA_JUSTIFICACION=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_JUSTIFICACION) . "','{$KEY_AES}')"
+                        . " where RESPUESTA_ID=" . $ramdom[$i]->RESPUESTA_ID);
+                        
+                if (!empty($ramdom[$bara[$i]]->RESPUESTA_MODIFICACION_ENUNCIADO)) {
+                    $this->db->query("update umbitems_respuesta_modificacion set "
+//                . "PREGUNTA_IDRESPUESTA=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_ID)."--".$ramdom[$i]->RESPUESTA_ID  . "','{$KEY_AES}'),"
+                            . "RESPUESTA_MODIFICACION_ENUNCIADO=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_MODIFICACION_ENUNCIADO) . "','{$KEY_AES}'),"
+                            . "RESPUESTA_MODIFICACION_JUSTIFICACION=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_MODIFICACION_JUSTIFICACION) . "','{$KEY_AES}')"
+                            . " where RESPUESTA_ID=" . $ramdom[$i]->RESPUESTA_ID);
+                }
+            }
+            $this->db->query("update umbitems_preguntas set PREGUNTA_IDRESPUESTA=AES_ENCRYPT('" . addslashes($respuesta) . "','{$KEY_AES}')  where PREGUNTA_ID=" . $id_question);
+
+//
+//            $SQL = "SELECT
+//umbitems_respuesta_modificacion.RESPUESTA_ID,
+//AES_DECRYPT(RESPUESTA_MODIFICACION_ENUNCIADO,'kjgw&&3%$&887Dvvc600') AS RESPUESTA_ENUNCIADO,
+//AES_DECRYPT(RESPUESTA_MODIFICACION_JUSTIFICACION,'kjgw&&3%$&887Dvvc600') AS RESPUESTA_JUSTIFICACION
+//FROM
+//umbitems_respuesta_modificacion";
+//            $ramdom = $this->db->query($SQL);
+//            $ramdom = $ramdom->result();
+//            echo print_y($ramdom);
+
+// modificacion
+//            $SQL = "SELECT
+//umbitems_respuestas.RESPUESTA_ID,
+//AES_DECRYPT(PREGUNTA_IDRESPUESTA,'kjgw&&3%$&887Dvvc600') AS PREGUNTA_IDRESPUESTA,
+//AES_DECRYPT(RESPUESTA_ENUNCIADO,'kjgw&&3%$&887Dvvc600') AS RESPUESTA_ENUNCIADO,
+//AES_DECRYPT(RESPUESTA_JUSTIFICACION,'kjgw&&3%$&887Dvvc600') AS RESPUESTA_JUSTIFICACION
+//FROM
+//umbitems_preguntas
+//WHERE umbitems_preguntas.PREGUNTA_ID=" . $id_question; 
+//            
+//            
+//            for ($i = 0; $i < count($bara) - 1; $i++) {
+//                $this->db->query("update umbitems_respuesta_modificacion set "
+////                . "PREGUNTA_IDRESPUESTA=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_ID)."--".$ramdom[$i]->RESPUESTA_ID  . "','{$KEY_AES}'),"
+//                                . "RESPUESTA_MODIFICACION_ENUNCIADO=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_ENUNCIADO) . "','{$KEY_AES}'),"
+//                                . "RESPUESTA_MODIFICACION_JUSTIFICACION=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_JUSTIFICACION) . "','{$KEY_AES}')"
+//                                . " where RESPUESTA_ID=" . $ramdom[$i]->RESPUESTA_ID) . "<br>";
+//            }
+//            die();
+        }
+//        echo $campodinamico;
+//        die();
+
         switch ($state) {
             case 0:
                 $data = array(
@@ -15,7 +100,7 @@ class Selection_model extends CI_Model {
                     'PREGUNTA_ETAPA' => $etapa,
                     $campodinamico . '_FECHA' => date("Y-m-d H:i:s")
                 );
-                $this->db->set('PREGUNTA_SELEC_1_TEXT2','concat(PREGUNTA_SELEC_1_TEXT2,'."'".$post['PREGUNTA_SELEC_1_TEXT2']."<br>".date('d/m/Y H:i:s')."<br>"."')",false);
+                $this->db->set('PREGUNTA_SELEC_1_TEXT2', 'concat(PREGUNTA_SELEC_1_TEXT2,' . "'" . $post['PREGUNTA_SELEC_1_TEXT2'] . "<br>" . date('d/m/Y H:i:s') . "<br>" . "')", false);
                 break;
             default:
                 $data = array(
