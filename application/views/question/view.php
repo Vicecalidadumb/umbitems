@@ -156,6 +156,7 @@
                                     if ($this->session->userdata('ID_TIPO_USU') == 6 && ($etapa == 3 || $etapa == 2)) {
                                         if ($question->PREGUNTA_SELECCIONADA == 0) {
                                             ?>
+                            
                                             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#exampleModal3" 
                                                data-preguntaid="<?php echo $question->PREGUNTA_ID; ?>" 
                                                data-envio="<?php echo base_url("index.php/selection/select/" . $question->PREGUNTA_SELECCIONADA . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_SELECCIONADA/3' ?>">
@@ -312,13 +313,20 @@
                         <div class="form-group">
                             <label for="message-text" class="control-label">Observaci&oacute;n:</label>
                             <textarea name="PREGUNTA_SELEC_1_TEXT2" class="form-control" id="PREGUNTA_SELEC_1_TEXT2"></textarea>
+                            <input type="hidden" value="0" id="accion2" name="accion2">
                         </div>                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="submit" class="btn btn-danger" onclick="accion(1)">Devolver</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>    
+    <script>
+        function accion(dato){
+            $('#accion2').val(dato);
+        }
+    </script>

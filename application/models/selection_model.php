@@ -30,21 +30,14 @@ WHERE umbitems_preguntas.PREGUNTA_ID=" . $id_question;
             $bara = array(0, 1, 2, 3);
             $bara[] = shuffle($bara);
 
-            //echo "**".$ramdom[$bara[2]]->RESPUESTA_ID."<br><p>";
-
-//            echo print_y($ramdom);
-//            echo print_y($bara);
-//            echo "**" . $ramdom[0]->PREGUNTA_IDRESPUESTA . "<br><p>";
 
             for ($i = 0; $i < count($bara) - 1; $i++) {
-
-                //echo "**".$ramdom[$bara[$i]]->RESPUESTA_ID."<br>";
 
                 if (($ramdom[0]->PREGUNTA_IDRESPUESTA) == ($ramdom[$bara[$i]]->RESPUESTA_ID)) {
                      $respuesta = $ramdom[$i]->RESPUESTA_ID;
                 }
                 $this->db->query("update umbitems_respuestas set "
-//                . "PREGUNTA_IDRESPUESTA=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_ID)."--".$ramdom[$i]->RESPUESTA_ID  . "','{$KEY_AES}'),"
+
                         . "RESPUESTA_ENUNCIADO=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_ENUNCIADO) . "','{$KEY_AES}'),"
                         . "RESPUESTA_JUSTIFICACION=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_JUSTIFICACION) . "','{$KEY_AES}')"
                         . " where RESPUESTA_ID=" . $ramdom[$i]->RESPUESTA_ID);
@@ -59,39 +52,13 @@ WHERE umbitems_preguntas.PREGUNTA_ID=" . $id_question;
             }
             $this->db->query("update umbitems_preguntas set PREGUNTA_IDRESPUESTA=AES_ENCRYPT('" . addslashes($respuesta) . "','{$KEY_AES}')  where PREGUNTA_ID=" . $id_question);
 
-//
-//            $SQL = "SELECT
-//umbitems_respuesta_modificacion.RESPUESTA_ID,
-//AES_DECRYPT(RESPUESTA_MODIFICACION_ENUNCIADO,'kjgw&&3%$&887Dvvc600') AS RESPUESTA_ENUNCIADO,
-//AES_DECRYPT(RESPUESTA_MODIFICACION_JUSTIFICACION,'kjgw&&3%$&887Dvvc600') AS RESPUESTA_JUSTIFICACION
-//FROM
-//umbitems_respuesta_modificacion";
-//            $ramdom = $this->db->query($SQL);
-//            $ramdom = $ramdom->result();
-//            echo print_y($ramdom);
 
-// modificacion
-//            $SQL = "SELECT
-//umbitems_respuestas.RESPUESTA_ID,
-//AES_DECRYPT(PREGUNTA_IDRESPUESTA,'kjgw&&3%$&887Dvvc600') AS PREGUNTA_IDRESPUESTA,
-//AES_DECRYPT(RESPUESTA_ENUNCIADO,'kjgw&&3%$&887Dvvc600') AS RESPUESTA_ENUNCIADO,
-//AES_DECRYPT(RESPUESTA_JUSTIFICACION,'kjgw&&3%$&887Dvvc600') AS RESPUESTA_JUSTIFICACION
-//FROM
-//umbitems_preguntas
-//WHERE umbitems_preguntas.PREGUNTA_ID=" . $id_question; 
-//            
-//            
-//            for ($i = 0; $i < count($bara) - 1; $i++) {
-//                $this->db->query("update umbitems_respuesta_modificacion set "
-////                . "PREGUNTA_IDRESPUESTA=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_ID)."--".$ramdom[$i]->RESPUESTA_ID  . "','{$KEY_AES}'),"
-//                                . "RESPUESTA_MODIFICACION_ENUNCIADO=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_ENUNCIADO) . "','{$KEY_AES}'),"
-//                                . "RESPUESTA_MODIFICACION_JUSTIFICACION=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_JUSTIFICACION) . "','{$KEY_AES}')"
-//                                . " where RESPUESTA_ID=" . $ramdom[$i]->RESPUESTA_ID) . "<br>";
-//            }
-//            die();
+        }else if($etapa == 3 && $post['accion2']==1){
+            $state=0;
+            $etapa=1;
+            $this->db->set('PREGUNTA_VALIDA_2','1');
         }
-//        echo $campodinamico;
-//        die();
+
 
         switch ($state) {
             case 0:
