@@ -115,9 +115,9 @@
                                 case 5:
                                     if ($this->session->userdata('ID_TIPO_USU') == 7 && $etapa != 3 && $etapa != 2) {
                                         ?>
-                                        <a href="<?php echo base_url("index.php/selection/select/" . $question->PREGUNTA_DIAGRAMADA . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_DIAGRAMADA/5'; ?>" class="btn btn-<?php echo ($question->PREGUNTA_DIAGRAMADA == 0) ? 'success' : 'danger' ?> btn-xs">
+                                        <a href="<?php echo base_url("index.php/selection/select/" . $question->PREGUNTA_DIAGRAMADA . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_DIAGRAMADA/5'; ?>" class="btn btn-<?php echo ($question->PREGUNTA_DIAGRAMADA == 0) ? 'danger' : 'success' ?> btn-xs">
                                             <span class="glyphicon glyphicon-edit"></span> 
-                                            <?php echo ($question->PREGUNTA_DIAGRAMADA == 0) ? 'Diagramada' : 'Sin Diagramar'; ?>
+                                            <?php echo ($question->PREGUNTA_DIAGRAMADA == 0) ? 'Sin Diagramar' : 'Diagramada'; ?>
                                         </a>
                                         <?php
                                     }

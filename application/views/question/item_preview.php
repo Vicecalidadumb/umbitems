@@ -1,7 +1,7 @@
 <?php
 $validate_modify_item = get_modify_item($question[0]->PREGUNTA_ID);
 $user = $this->session->userdata('ID_TIPO_USU');
-if ($user != 3)
+if ($user != 3 && $user!=7)
     $colu = 6;
 else
     $colu = 12;
@@ -145,7 +145,7 @@ else
 
         <div class="col-md-<?php echo $colu; ?>">
             <div class="form-group">
-                <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Opcion de Respuesta 1 </label>
+                <label for="exampleInputEmail1" style="text-align: center;width: 100%;">A. </label>
                 <br>
                 <?php
                 $validate_modify_resp = get_modify_resp($question[0]->RESPUESTA_ID);
@@ -163,7 +163,7 @@ else
             <br><br>
         </div> 
         <?php
-        if ($user != 3) {
+        if ($user != 3 && $user!=7) {
             ?>
             <div class="col-md-6">
                 <div class="form-group">
@@ -195,7 +195,7 @@ else
     <div class="row">    
         <div class="col-md-<?php echo $colu; ?>">
             <div class="form-group">
-                <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Opcion de Respuesta 2 </label>
+                <label for="exampleInputEmail1" style="text-align: center;width: 100%;">B. </label>
                 <br>
                 <?php
                 $validate_modify_resp = get_modify_resp($question[1]->RESPUESTA_ID);
@@ -213,7 +213,7 @@ else
             <br><br>
         </div>
         <?php
-        if ($user != 3) {
+        if ($user != 3 && $user!=7) {
             ?>
             <div class="col-md-6">
                 <div class="form-group">
@@ -244,7 +244,7 @@ else
     <div class="row"> 
         <div class="col-md-<?php echo $colu; ?>">
             <div class="form-group">
-                <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Opcion de Respuesta 3 </label>
+                <label for="exampleInputEmail1" style="text-align: center;width: 100%;">C. </label>
                 <br>
                 <?php
                 $validate_modify_resp = get_modify_resp($question[2]->RESPUESTA_ID);
@@ -262,7 +262,7 @@ else
             <br><br>
         </div>
         <?php
-        if ($user != 3) {
+        if ($user != 3 && $user!=7) {
             ?>
             <div class="col-md-6">
                 <div class="form-group">
@@ -293,7 +293,7 @@ else
     <div class="row"> 
         <div class="col-md-<?php echo $colu; ?>">
             <div class="form-group">
-                <label for="exampleInputEmail1" style="text-align: center;width: 100%;">Opcion de Respuesta 4 </label>
+                <label for="exampleInputEmail1" style="text-align: center;width: 100%;">D. </label>
                 <?php
                 $validate_modify_resp = get_modify_resp($question[3]->RESPUESTA_ID);
 
@@ -310,7 +310,7 @@ else
             <br><br>
         </div>
         <?php
-        if ($user != 3) {
+        if ($user != 3 && $user!=7) {
             ?>
             <div class="col-md-6">
                 <div class="form-group">
