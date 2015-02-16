@@ -132,6 +132,14 @@
                                     }
                                 case 2:
                                     //VALIDAR ITEM (ESTADO 2 Y TIPO DE USUARIO 4 - VALIDADOR)
+                                    if ($this->session->userdata('ID_TIPO_USU') == 4 && $etapa == 1 && $question->PREGUNTA_VALIDA_2 == 0) {
+                                        ?>
+                                        <a href="<?php echo base_url("index.php/question/edit/" . encrypt_id($question->PREGUNTA_ID)); ?>" class="btn btn-info btn-xs">
+                                            <span class="glyphicon glyphicon-edit"></span> 
+                                            Editar
+                                        </a>
+                                        <?php
+                                    }
                                     if ($this->session->userdata('ID_TIPO_USU') == 4 && $etapa == 1) {
                                         $validate_modify_item = get_modify_item($question->PREGUNTA_ID);
                                         ?>
@@ -156,7 +164,7 @@
                                     if ($this->session->userdata('ID_TIPO_USU') == 6 && ($etapa == 3 || $etapa == 2)) {
                                         if ($question->PREGUNTA_SELECCIONADA == 0) {
                                             ?>
-                            
+
                                             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#exampleModal3" 
                                                data-preguntaid="<?php echo $question->PREGUNTA_ID; ?>" 
                                                data-envio="<?php echo base_url("index.php/selection/select/" . $question->PREGUNTA_SELECCIONADA . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_SELECCIONADA/3' ?>">
@@ -326,7 +334,7 @@
         </div>
     </div>    
     <script>
-        function accion(dato){
+        function accion(dato) {
             $('#accion2').val(dato);
         }
     </script>

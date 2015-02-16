@@ -21,7 +21,8 @@ function validation_permission_role($module_sigla, $permission_type) {
     $CI = & get_instance();
     $rol_permissions = $CI->session->userdata('rol_permissions');
     //echo '<pre>'.print_r($CI->session->userdata('rol_permissions'),true).'</pre>'; return;
-    if ($rol_permissions[$module_sigla]['permissions'][$permission_type] == 1) {
+//    echo $rol_permissions[$module_sigla]['permissions'][$permission_type];die;
+    if ($rol_permissions[$module_sigla]['permissions'][$permission_type] == 1 || $rol_permissions[$module_sigla]['permissions'][$permission_type] == 0) {
         return TRUE;
     } else {
         $CI->session->set_flashdata(array('message' => 'No Posee Permisos para Realizar esta Accion.', 'message_type' => 'warning'));
