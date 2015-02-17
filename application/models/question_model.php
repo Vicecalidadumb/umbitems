@@ -231,7 +231,7 @@ class Question_model extends CI_Model {
         $this->db->where('u.USUARIO_ID', 'p.USUARIO_ID', false);
         $this->db->where('c.COMPONENTE_ID', ' p.COMPONENTE_ID', false);
         $this->db->where('PREGUNTA_ESTADO', 1, false);
-        if ($tipo != 3 && $USUARIO_ID != 4)
+        if ($tipo != 3 && $tipo != 4)
             $this->db->where('p.USUARIO_ID', $USUARIO_ID, false);
         $this->db->from('preguntas p,respuestas r,usuarios u,componentes c');
         $datos = $this->db->get();
