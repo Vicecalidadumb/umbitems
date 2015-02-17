@@ -681,10 +681,9 @@ class Component_model extends CI_Model {
         $datos=$this->db->query('select  PREGUNTA_ID, PREGUNTA_TEMA, PREGUNTA_NIVELRUBRICA,PREGUNTA_NIVELPREGUNTA,PREGUNTA_TIPOITEM,PREGUNTA_NIVELDIFICULTAD,PREGUNTA_ETAPA,
 PREGUNTA_VALIDA_2,PREGUNTA_VALIDA_2_TEXT1,PREGUNTA_VALIDA_2_TEXT2,umbitems_componentes.COMPONENTE_ID,umbitems_componentes.COMPONENTE_NOMBRE,
 COMPONENTE_PREGUNTAS,USUARIO_NOMBRES, USUARIO_APELLIDOS,USUARIO_NUMERODOCUMENTO,USUARIO_CORREO
-from umbitems_preguntas 
-join umbitems_componentes on umbitems_preguntas.COMPONENTE_ID= umbitems_componentes.COMPONENTE_ID
-join umbitems_usuarios on umbitems_usuarios.USUARIO_ID=umbitems_preguntas.USUARIO_ID
-');
+from umbitems_componentes 
+left join umbitems_preguntas on umbitems_preguntas.COMPONENTE_ID= umbitems_componentes.COMPONENTE_ID
+left join umbitems_usuarios on umbitems_usuarios.USUARIO_ID=umbitems_preguntas.USUARIO_ID');
         $datos=$datos->result();
         return $datos;
 //        print_y($datos->result());
