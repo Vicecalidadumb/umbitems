@@ -105,11 +105,29 @@
                                 case 4:
                                     if ($this->session->userdata('ID_TIPO_USU') == 3 && $etapa != 2) {
                                         $validate_modify_item = get_modify_item($question->PREGUNTA_ID);
+                                        if ($question->PREGUNTA_VALIDA_CE == 0) {
+                                            ?>
+                                            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#exampleModal3" 
+                                               data-preguntaid="<?php echo $question->PREGUNTA_ID; ?>" 
+                                               data-envio="<?php echo base_url("index.php/selection/select/" . $question->PREGUNTA_VALIDA_CE . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_VALIDA_CE/4'; ?>">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                                <?php echo 'Seleccionar Item'; ?>
+                                            </a>
+                                            <?php
+                                        } else {
+                                            ?>
+                                            <a href="<?php echo base_url("index.php/selection/select/" . $question->PREGUNTA_VALIDA_CE . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_VALIDA_CE/4'; ?>" class="btn btn-<?php echo ($question->PREGUNTA_VALIDA_CE == 0) ? 'success' : 'danger' ?> btn-xs">
+                                                <span class="glyphicon glyphicon-edit"></span> 
+                                                <?php echo ($question->PREGUNTA_VALIDA_CE == 0) ? 'Correccion de Estilo OK' : 'Sin Correccion de Estilo'; ?>
+                                            </a>
+                                            <?php
+                                        }
                                         ?>
-                                        <a href="<?php echo base_url("index.php/selection/select/" . $question->PREGUNTA_VALIDA_CE . '/' . encrypt_id($question->PREGUNTA_ID) . '/' . encrypt_id($question->COMPONENTE_ID)) . '/' . encrypt_id($question->PREGUNTA_NIVELPREGUNTA) . '/' . 'PREGUNTA_VALIDA_CE/4'; ?>" class="btn btn-<?php echo ($question->PREGUNTA_VALIDA_CE == 0) ? 'success' : 'danger' ?> btn-xs">
-                                            <span class="glyphicon glyphicon-edit"></span> 
-                                            <?php echo ($question->PREGUNTA_VALIDA_CE == 0) ? 'Correccion de Estilo OK' : 'Sin Correccion de Estilo'; ?>
-                                        </a>
+
+
+
+
+
                                         <?php
                                     }
                                 case 5:

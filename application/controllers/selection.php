@@ -19,10 +19,6 @@ class Selection extends CI_Controller {
     public function select($state, $id_question, $COMPONENTE_ID, $PREGUNTA_NIVELPREGUNTA, $campodinamico, $etapa) {
         
         $s=$this->input->post();
-//        print_r($s);
-//        echo $etapa;
-//        die();
-//        
         $insert = $this->selection_model->update_question_select($state, $id_question, $COMPONENTE_ID, $PREGUNTA_NIVELPREGUNTA, $campodinamico, $etapa,$this->session->userdata("KEY_AES"));
         if ($insert) {
             $this->session->set_flashdata(array('message' => 'Pregunta Actualizada con Exito.', 'message_type' => 'info'));

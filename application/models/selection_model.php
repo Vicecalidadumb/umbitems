@@ -10,8 +10,10 @@ class Selection_model extends CI_Model {
 //        echo $id_question." id question<br> etapa ";
         $post = $this->input->post();
 
+//        echo $etapa . "**" . $state . "**" . $post['accion2'];
+//        die();
 
-        if ($etapa == 4 && $state == 0) {
+        if ($etapa == 4 && $state == 0 && $post['accion2'] == 0) {
             $SQL = "SELECT
 umbitems_respuestas.RESPUESTA_ID,
 AES_DECRYPT(PREGUNTA_IDRESPUESTA,'kjgw&&3%$&887Dvvc600') AS PREGUNTA_IDRESPUESTA,
@@ -34,14 +36,13 @@ WHERE umbitems_preguntas.PREGUNTA_ID=" . $id_question;
             for ($i = 0; $i < count($bara) - 1; $i++) {
 
                 if (($ramdom[0]->PREGUNTA_IDRESPUESTA) == ($ramdom[$bara[$i]]->RESPUESTA_ID)) {
-                     $respuesta = $ramdom[$i]->RESPUESTA_ID;
+                    $respuesta = $ramdom[$i]->RESPUESTA_ID;
                 }
                 $this->db->query("update umbitems_respuestas set "
-
                         . "RESPUESTA_ENUNCIADO=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_ENUNCIADO) . "','{$KEY_AES}'),"
                         . "RESPUESTA_JUSTIFICACION=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_JUSTIFICACION) . "','{$KEY_AES}')"
                         . " where RESPUESTA_ID=" . $ramdom[$i]->RESPUESTA_ID);
-                        
+
                 if (!empty($ramdom[$bara[$i]]->RESPUESTA_MODIFICACION_ENUNCIADO)) {
                     $this->db->query("update umbitems_respuesta_modificacion set "
 //                . "PREGUNTA_IDRESPUESTA=AES_ENCRYPT('" . addslashes($ramdom[$bara[$i]]->RESPUESTA_ID)."--".$ramdom[$i]->RESPUESTA_ID  . "','{$KEY_AES}'),"
@@ -51,12 +52,17 @@ WHERE umbitems_preguntas.PREGUNTA_ID=" . $id_question;
                 }
             }
             $this->db->query("update umbitems_preguntas set PREGUNTA_IDRESPUESTA=AES_ENCRYPT('" . addslashes($respuesta) . "','{$KEY_AES}')  where PREGUNTA_ID=" . $id_question);
-
-
-        }else if($etapa == 3 && $post['accion2']==1){
-            $state=0;
-            $etapa=1;
-            $this->db->set('PREGUNTA_VALIDA_2','1');
+            $this->db->set('PREGUNTA_SELEC_1_TEXT2', 'concat(PREGUNTA_SELEC_1_TEXT2,' . "'" . $post['PREGUNTA_SELEC_1_TEXT2'] . "<br>" . date('d/m/Y H:i:s') . " En Corr. de Estilo <br>" . "')", false);
+        } else if ($etapa == 3 && $post['accion2'] == 1) {
+            $state = 0;
+            $etapa = 1;
+            $this->db->set('PREGUNTA_VALIDA_2', '1');
+            $this->db->set('PREGUNTA_SELEC_1_TEXT2', 'concat(PREGUNTA_SELEC_1_TEXT2,' . "'" . $post['PREGUNTA_SELEC_1_TEXT2'] . "<br>" . date('d/m/Y H:i:s') . " En Seleccion <br>" . "')", false);
+        } else if ($etapa == 4 && $post['accion2'] == 1) {
+            $state = 0;
+            $etapa = 1;
+            $this->db->set('PREGUNTA_VALIDA_2', '0');
+            $this->db->set('PREGUNTA_SELEC_1_TEXT2', 'concat(PREGUNTA_SELEC_1_TEXT2,' . "'" . $post['PREGUNTA_SELEC_1_TEXT2'] . "<br>" . date('d/m/Y H:i:s') . " En Corr. de Estilo <br>" . "')", false);
         }
 
 
@@ -67,7 +73,6 @@ WHERE umbitems_preguntas.PREGUNTA_ID=" . $id_question;
                     'PREGUNTA_ETAPA' => $etapa,
                     $campodinamico . '_FECHA' => date("Y-m-d H:i:s")
                 );
-                $this->db->set('PREGUNTA_SELEC_1_TEXT2', 'concat(PREGUNTA_SELEC_1_TEXT2,' . "'" . $post['PREGUNTA_SELEC_1_TEXT2'] . "<br>" . date('d/m/Y H:i:s') . "<br>" . "')", false);
                 break;
             default:
                 $data = array(
