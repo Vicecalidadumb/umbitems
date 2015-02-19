@@ -363,3 +363,4 @@ function configuracion($url) {
     $config['c_id'] = '1';
     return $config;
 }
+

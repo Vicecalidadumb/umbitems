@@ -279,7 +279,7 @@ class Component_model extends CI_Model {
                         AND
                         u.USUARIO_ID = $id_user
                         AND
-                        c.COMPONENTE_ESTADO = '1'";
+                        c.COMPONENTE_ESTADO = '1'  order by c.COMPONENTE_NOMBRE";
         //echo $SQL_string;
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();
