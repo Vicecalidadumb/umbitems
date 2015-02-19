@@ -510,6 +510,7 @@ class Question_model extends CI_Model {
                 . " AES_DECRYPT(RESPUESTA_MODIFICACION_ENUNCIADO,'{$KEY_AES}') RESPUESTA_MODIFICACION_ENUNCIADO,"
                 . " AES_DECRYPT(RESPUESTA_MODIFICACION_JUSTIFICACION,'{$KEY_AES}') RESPUESTA_MODIFICACION_JUSTIFICACION,"
                 . " RESPUESTA_MODIFICACION_FECHA "
+//                . " AES_DECRYPT(PREGUNTA_MODIFICACION_OBSERVACIONES,'{$KEY_AES}') PREGUNTA_MODIFICACION_OBSERVACIONES"
                 . " FROM {$this->db->dbprefix('respuesta_modificacion')} WHERE "
                 . "RESPUESTA_ID = '{$RESPUESTA_ID}'  ";
         //echo $SQL_string;

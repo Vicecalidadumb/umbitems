@@ -105,7 +105,8 @@
                                 case 4:
                                     if ($this->session->userdata('ID_TIPO_USU') == 3 && $etapa != 2) {
                                         $validate_modify_item = get_modify_item($question->PREGUNTA_ID);
-                                        if ($question->PREGUNTA_VALIDA_CE == 0) {
+                                        
+                                        if ($question->PREGUNTA_VALIDA_CE == 0 && count($validate_modify_item)==0) {
                                             ?>
                                             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#exampleModal3" 
                                                data-preguntaid="<?php echo $question->PREGUNTA_ID; ?>" 

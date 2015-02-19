@@ -1,11 +1,26 @@
 <?php
 $validate_modify_item = get_modify_item($question[0]->PREGUNTA_ID);
+$validate_modify_resp = get_modify_resp($question[0]->RESPUESTA_ID);
 $user = $this->session->userdata('ID_TIPO_USU');
-if ($user != 3 && $user!=7)
+if ($user != 3 && $user != 7)
     $colu = 6;
 else
     $colu = 12;
+$PREGUNTA_ENUNCIADO = '';
+if (count($validate_modify_item) > 0) {
+    $PREGUNTA_ENUNCIADO = $validate_modify_item[0]->PREGUNTA_MODIFICACION_OBSERVACIONES;
+} else {
+    $PREGUNTA_ENUNCIADO = $question[0]->PREGUNTA_OBSERVACIONES;
+}
 ?>
+<div class="well" style="background-color: #d9edf7 !important;border: 1px solid #0000FF !important;">
+    Observaciones:<br>
+    <?php
+    echo $PREGUNTA_ENUNCIADO
+    ?>
+</div>
+
+
 <?php if (!empty($question[0]->PREGUNTA_VALIDA_2_TEXT1)) { ?>
     <div class="well" style="background-color: rgb(250, 243, 243) !important;border: 1px solid red !important;">
         <ul>
@@ -148,8 +163,6 @@ else
                 <label for="exampleInputEmail1" style="text-align: center;width: 100%;">A. </label>
                 <br>
                 <?php
-                $validate_modify_resp = get_modify_resp($question[0]->RESPUESTA_ID);
-
                 $RESPUESTA_ENUNCIADO_1 = '';
                 if (count($validate_modify_resp) > 0) {
                     $RESPUESTA_ENUNCIADO_1 = $validate_modify_resp[0]->RESPUESTA_MODIFICACION_ENUNCIADO;
@@ -163,7 +176,7 @@ else
             <br><br>
         </div> 
         <?php
-        if ($user != 3 && $user!=7) {
+        if ($user != 3 && $user != 7) {
             ?>
             <div class="col-md-6">
                 <div class="form-group">
@@ -207,13 +220,13 @@ else
                     $RESPUESTA_ENUNCIADO_2 = $question[1]->RESPUESTA_ENUNCIADO;
                 }
                 echo $RESPUESTA_ENUNCIADO_2;
-                //echo form_textarea('RESPUESTA_ENUNCIADO_2', $RESPUESTA_ENUNCIADO_2, 'id="RESPUESTA_ENUNCIADO_2" class="textarea_umb"');
+//echo form_textarea('RESPUESTA_ENUNCIADO_2', $RESPUESTA_ENUNCIADO_2, 'id="RESPUESTA_ENUNCIADO_2" class="textarea_umb"');
                 ?>
             </div> 
             <br><br>
         </div>
         <?php
-        if ($user != 3 && $user!=7) {
+        if ($user != 3 && $user != 7) {
             ?>
             <div class="col-md-6">
                 <div class="form-group">
@@ -256,13 +269,13 @@ else
                     $RESPUESTA_ENUNCIADO_3 = $question[2]->RESPUESTA_ENUNCIADO;
                 }
                 echo $RESPUESTA_ENUNCIADO_3;
-                //echo form_textarea('RESPUESTA_ENUNCIADO_3', $RESPUESTA_ENUNCIADO_3, 'id="RESPUESTA_ENUNCIADO_3" class="textarea_umb"');
+//echo form_textarea('RESPUESTA_ENUNCIADO_3', $RESPUESTA_ENUNCIADO_3, 'id="RESPUESTA_ENUNCIADO_3" class="textarea_umb"');
                 ?>
             </div> 
             <br><br>
         </div>
         <?php
-        if ($user != 3 && $user!=7) {
+        if ($user != 3 && $user != 7) {
             ?>
             <div class="col-md-6">
                 <div class="form-group">
@@ -304,13 +317,13 @@ else
                     $RESPUESTA_ENUNCIADO_4 = $question[3]->RESPUESTA_ENUNCIADO;
                 }
                 echo $RESPUESTA_ENUNCIADO_4;
-                //echo form_textarea('RESPUESTA_ENUNCIADO_4', $RESPUESTA_ENUNCIADO_4, 'id="RESPUESTA_ENUNCIADO_4" class="textarea_umb"');
+//echo form_textarea('RESPUESTA_ENUNCIADO_4', $RESPUESTA_ENUNCIADO_4, 'id="RESPUESTA_ENUNCIADO_4" class="textarea_umb"');
                 ?>
             </div> 
             <br><br>
         </div>
         <?php
-        if ($user != 3 && $user!=7) {
+        if ($user != 3 && $user != 7) {
             ?>
             <div class="col-md-6">
                 <div class="form-group">
