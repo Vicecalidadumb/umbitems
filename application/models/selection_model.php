@@ -14,6 +14,7 @@ class Selection_model extends CI_Model {
 //        die();
 
         if ($etapa == 4 && $state == 0 && $post['accion2'] == 0) {
+            echo "***";
             $SQL = "SELECT
 umbitems_respuestas.RESPUESTA_ID,
 AES_DECRYPT(PREGUNTA_IDRESPUESTA,'kjgw&&3%$&887Dvvc600') AS PREGUNTA_IDRESPUESTA,
@@ -63,10 +64,11 @@ WHERE umbitems_preguntas.PREGUNTA_ID=" . $id_question;
             $etapa = 1;
             $this->db->set('PREGUNTA_VALIDA_2', '0');
             $this->db->set('PREGUNTA_SELEC_1_TEXT2', 'concat(PREGUNTA_SELEC_1_TEXT2,' . "'" . $post['PREGUNTA_SELEC_1_TEXT2'] . "<br>" . date('d/m/Y H:i:s') . " En Corr. de Estilo <br>" . "')", false);
+        }else if($state==0 && $etapa==3){
+            $this->db->set('PREGUNTA_SELEC_1_TEXT2', 'concat(PREGUNTA_SELEC_1_TEXT2,' . "'" . $post['PREGUNTA_SELEC_1_TEXT2'] . "<br>" . date('d/m/Y H:i:s') . " En Seleccion <br>" . "')", false);
         }
 
-
-        switch ($state) {
+            switch ($state) {
             case 0:
                 $data = array(
                     $campodinamico => 1,
