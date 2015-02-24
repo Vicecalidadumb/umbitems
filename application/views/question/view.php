@@ -308,7 +308,7 @@
                         <input type="hidden" name="PREGUNTA_ID" id="PREGUNTA_ID">
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">Estado:</label>
-                            <?php echo form_dropdown('PREGUNTA_VALIDA_2', array(1 => 'VALIDACION OK', 2 => 'ERROR AL VALIDAR'), '', 'class="form-control"'); ?>
+                            <?php echo form_dropdown('PREGUNTA_VALIDA_2', array(1 => 'ENVIAR A SELECCION', 2 => 'DEVOLVER A CONSTRUCCION'), '', 'class="form-control"'); ?>
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">Suficiencia:</label>

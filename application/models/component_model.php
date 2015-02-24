@@ -255,7 +255,8 @@ class Component_model extends CI_Model {
 
     public function get_components_id_user($id_user) {
         $CI = & get_instance();
-        $SQL_string = "SELECT c.COMPONENTE_ID, 
+        $SQL_string = "SELECT COMPONENTE_ID, CONCAT(COMPONENTE_NOMBRE,' / ',CANTIDAD) COMPONENTE_NOMBRE,CANTIDAD,NUMERO_PREGUNTAS FROM (
+            SELECT c.COMPONENTE_ID, 
                         CONCAT( 
                             c.COMPONENTE_NOMBRE, 
                             ' - ', 
@@ -267,7 +268,12 @@ class Component_model extends CI_Model {
                                 WHERE p.COMPONENTE_ID = c.COMPONENTE_ID
                                 AND p.PREGUNTA_ESTADO = 1
                             )
-                        ) COMPONENTE_NOMBRE
+                        ) COMPONENTE_NOMBRE,
+                        ( SELECT COUNT(PREGUNTA_ID) FROM umbitems_preguntas p WHERE p.COMPONENTE_ID = c.COMPONENTE_ID AND p.PREGUNTA_ESTADO = 1 ) NUMERO_PREGUNTAS,
+                        (SELECT COUNT(PREGUNTA_ID) 
+                        FROM umbitems_preguntas p
+                        WHERE p.PREGUNTA_ETAPA =5 AND p.COMPONENTE_ID = c.COMPONENTE_ID) CANTIDAD
+
                       FROM 
                         {$this->db->dbprefix('componentes')} c,
                         {$this->db->dbprefix('usuarios_componentes')} uc,
@@ -279,7 +285,9 @@ class Component_model extends CI_Model {
                         AND
                         u.USUARIO_ID = $id_user
                         AND
-                        c.COMPONENTE_ESTADO = '1'  order by c.COMPONENTE_NOMBRE";
+                        c.COMPONENTE_ESTADO = '1'  order by c.COMPONENTE_NOMBRE)
+                        TABLA
+                        ";
         //echo $SQL_string;
         $SQL_string_query = $this->db->query($SQL_string);
         return $SQL_string_query->result();

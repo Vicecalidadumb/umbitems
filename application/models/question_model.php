@@ -12,7 +12,11 @@ class Question_model extends CI_Model {
         } else {
             $WHERE.= " AND p.COMPONENTE_ID = '$id_component' ";
         }
+        
         if ($id_user != 'ALL' && $ID_TIPO_USU == '1') {
+            $WHERE.= " AND p.USUARIO_ID = '$id_user' ";
+        }
+        if ($ID_TIPO_USU == '2') {
             $WHERE.= " AND p.USUARIO_ID = '$id_user' ";
         }
         if ($GROUPBY == 1) {

@@ -29,7 +29,8 @@ class Question extends CI_Controller {
         $components_array = $this->component_model->get_components_id_user($id_user);
 
         if (count($components_array) > 0) {
-            $data['components'] = get_dropdown($components_array, 'COMPONENTE_ID', 'COMPONENTE_NOMBRE');
+//            $data['components'] = get_dropdown($components_array, 'COMPONENTE_ID', 'COMPONENTE_NOMBRE');
+            $data['components'] = $components_array;
             //VALIDAR SI SE HA SELECCIONADO UN COMPONENTE
             if ($id_component == '0') {
                 //OPTENER DATOS DEL USUARIO
@@ -53,7 +54,7 @@ class Question extends CI_Controller {
 
                     $data['questions'] = $this->question_model->get_questions($id_component, $id_user, $this->session->userdata("KEY_AES"), 1, deencrypt_id($level), $this->session->userdata('ID_TIPO_USU'));
                     //$data['component'] = $this->component_model->get_components_id_est($id_component);
-
+//                    echo print_y($data['questions']);
                     $data['title'] = 'Buscar Items';
                     $data['content'] = 'question/view';
                     $this->load->view('template/template', $data);
